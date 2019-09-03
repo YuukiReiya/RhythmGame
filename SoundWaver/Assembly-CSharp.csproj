@@ -203,12 +203,15 @@
      <Compile Include="Assets\ImportAsset\Github\UniBpmAnalyzer\Scripts\UniBpmAnalyzer.cs" />
      <Compile Include="Assets\ImportAsset\Github\UnityAudioSpectrum\AudioSpectrum.cs" />
      <Compile Include="Assets\ImportAsset\Github\UnityBeatDetection\AudioProcessor.cs" />
+     <Compile Include="Assets\Scripts\Aspect\FixedAspecter.cs" />
+     <Compile Include="Assets\Scripts\Aspect\FixedAspectRatio.cs" />
      <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
      <Compile Include="Assets\Scripts\FileIO\Read.cs" />
      <Compile Include="Assets\Scripts\FileIO\scaletest.cs" />
      <Compile Include="Assets\Scripts\FileIO\tmp.cs" />
      <Compile Include="Assets\Scripts\Hoge.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
+     <Compile Include="Assets\Tool\FPSmeter\Scripts\FPSmeter.cs" />
      <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\ImportAsset\AssetStore\NGUI\ReadMe - 2018.3.0.txt" />
      <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Masked 1.shader" />
@@ -255,6 +258,7 @@
      <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTween\DOTween43.xml" />
      <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
      <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\Shaders\SimpleScroll.shader" />
      <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
      <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
