@@ -1,0 +1,7 @@
+*.apk
+SoundWaver/.vscode/
+SoundWaver/Assets/ImportAsset/AssetStore/
+SoundWaver/Assets/Resources/
+SoundWaver/Library/
+SoundWaver/obj/
+SoundWaver/Temp/
