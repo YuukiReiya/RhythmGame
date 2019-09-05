@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yuuki;
 
-public class InputNGUI : MonoBehaviour
+public class TouchController : SingletonMonoBehaviour<TouchController>
 {
+
+
     // Start is called before the first frame update
     void Start()
     {
