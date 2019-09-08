@@ -5,7 +5,6 @@ using UnityEngine;
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
     public List<INote> notes;
-
     void Awake()
     {
         base.Awake();
