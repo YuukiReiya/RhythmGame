@@ -18,7 +18,7 @@ public class SingleNote : MonoBehaviour, INote
 
     public void Move()
     {
-        Debug.Log("hoge");
+        // Debug.Log("hoge");
     }
 
     public void Register()

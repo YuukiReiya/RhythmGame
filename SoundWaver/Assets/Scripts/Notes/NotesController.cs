@@ -4,30 +4,47 @@ using UnityEngine;
 
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
-    public List<INote> notes;
-    void Awake()
+    [System.Serializable]
+    struct TimingLine
     {
-        base.Awake();
-        notes = new List<INote>();
+        public float y, z;
+    }
+
+    [SerializeField]
+    TimingLine timingLine;
+    public List<INote> notes;
+
+    public float elapsedTime { get; private set; }
+
+    void Awake ()
+    {
+        base.Awake ();
+        notes = new List<INote> ();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    void Start () { }
 
     // Update is called once per frame
-    void Update()
+    void Update ()
     {
-        Move();
+        Move ();
     }
 
-    void Move()
+    void Move ()
     {
+
         foreach (var it in notes)
         {
-            it.Move();
+            it.Move ();
         }
+    }
+
+    void OnDrawGizmos ()
+    {
+        Gizmos.color = Color.red;
+
+        float left = -10, right = 10;
+        Gizmos.DrawLine (new Vector3 (left, timingLine.y, timingLine.z), new Vector3 (right, timingLine.y, timingLine.z));
     }
 }
