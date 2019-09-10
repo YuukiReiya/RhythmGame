@@ -212,6 +212,7 @@
     <Compile Include="Assets\ImportAsset\Github\UnityBeatDetection\AudioProcessor.cs" />
     <Compile Include="Assets\Scripts\Aspect\FixedAspecter.cs" />
     <Compile Include="Assets\Scripts\Aspect\FixedAspectRatio.cs" />
+    <Compile Include="Assets\Scripts\AutoMusicScoreFactor.cs" />
     <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
     <Compile Include="Assets\Scripts\FileIO\scaletest.cs" />
@@ -220,12 +221,14 @@
     <Compile Include="Assets\Scripts\Framework\CoroutineExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonMonoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
     <Compile Include="Assets\Scripts\Hoge.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
     <Compile Include="Assets\Scripts\Notes\NoteDecorate.cs" />
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
+    <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
