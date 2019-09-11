@@ -12,20 +12,44 @@ public class AutoMusicScoreFactor : MonoBehaviour
     [SerializeField]
     AudioSource audioSource;
 
+    [Header("Music Infomation")]
+    public string title;
+    public uint bpm;
+
     float prevMax = 0;
     StreamWriter sw;
 
     [SerializeField]
     float minimum = 15;
 
+    [SerializeField]
+    bool isOverWrite = true;
+
     List<List<float>> specLists;
     List<float> ret;
+
+    //uint musicalBarCount = 0;//小節数
+    //uint 
 
     // Start is called before the first frame update
     void Start ()
     {
-        sw = new StreamWriter("specDatas.txt", true);
+        FileInfo fi = new FileInfo("Chart1.json");
+        if (fi.Exists)
+        {
+            if (isOverWrite) { fi.Delete(); }
+        }
+
+        sw = new StreamWriter("Chart1.json", true);
         specLists = new List<List<float>> ();
+        ret = new List<float>();
+
+        Chart test = new Chart();
+        test.Title = "シャイニングスター";
+        test.BPM = 158;
+
+        string jsonRead = JsonUtility.ToJson(test);
+        Debug.Log(jsonRead);
 
         //Read ();
     }
@@ -46,44 +70,32 @@ public class AutoMusicScoreFactor : MonoBehaviour
         //}
         //sw.WriteLine ();
 
-        float maxSpec = spectrums.Max();
-        sw.WriteLine((maxSpec * 100) > prevMax + minimum ? maxSpec.ToString() : "");
-    }
+        //float maxSpec = spectrums.Max();
+        //sw.WriteLine(
+        //    (maxSpec * 100) > prevMax + minimum ?
+        //    audioSource.time.ToString()
+        //    :
+        //    "");
 
-    void Read ()
-    {
-        var file = new FileStream ("specDatas.txt", FileMode.Open, FileAccess.Read);
-        var sr = new StreamReader (file);
-        List<string> readBuffer = new List<string> ();
-        while (sr.EndOfStream != true)
+        if (spectrums.Max() * 100 > prevMax + minimum)
         {
-            string line = sr.ReadLine ();
-            readBuffer.Add (line);
-        }
-        for (int i = 0; i < readBuffer.Count; ++i)
-        {
-            var s = readBuffer[i];
+            ret.Add(audioSource.time);
         }
 
-        ret = new List<float> ();
-        foreach (var frame in specLists)
-        {
-            float maxValue = 0;
-            maxValue = frame.Max () * 100;
-
-            if (maxValue > prevMax + minimum)
-            {
-                Debug.Log ("Hit ＝ " + maxValue);
-                ret.Add (maxValue);
-            }
-
-            prevMax = maxValue;
-        }
-        Debug.Log ("かんりょう");
+        //specLists.Add(spectrums.ToList<float>());
     }
 
     void OnDestroy()
     {
+        Chart chart = new Chart();
+        chart.Title = title;
+        chart.BPM = bpm;
+        //chart.
+        //chart.timing = specLists.Select(it=>it.Max()).ToArray();
+        chart.timing = ret.ToArray();
+
+        var jsonData = JsonUtility.ToJson(chart);
+        sw.Write(jsonData);
         sw.Close();
 
         //sw = new StreamWriter ("kore.txt", true);
