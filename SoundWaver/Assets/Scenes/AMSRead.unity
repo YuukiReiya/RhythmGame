@@ -358,8 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea8bea363e67ca46afed174934873da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: 1
-  sp: 1
 --- !u!114 &148009612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +397,7 @@ GameObject:
   - component: {fileID: 190329836}
   - component: {fileID: 190329835}
   m_Layer: 0
-  m_Name: AutoMusicScoreFactor
+  m_Name: AMSReader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,13 +412,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 190329834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d01306b74f85244f9f30948ba518af5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3655219a08e4abe43bf65b9a97f9c784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sampleCount: 2048
-  channelNumber: 0
-  audioSource: {fileID: 1089299385}
-  minimum: 15
+  intervalSec: 0.5
 --- !u!4 &190329836
 Transform:
   m_ObjectHideFlags: 0
@@ -1807,6 +1802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
+  noteSpeed: 3
   timingLine:
     y: -1.5
     z: 2.23
@@ -1882,7 +1878,6 @@ GameObject:
   - component: {fileID: 1792468225}
   - component: {fileID: 1792468224}
   - component: {fileID: 1792468223}
-  - component: {fileID: 1792468222}
   m_Layer: 0
   m_Name: Lane
   m_TagString: Untagged
@@ -1890,18 +1885,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1792468222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792468221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9dcf5f56bf7b3c4c89ad16ebc9d46f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1792468223
 MeshRenderer:
   m_ObjectHideFlags: 0
