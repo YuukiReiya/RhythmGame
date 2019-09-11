@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
@@ -9,14 +10,16 @@ public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
     {
         public float y, z;
     }
-
     [SerializeField]
     TimingLine timingLine;
     public List<INote> notes;
+    [SerializeField] AudioSource audioSource;
+
+    public Vector3 JustTimingPosition { get { return new Vector3(0, timingLine.y, timingLine.z); } } 
 
     public float elapsedTime { get; private set; }
 
-    void Awake ()
+    protected override void Awake ()
     {
         base.Awake ();
         notes = new List<INote> ();
@@ -28,12 +31,20 @@ public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
     // Update is called once per frame
     void Update ()
     {
-        Move ();
+        Move();
+        elapsedTime = audioSource.time;
+    }
+
+    /// <summary>
+    /// 管理リストの更新
+    /// </summary>
+    void Renewal()
+    {
+        notes.RemoveAll(it => it.isReset);
     }
 
     void Move ()
     {
-
         foreach (var it in notes)
         {
             it.Move ();
