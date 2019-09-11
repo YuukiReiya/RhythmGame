@@ -24,27 +24,30 @@ public class AutoMusicScoreFactor : MonoBehaviour
     // Start is called before the first frame update
     void Start ()
     {
-        //sw = new StreamWriter("specDatas.txt", true);
+        sw = new StreamWriter("specDatas.txt", true);
         specLists = new List<List<float>> ();
 
-        Read ();
+        //Read ();
     }
 
     // Update is called once per frame
     void Update ()
     {
-        //Execute();
+        Execute();
     }
 
     void Execute ()
     {
         var spectrums = audioSource.GetSpectrumData (sampleCount, channelNumber, FFTWindow.Blackman);
 
-        foreach (var it in spectrums)
-        {
-            sw.Write (it.ToString () + ",");
-        }
-        sw.WriteLine ();
+        //foreach (var it in spectrums)
+        //{
+        //    sw.Write (it.ToString () + ",");
+        //}
+        //sw.WriteLine ();
+
+        float maxSpec = spectrums.Max();
+        sw.WriteLine((maxSpec * 100) > prevMax + minimum ? maxSpec.ToString() : "");
     }
 
     void Read ()
@@ -60,7 +63,6 @@ public class AutoMusicScoreFactor : MonoBehaviour
         for (int i = 0; i < readBuffer.Count; ++i)
         {
             var s = readBuffer[i];
-            hoge (s);
         }
 
         ret = new List<float> ();
@@ -80,36 +82,15 @@ public class AutoMusicScoreFactor : MonoBehaviour
         Debug.Log ("かんりょう");
     }
 
-    void hoge (string str)
+    void OnDestroy()
     {
-        int findIndex = str.IndexOf (",");
-        List<float> framePerSpectrum = new List<float> ();
-        //while (true)
-        var tmp = str;
-        for (int i = 0; i < tmp.Length - tmp.Replace (",", "").Length; ++i)
-        {
-            var val = str.Substring (0, findIndex);
-            Debug.Log ("val = " + val);
-            framePerSpectrum.Add (float.Parse (val));
-            str = str.Substring (findIndex + 1);
-            findIndex = str.IndexOf (",");
-            if (string.IsNullOrEmpty (str) || findIndex == -1)
-            {
-                break;
-            }
-        }
-        specLists.Add (framePerSpectrum);
-    }
+        sw.Close();
 
-    void OnDestroy ()
-    {
-        //sw.Close();
-
-        sw = new StreamWriter ("kore.txt", true);
-        foreach (var it in ret)
-        {
-            sw.WriteLine (it.ToString ());
-        }
-        sw.Close ();
+        //sw = new StreamWriter ("kore.txt", true);
+        //foreach (var it in ret)
+        //{
+        //    sw.WriteLine (it.ToString ());
+        //}
+        //sw.Close ();
     }
 }
