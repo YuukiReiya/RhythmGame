@@ -4,6 +4,10 @@ using UnityEngine;
 
 public sealed class SingleNotesPool : SingletonObjectPool<SingleNotesPool>
 {
+    protected override void Awake()
+    {
+        Setup();
+    }
     // Start is called before the first frame update
     void Start ()
     {

@@ -15,11 +15,10 @@ public class SingleNote : MonoBehaviour, INote
     float dt;
     public float DownTime { get { return this.dt; } }
 
-    [SerializeField] float ts = 1.0f;
-
     public void Setup(int laneNumber, float downTime)
     {
-
+        this.laneNumber = laneNumber;
+        dt = downTime;
     }
 
     // Start is called before the first frame update
@@ -30,35 +29,35 @@ public class SingleNote : MonoBehaviour, INote
 
     protected void OnEnable()
     {
-        Register();
+        //Register();
     }
 
     protected void OnDisable()
     {
-        Unregister();
+        //Unregister();
     }
 
     // Update is called once per frame
-    [SerializeField] float sp = 1.0f;
     void Update()
     {
     }
     public void Move()
     {
         var x = this.transform.position.x;
-        float timing = ts - NotesController.Instance.elapsedTime;
+        float timing = DownTime - NotesController.Instance.elapsedTime;
 
         //TODO:汚い
         //Vector3 ndir = (this.transform.position - NotesController.Instance.JustTimingPosition).normalized;
         Vector3 ndir = (-this.transform.up.normalized);
 
-        var pos = NotesController.Instance.JustTimingPosition - ndir * timing * sp;
+        var pos = NotesController.Instance.JustTimingPosition - ndir * timing * NotesController.Instance.NotesSpeed;
         pos.x = x;
         this.transform.position = pos;
     }
 
     public void Register()
     {
+        Debug.Log("N ADD");
         NotesController.Instance.notes.Add(this);
     }
 

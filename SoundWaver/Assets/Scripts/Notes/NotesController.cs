@@ -5,6 +5,9 @@ using System.Linq;
 
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
+    [Header("Notes Control Parameter")]
+    [SerializeField] float noteSpeed;
+    public float NotesSpeed { get { return noteSpeed; } }
     [System.Serializable]
     struct TimingLine
     {
@@ -23,6 +26,7 @@ public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
     {
         base.Awake ();
         notes = new List<INote> ();
+        Debug.Log("NM");
     }
 
     // Start is called before the first frame update
