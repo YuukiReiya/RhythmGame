@@ -212,7 +212,8 @@
     <Compile Include="Assets\ImportAsset\Github\UnityBeatDetection\AudioProcessor.cs" />
     <Compile Include="Assets\Scripts\Aspect\FixedAspecter.cs" />
     <Compile Include="Assets\Scripts\Aspect\FixedAspectRatio.cs" />
-    <Compile Include="Assets\Scripts\AutoMusicScoreFactor.cs" />
+    <Compile Include="Assets\Scripts\AutoMusicScore\AMSReader.cs" />
+    <Compile Include="Assets\Scripts\AutoMusicScore\AutoMusicScoreFactor.cs" />
     <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
     <Compile Include="Assets\Scripts\FileIO\scaletest.cs" />
