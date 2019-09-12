@@ -6,8 +6,6 @@ using System.Linq;
 
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
-    [Header("Lane Tap Event")]
-    [SerializeField] EventTrigger[] laneTapEvents;
     [Header("Notes Control Parameter")]
     [SerializeField] float noteSpeed;
     public float NotesSpeed { get { return noteSpeed; } }
