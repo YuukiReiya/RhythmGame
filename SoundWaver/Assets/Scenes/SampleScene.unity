@@ -358,8 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea8bea363e67ca46afed174934873da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: 1
-  sp: 1
 --- !u!114 &148009612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +660,7 @@ GameObject:
   - component: {fileID: 332523486}
   - component: {fileID: 332523485}
   - component: {fileID: 332523484}
+  - component: {fileID: 332523487}
   m_Layer: 8
   m_Name: LaneTapArea
   m_TagString: Untagged
@@ -739,6 +738,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &332523487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332523482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe570530811a30458cb1eab82669bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneNumber: 0
+  eventTrigger: {fileID: 332523484}
 --- !u!1 &383942950
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,6 +888,7 @@ GameObject:
   - component: {fileID: 700244125}
   - component: {fileID: 700244124}
   - component: {fileID: 700244126}
+  - component: {fileID: 700244127}
   m_Layer: 8
   m_Name: LaneTapArea (1)
   m_TagString: Untagged
@@ -952,6 +966,20 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &700244127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700244122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe570530811a30458cb1eab82669bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneNumber: 1
+  eventTrigger: {fileID: 700244126}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,6 +1588,7 @@ GameObject:
   - component: {fileID: 1235690397}
   - component: {fileID: 1235690396}
   - component: {fileID: 1235690398}
+  - component: {fileID: 1235690399}
   m_Layer: 8
   m_Name: LaneTapArea (2)
   m_TagString: Untagged
@@ -1637,6 +1666,20 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &1235690399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235690394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe570530811a30458cb1eab82669bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneNumber: 2
+  eventTrigger: {fileID: 1235690398}
 --- !u!1 &1506363988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,6 +1803,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
+  laneTapEvents:
+  - {fileID: 332523484}
+  - {fileID: 700244126}
+  - {fileID: 1235690398}
+  noteSpeed: 3
   timingLine:
     y: -1.5
     z: 2.23
@@ -2133,6 +2181,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045699369}
   m_CullTransparentMesh: 0
+--- !u!1 &2058624123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2058624125}
+  - component: {fileID: 2058624124}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2058624124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058624123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3655219a08e4abe43bf65b9a97f9c784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intervalSec: 1
+--- !u!4 &2058624125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058624123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 14, z: 37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2082187521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3655219a08e4abe43bf65b9a97f9c784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intervalSec: 1
 --- !u!4 &2082187523
 Transform:
   m_ObjectHideFlags: 0

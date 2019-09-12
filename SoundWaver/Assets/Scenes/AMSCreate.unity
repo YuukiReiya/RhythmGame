@@ -358,8 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea8bea363e67ca46afed174934873da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: 1
-  sp: 1
 --- !u!114 &148009612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1425,7 +1423,7 @@ MonoBehaviour:
   - Name: 
     UnitPerBeat: 4
     UnitPerBar: 16
-    Tempo: 120
+    Tempo: 158
     StartBar: 0
     StartTimeSamples: 0
     LoopType: 0
@@ -1810,6 +1808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
+  noteSpeed: 0
   timingLine:
     y: -1.5
     z: 2.23
