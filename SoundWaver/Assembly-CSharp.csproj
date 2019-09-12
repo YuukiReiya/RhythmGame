@@ -214,7 +214,9 @@
     <Compile Include="Assets\Scripts\Aspect\FixedAspectRatio.cs" />
     <Compile Include="Assets\Scripts\AutoMusicScore\AMSReader.cs" />
     <Compile Include="Assets\Scripts\AutoMusicScore\AutoMusicScoreFactor.cs" />
+    <Compile Include="Assets\Scripts\BPM\BPMChecker.cs" />
     <Compile Include="Assets\Scripts\Chart\Chart.cs" />
+    <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
     <Compile Include="Assets\Scripts\FileIO\scaletest.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
     <Compile Include="Assets\Scripts\Hoge.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
+    <Compile Include="Assets\Scripts\Lane\Lane.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
     <Compile Include="Assets\Scripts\Notes\NoteDecorate.cs" />
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
+    <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
     <Compile Include="Assets\Tool\FPSmeter\Scripts\FPSmeter.cs" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\ReadMe - 2018.3.0.txt" />
