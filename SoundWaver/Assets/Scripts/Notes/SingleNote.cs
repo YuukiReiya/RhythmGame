@@ -57,12 +57,12 @@ public class SingleNote : MonoBehaviour, INote
 
     public void Register()
     {
-        Debug.Log("N ADD");
         NotesController.Instance.notes.Add(this);
     }
 
     public void Unregister()
     {
+        this.gameObject.SetActive(false);
         NotesController.Instance.notes.Remove(this);
     }
 }
