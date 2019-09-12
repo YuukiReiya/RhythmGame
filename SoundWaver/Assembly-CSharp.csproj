@@ -226,7 +226,6 @@
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
-    <Compile Include="Assets\Scripts\Hoge.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
@@ -235,7 +234,6 @@
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
-    <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
