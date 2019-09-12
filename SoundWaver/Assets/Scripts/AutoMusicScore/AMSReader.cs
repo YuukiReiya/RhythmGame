@@ -35,7 +35,7 @@ public class AMSReader : MonoBehaviour
         {
             if (it > prevSec + intervalSec)
             {
-                Debug.Log("sec = " + it);
+                //Debug.Log("sec = " + it);
                 var note = SingleNotesPool.Instance.GetObject().GetComponent<SingleNote>();
                 note.Setup(1, it);
                 prevSec = it;

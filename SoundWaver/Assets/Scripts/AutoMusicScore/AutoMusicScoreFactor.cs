@@ -77,10 +77,16 @@ public class AutoMusicScoreFactor : MonoBehaviour
         //    :
         //    "");
 
-        if (spectrums.Max() * 100 > prevMax + minimum)
+        //if (spectrums.Max() * 100 > prevMax + minimum)
+        //{
+        //    ret.Add(audioSource.time);
+        //}
+
+        if(Music.IsJustChangedBar())
         {
             ret.Add(audioSource.time);
         }
+
 
         //specLists.Add(spectrums.ToList<float>());
     }
