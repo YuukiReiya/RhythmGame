@@ -6,21 +6,26 @@ using System.Linq;
 
 public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
 {
+    //serialeze param
     [Header("Notes Control Parameter")]
     [SerializeField] float noteSpeed;
     public float NotesSpeed { get { return noteSpeed; } }
+    [SerializeField, Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 5.0f;
     [System.Serializable]
     struct TimingLine
     {
         public float y, z;
     }
-    [SerializeField]
-    TimingLine timingLine;//判定ラインの座標
-
-    public List<INote> notes;
+    [Header("Lane Parameter")]
+    [SerializeField] TimingLine timingLine;//判定ラインの座標
     [SerializeField] AudioSource audioSource;
 
+    //private param
+    public List<INote> notes;
+
+    //accessor
     public Vector3 JustTimingPosition { get { return new Vector3(0, timingLine.y, timingLine.z); } } 
+    public float WaitTime { get { return waitTime; } }
 
     public float elapsedTime { get; private set; }
 
