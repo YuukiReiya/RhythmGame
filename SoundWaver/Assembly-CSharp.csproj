@@ -233,6 +233,7 @@
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
+    <Compile Include="Assets\Scripts\Score\ScoreController.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
