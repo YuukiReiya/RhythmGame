@@ -8,7 +8,6 @@ public class Lane : MonoBehaviour
 {
     [SerializeField,Tooltip("ノーツの流れるレーン番号")] uint laneNumber;
     [SerializeField, Tooltip("関連付けさせるイベントトリガー")] EventTrigger eventTrigger;
-
     private void Awake()
     {
         SetupTapEvent();
@@ -36,27 +35,33 @@ public class Lane : MonoBehaviour
             First();
 
         //ノーツが"n"秒経過していたら処理しない
+        //TODO:処理用確認
         var tapTime = note.DownTime - NotesController.Instance.elapsedTime;
-        if (Mathf.Abs(tapTime) > 10.0f) { return; }
+        if (Mathf.Abs(tapTime) > NotesController.Instance.WaitTime) { return; }
 
         //判定
         string judge;
 
+        //TODO:汚い
         if(Mathf.Abs(tapTime)<=Common.Define.c_PerfectTime)
         {
             judge = "perfect";
+            ScoreController.Instance.StartScoreEffect(ScoreController.Score.PERFECT);
         }
-        else if(Mathf.Abs(tapTime) <= Common.Define.c_PerfectTime)
+        else if(Mathf.Abs(tapTime) <= Common.Define.c_GreatTime)
         {
             judge = "great";
+            ScoreController.Instance.StartScoreEffect(ScoreController.Score.GREAT);
         }
         else if (Mathf.Abs(tapTime) <= Common.Define.c_GoodTime)
         {
             judge = "good";
+            ScoreController.Instance.StartScoreEffect(ScoreController.Score.GOOD);
         }
         else
         {
             judge = "miss";
+            ScoreController.Instance.StartScoreEffect(ScoreController.Score.MISS);
         }
         Debug.Log(judge);
 
