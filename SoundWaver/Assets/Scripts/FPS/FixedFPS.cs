@@ -9,6 +9,10 @@ public class FixedFPS : MonoBehaviour
     void Awake ()
     {
         /// <summary>
+        /// "ProjectSetting/Quality/Other/VSync Count" = Don't Sync の手動設定
+        /// </summary>
+        QualitySettings.vSyncCount = 0;
+        /// <summary>
         /// 事前に"ProjectSetting/Quality/Other/VSync Count"をDon't Syncに設定
         /// </summary>
         Application.targetFrameRate = fps;
