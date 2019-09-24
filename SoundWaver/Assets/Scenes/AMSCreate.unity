@@ -420,7 +420,7 @@ MonoBehaviour:
   audioSource: {fileID: 1089299385}
   title: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
   bpm: 158
-  minimum: 15
+  difference: 2
   isOverWrite: 1
 --- !u!4 &190329836
 Transform:
@@ -759,8 +759,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &332523485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -998,8 +996,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,8 +1679,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1506363988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,6 +1803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
   noteSpeed: 0
+  waitTime: 5
   timingLine:
     y: -1.5
     z: 2.23
@@ -2162,8 +2157,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 6c091cbe63d398e489d5a96df254b4c2, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
