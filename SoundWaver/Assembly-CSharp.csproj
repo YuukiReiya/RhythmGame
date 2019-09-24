@@ -217,10 +217,9 @@
     <Compile Include="Assets\Scripts\BPM\BPMChecker.cs" />
     <Compile Include="Assets\Scripts\Chart\Chart.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
+    <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
     <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
-    <Compile Include="Assets\Scripts\FileIO\scaletest.cs" />
-    <Compile Include="Assets\Scripts\FileIO\tmp.cs" />
     <Compile Include="Assets\Scripts\FPS\FixedFPS.cs" />
     <Compile Include="Assets\Scripts\Framework\CoroutineExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />
@@ -238,6 +237,8 @@
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
+    <Compile Include="Assets\Scripts\WWW\WWWLoader.cs" />
+    <Compile Include="Assets\Scripts\WWW\WWWTest.cs" />
     <Compile Include="Assets\Tool\FPSmeter\Scripts\FPSmeter.cs" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\ReadMe - 2018.3.0.txt" />
