@@ -19,13 +19,12 @@ public class AutoMusicScoreFactor : MonoBehaviour
     float prevMax = 0;
     StreamWriter sw;
 
-    [SerializeField]
-    float minimum = 15;
+    [SerializeField, Range(0, 100.0f),Tooltip("直前のフレームの最大スペクトラムと比較して、(この値 / 100) 大きければノーツを生成")]
+    float difference = 15f;
 
     [SerializeField]
     bool isOverWrite = true;
 
-    List<List<float>> specLists;
     List<float> ret;
 
     //uint musicalBarCount = 0;//小節数
@@ -41,7 +40,6 @@ public class AutoMusicScoreFactor : MonoBehaviour
         }
 
         sw = new StreamWriter("Chart1.json", true);
-        specLists = new List<List<float>> ();
         ret = new List<float>();
 
         Chart test = new Chart();
@@ -62,32 +60,25 @@ public class AutoMusicScoreFactor : MonoBehaviour
 
     void Execute ()
     {
+#if false
         var spectrums = audioSource.GetSpectrumData (sampleCount, channelNumber, FFTWindow.Blackman);
-
-        //foreach (var it in spectrums)
-        //{
-        //    sw.Write (it.ToString () + ",");
-        //}
-        //sw.WriteLine ();
-
-        //float maxSpec = spectrums.Max();
-        //sw.WriteLine(
-        //    (maxSpec * 100) > prevMax + minimum ?
-        //    audioSource.time.ToString()
-        //    :
-        //    "");
-
-        //if (spectrums.Max() * 100 > prevMax + minimum)
-        //{
-        //    ret.Add(audioSource.time);
-        //}
 
         if(Music.IsJustChangedBar())
         {
             ret.Add(audioSource.time);
         }
+#endif
+        var spectrums = audioSource.GetSpectrumData(sampleCount, channelNumber, FFTWindow.Blackman);
+        float max = spectrums.Max();
 
-
+        if(Music.IsJustChanged)
+        {
+            if (max > prevMax + (difference / 100))
+            {
+                ret.Add(audioSource.time);
+            }
+        }
+        prevMax = max;
         //specLists.Add(spectrums.ToList<float>());
     }
 

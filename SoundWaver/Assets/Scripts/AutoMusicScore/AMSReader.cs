@@ -30,7 +30,6 @@ public class AMSReader : MonoBehaviour
         chart = JsonUtility.FromJson<Chart>(buffer);
         Debug.Log("timingCount = " + chart.timing.Length);
         float prevSec = 0;
-
         foreach(var it in chart.timing)
         {
             if (it > prevSec + intervalSec)
