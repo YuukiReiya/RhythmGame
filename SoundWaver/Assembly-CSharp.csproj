@@ -253,6 +253,7 @@
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\ImportAsset\AssetStore\FantomPlugin\Images\fantomPlugin_Icon_Image_Readme.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (TextureClip).shader" />
