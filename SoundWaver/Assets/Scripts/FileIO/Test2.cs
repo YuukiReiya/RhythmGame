@@ -42,7 +42,7 @@ public class Test2 : MonoBehaviour
     IEnumerator LoadAudio(string path)
     {
 #if WWW
-        WWW request = new WWW(path);
+        WWW request = new WWW("file:///" + path);
         while (!request.isDone)
         {
             yield return new WaitForEndOfFrame();
@@ -69,18 +69,13 @@ public class Test2 : MonoBehaviour
         uGUI.text += "music start";
 #else
         uGUI.text = "";
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(path,AudioType.MPEG))
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG))
         {
             uGUI.text = "send to reqest\n";
             //  リクエスト送信
             yield return request.SendWebRequest();
-
-            while (!request.isDone)
-            {
-                uGUI.text = "loading now\n";
-                yield return null;
-            }
-            if(request.isNetworkError)
+            //  エラー
+            if (request.isNetworkError)
             {
                 uGUI.text += request.error;
                 yield break;
@@ -91,7 +86,6 @@ public class Test2 : MonoBehaviour
                 uGUI.text += "load state = " + clip.loadState;
                 yield break;
             }
-
             source.clip = clip;
             source.Play();
             uGUI.text += "success";
