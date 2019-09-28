@@ -222,11 +222,17 @@
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
     <Compile Include="Assets\Scripts\FileIO\Test1.cs" />
     <Compile Include="Assets\Scripts\FileIO\Test2.cs" />
+    <Compile Include="Assets\Scripts\FileIO\Test3.cs" />
+    <Compile Include="Assets\Scripts\FileManager\FileManager.cs" />
+    <Compile Include="Assets\Scripts\FileManager\FileUI.cs" />
     <Compile Include="Assets\Scripts\FPS\FixedFPS.cs" />
     <Compile Include="Assets\Scripts\Framework\CoroutineExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Game\Dummy.cs" />
+    <Compile Include="Assets\Scripts\Game\GameController.cs" />
+    <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
