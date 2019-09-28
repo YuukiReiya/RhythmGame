@@ -69,7 +69,7 @@ public class Test2 : MonoBehaviour
         uGUI.text += "music start";
 #else
         uGUI.text = "";
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG))
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.UNKNOWN))
         {
             uGUI.text = "send to reqest\n";
             //  リクエスト送信

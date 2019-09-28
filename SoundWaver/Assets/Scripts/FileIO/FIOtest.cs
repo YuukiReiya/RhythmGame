@@ -34,7 +34,7 @@ public class FIOtest : MonoBehaviour
     [ContextMenu("b")]
     public void B()
     {
-        var b = FileIO.Instance.Read(label.text);
+        var b = FileIO.GetContents(label.text);
         uGUI.text = b;
         label.text = "/storage/emulated/0/Android/data/com.Yuuki.MyS/files/";
         Debug.Log(b);
