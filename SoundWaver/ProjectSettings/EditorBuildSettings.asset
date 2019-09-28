@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Dummy.unity
+    guid: 95a1ff7f07f3cb94bb7e3e19cc269d73
+  - enabled: 1
+    path: Assets/Scenes/AudioLoadTest.unity
+    guid: 577781b9d4015c64b97297c2078ee882
+  - enabled: 1
     path: Assets/Scenes/DynamicAudioLoad.unity
     guid: f42ae571a2a726b47b77fa6cdbb3e2ed
   - enabled: 1
