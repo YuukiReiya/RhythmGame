@@ -2,67 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleNote : MonoBehaviour, INote
+namespace Game
 {
-    public bool isReset  { get; }
-
-    int laneNumber;
-    public int LaneNumber
+    public class SingleNote : MonoBehaviour, INote
     {
-        get { return 1; }
-    }
+        public bool isReset { get; }
 
-    float dt;
-    public float DownTime { get { return this.dt; } }
+        int laneNumber;
+        public int LaneNumber
+        {
+            get { return 1; }
+        }
 
-    public void Setup(int laneNumber, float downTime)
-    {
-        this.laneNumber = laneNumber;
-        dt = downTime;
-    }
+        float dt;
+        public float DownTime { get { return this.dt; } }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Register();
-    }
+        public void Setup(int laneNumber, float downTime)
+        {
+            this.laneNumber = laneNumber;
+            dt = downTime;
+        }
 
-    protected void OnEnable()
-    {
-        //Register();
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            Register();
+        }
 
-    protected void OnDisable()
-    {
-        //Unregister();
-    }
+        protected void OnEnable()
+        {
+            //Register();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-    public void Move()
-    {
-        var x = this.transform.position.x;
-        float timing = DownTime - NotesController.Instance.elapsedTime;
+        protected void OnDisable()
+        {
+            //Unregister();
+        }
 
-        //TODO:汚い
-        //Vector3 ndir = (this.transform.position - NotesController.Instance.JustTimingPosition).normalized;
-        Vector3 ndir = (-this.transform.up.normalized);
+        // Update is called once per frame
+        void Update()
+        {
+        }
+        public void Move()
+        {
+            var x = this.transform.position.x;
+            float timing = DownTime - NotesController.Instance.elapsedTime;
 
-        var pos = NotesController.Instance.JustTimingPosition - ndir * timing * NotesController.Instance.NotesSpeed;
-        pos.x = x;
-        this.transform.position = pos;
-    }
+            //TODO:汚い
+            //Vector3 ndir = (this.transform.position - NotesController.Instance.JustTimingPosition).normalized;
+            Vector3 ndir = (-this.transform.up.normalized);
 
-    public void Register()
-    {
-        NotesController.Instance.notes.Add(this);
-    }
+            var pos = NotesController.Instance.JustTimingPosition - ndir * timing * NotesController.Instance.NotesSpeed;
+            pos.x = x;
+            this.transform.position = pos;
+        }
 
-    public void Unregister()
-    {
-        this.gameObject.SetActive(false);
-        NotesController.Instance.notes.Remove(this);
+        public void Register()
+        {
+            NotesController.Instance.notes.Add(this);
+        }
+
+        public void Unregister()
+        {
+            this.gameObject.SetActive(false);
+            NotesController.Instance.notes.Remove(this);
+        }
     }
 }

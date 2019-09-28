@@ -4,70 +4,86 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
+namespace Game
 {
-    //serialeze param
-    [Header("Notes Control Parameter")]
-    [SerializeField] float noteSpeed;
-    public float NotesSpeed { get { return noteSpeed; } }
-    [SerializeField, Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 5.0f;
-    [System.Serializable]
-    struct TimingLine
+    public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
     {
-        public float y, z;
-    }
-    [Header("Lane Parameter")]
-    [SerializeField] TimingLine timingLine;//判定ラインの座標
-    [SerializeField] AudioSource audioSource;
-
-    //private param
-    public List<INote> notes;
-
-    //accessor
-    public Vector3 JustTimingPosition { get { return new Vector3(0, timingLine.y, timingLine.z); } } 
-    public float WaitTime { get { return waitTime; } }
-
-    public float elapsedTime { get; private set; }
-
-    protected override void Awake ()
-    {
-        base.Awake ();
-        notes = new List<INote> ();
-    }
-
-    // Start is called before the first frame update
-    void Start () { }
-
-    // Update is called once per frame
-    void Update ()
-    {
-        Move();
-        elapsedTime = audioSource.time;
-    }
-
-    /// <summary>
-    /// 管理リストの更新
-    /// </summary>
-    void Renewal()
-    {
-        notes.RemoveAll(it => it.isReset);
-    }
-
-    void Move ()
-    {
-        foreach (var it in notes)
+        //serialeze param
+        [Header("Notes Control Parameter")]
+        [SerializeField] float noteSpeed;
+        [SerializeField, Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 5.0f;
+        [System.Serializable]
+        struct TimingLine
         {
-            it.Move ();
+            public float y, z;
         }
-    }
+        [Header("Lane Parameter")]
+        [SerializeField] TimingLine timingLine;//判定ラインの座標
+        [SerializeField] AudioSource audioSource;
 
-    void OnDrawGizmos ()
-    {
-        Gizmos.color = Color.red;
+        //private param
+        public List<INote> notes;
 
-        float left = -10, right = 10;
-        Gizmos.DrawLine (new Vector3 (left, timingLine.y, timingLine.z), new Vector3 (right, timingLine.y, timingLine.z));
-    }
+        //accessor
+        public Vector3 JustTimingPosition { get { return new Vector3(0, timingLine.y, timingLine.z); } }
+        public float NotesSpeed { get { return noteSpeed; } }
+        public float WaitTime { get { return waitTime; } }
+
+        public float elapsedTime { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            notes = new List<INote>();
+        }
+
+        // Start is called before the first frame update
+        void Start() { }
+
+        // Update is called once per frame
+        void Update()
+        {
+            Move();
+            elapsedTime = audioSource.time;
+        }
+
+        /// <summary>
+        /// 管理リストの更新
+        /// </summary>
+        void Renewal()
+        {
+            notes.RemoveAll(it => it.isReset);
+        }
+
+        void Move()
+        {
+            foreach (var it in notes)
+            {
+                it.Move();
+            }
+        }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+
+            float left = -10, right = 10;
+            Gizmos.DrawLine(new Vector3(left, timingLine.y, timingLine.z), new Vector3(right, timingLine.y, timingLine.z));
+        }
+
+        public void Setup(Chart chart)
+        {
+            float prevSec = 0.0f;
+            foreach (var it in chart.timing)
+            {
+                if (it > prevSec + chart.NotesInterval)
+                {
+                    var note = SingleNotesPool.Instance.GetObject().GetComponent<SingleNote>();
+                    note.Setup(1, it);
+                    prevSec = it;
+                }
+            }
+        }
 
 #if false
     //何故かタップ時にすべてのレーンでレーン番号が"3"になる。
@@ -108,4 +124,5 @@ public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
         note.Unregister();
     }
 #endif
+    }
 }
