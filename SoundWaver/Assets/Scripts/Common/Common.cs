@@ -28,5 +28,10 @@ namespace Common
         /// WAV拡張子
         /// </summary>
         public const string c_WAV = ".wav";
+        /// <summary>
+        /// .iniファイル名
+        /// 読み込み先は"Application.persistentDataPath"
+        /// </summary>
+        public static readonly string c_SettingFilePath = Application.persistentDataPath + "\\" + Application.productName + ".ini";
     }
 }
