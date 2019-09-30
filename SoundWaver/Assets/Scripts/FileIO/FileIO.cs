@@ -6,10 +6,10 @@ using System.IO;
 
 namespace Yuuki.FileIO
 {
-    public static class FileIO
+    public class FileIO
     {
 
-        public static bool CreateFile(string filePath, string content, bool isOverride = false)
+        public void CreateFile(string filePath, string content, bool isOverride = false)
         {
             //フォルダ作成
             string dirPath = Path.GetDirectoryName(filePath);
@@ -18,17 +18,24 @@ namespace Yuuki.FileIO
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             }
             //既に存在
-            if (File.Exists(filePath)) { return false; }
+            if (File.Exists(filePath))
+            {
+                if (!isOverride)
+                {
+                    return;
+                }
+                File.Delete(filePath);
+            }
             //作成
             using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 sw.Write(content);
                 sw.Close();
             }
-            return true;
+            //return true;
         }
 
-        public static bool CreateFile(string filePath, string[] contents, bool isOverride = false)
+        public bool CreateFile(string filePath, string[] contents, bool isOverride = false)
         {
             //フォルダ作成
             string dirPath = Path.GetDirectoryName(filePath);
@@ -52,14 +59,14 @@ namespace Yuuki.FileIO
         /// </summary>
         /// <param name="directoryPath"></param>
         /// <returns>既に存在すれば作成せずにfalse</returns>
-        public static bool CreateDirectory(string directoryPath)
+        public bool CreateDirectory(string directoryPath)
         {
             if (Directory.Exists(directoryPath)) { return false; }
             if (Directory.CreateDirectory(directoryPath) == null) { return false; }
             return true;
         }
 
-        public static string GetContents(string filePath)
+        public string GetContents(string filePath)
         {
             if (!File.Exists(filePath)) { return string.Empty; }
             string contents = string.Empty;
