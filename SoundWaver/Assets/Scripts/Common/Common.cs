@@ -21,6 +21,10 @@ namespace Common
         public const string c_LocalFilePath = "file:///";
         
         /// <summary>
+        /// JSON拡張子
+        /// </summary>
+        public const string c_JSON = ".json";
+        /// <summary>
         /// MP3拡張子
         /// </summary>
         public const string c_MP3 = ".mp3";

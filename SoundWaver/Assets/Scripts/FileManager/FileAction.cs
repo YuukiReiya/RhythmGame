@@ -18,5 +18,20 @@ namespace Yuuki.FileManager
             FileManager.Instance.UpdateCurrentDirectories(currentDirectory);
             FileManager.Instance.Display();
         }
+
+        public void SetupMusicFile()
+        {
+            var filePath = FileManager.Instance.CurrentDirectory + "\\" + fileName.text;
+            var ext = System.IO.Path.GetExtension(filePath);
+
+            if(ext==Common.Define.c_MP3|| ext == Common.Define.c_WAV)
+            {
+                AutoMusicScoreFactor.Instance.SetupMusicName(fileName.text);
+            }
+            else
+            {
+                Debug.Log("拡張子が違います:" + ext);
+            }
+        }
     }
 }
