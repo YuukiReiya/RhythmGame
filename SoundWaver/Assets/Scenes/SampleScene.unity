@@ -2042,6 +2042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intervalSec: 0
+  chartFilePath: Assets\StreamingAssets\Charts\chart_1.json
 --- !u!4 &2082187523
 Transform:
   m_ObjectHideFlags: 0
