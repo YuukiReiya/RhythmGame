@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 0
+  musicFilePath: a.mp3
 --- !u!114 &1896972712
 MonoBehaviour:
   m_ObjectHideFlags: 0
