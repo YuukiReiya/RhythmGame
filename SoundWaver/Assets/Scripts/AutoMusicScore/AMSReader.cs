@@ -9,6 +9,7 @@ public class AMSReader : MonoBehaviour
     Chart chart;
     [SerializeField]
     float intervalSec = 1;
+    public string chartFilePath = "Assets\\StreamingAssets\\Charts\\";
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class AMSReader : MonoBehaviour
 
     void Read()
     {
-        var sr = new StreamReader("Chart1.json");
+        var sr = new StreamReader(chartFilePath);
         var buffer = sr.ReadToEnd();
         sr.Close();
         chart = JsonUtility.FromJson<Chart>(buffer);
