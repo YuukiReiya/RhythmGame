@@ -14,6 +14,7 @@ namespace Game
             if (GameMusic.Instance.Clip)
             {
                 source.clip = GameMusic.Instance.Clip;
+                Music.CurrentSetup();
                 source.Play();
             }
             else

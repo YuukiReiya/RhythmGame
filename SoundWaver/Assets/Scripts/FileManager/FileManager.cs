@@ -32,6 +32,7 @@ namespace Yuuki.FileManager
         // Start is called before the first frame update
         void Start()
         {
+            Open();
         }
 
         // Update is called once per frame
@@ -140,17 +141,10 @@ namespace Yuuki.FileManager
             if (!File.Exists(Define.c_SettingFilePath))
             {
                 //無いので作る
-                Debug.Log("作りました");
                 fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
             }
-            else
-            {
-                Debug.Log("読み込みました");
-            }
             var currentDirectory = fileIO.GetContents(Define.c_SettingFilePath);
-            Debug.Log("読み込み = " + currentDirectory);
             CurrentDirectory = currentDirectory;
-            //CurrentDirectory = Application.persistentDataPath;
             UpdateCurrentDirectories(CurrentDirectory);
             Display();
             routine = ScalingRoutine(scaleParentObj, Vector3.zero, Vector3.one, scaleSec);

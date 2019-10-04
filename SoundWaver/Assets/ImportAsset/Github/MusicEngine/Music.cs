@@ -480,68 +480,138 @@ public class Music : MonoBehaviour
 		return isJustChanged_ &&
 			just_.Bar == bar && just_.Beat == beat && just_.Unit == unit;
 	}
-	#endregion
+    #endregion
 
-	#region private functions
-	void Awake()
-	{
+    #region Yuuki
+    /// <summary>
+    /// èàóùÇÕAwakeÇÃíÜêg
+    /// </summary>
+    public static void CurrentSetup()
+    {
 #if UNITY_EDITOR
-		if( !UnityEditor.EditorApplication.isPlaying )
-		{
-			OnValidate();
-			return;
-		}
+        if (!UnityEditor.EditorApplication.isPlaying)
+        {
+            Current_.OnValidate();
+            return;
+        }
 #endif
-		MusicList_.Add(this);
-		musicSource_ = GetComponent<AudioSource>();
-		if( Current_ == null || musicSource_.playOnAwake )
-		{
-			Current_ = this;
-		}
-		samplingRate_ = musicSource_.clip.frequency;
-		if( musicSource_.loop )
-		{
-			samplesInLoop_ = musicSource_.clip.samples;
-			Section lastSection = Sections[Sections.Count - 1];
-			double beatSec = (60.0 / lastSection.Tempo);
-			int samplesPerBar = (int)(samplingRate_ * lastSection.UnitPerBar * (beatSec/lastSection.UnitPerBeat));
-			numLoopBar_ = lastSection.StartBar + Mathf.RoundToInt((float)(samplesInLoop_ - lastSection.StartTimeSamples) / (float)samplesPerBar);
-		}
+        MusicList_.Add(Current_);
+        Current_.musicSource_ = Current_.gameObject.GetComponent<AudioSource>();
+        if (Current_ == null || Current_.musicSource_.playOnAwake)
+        {
+            Debug.Log("current == null");
+            //Current_ = this;
+        }
+        Current_.samplingRate_ = Current_.musicSource_.clip.frequency;
+        if (Current_.musicSource_.loop)
+        {
+            Current_.samplesInLoop_ = Current_.musicSource_.clip.samples;
+            Section lastSection = Current_.Sections[Current_.Sections.Count - 1];
+            double beatSec = (60.0 / lastSection.Tempo);
+            int samplesPerBar = (int)(Current_.samplingRate_ * lastSection.UnitPerBar * (beatSec / lastSection.UnitPerBeat));
+            Current_.numLoopBar_ = lastSection.StartBar + Mathf.RoundToInt((float)(Current_.samplesInLoop_ - lastSection.StartTimeSamples) / (float)samplesPerBar);
+        }
 
-		if( CreateSectionClips )
-		{
-			AudioClip[] clips = new AudioClip[Sections.Count];
-			int previousSectionSample = 0;
-			for( int i=0; i<Sections.Count; ++i )
-			{
-				int nextSectionSample = ( i + 1 < Sections.Count ? Sections[i+1].StartTimeSamples : musicSource_.clip.samples);
-				clips[i] = AudioClip.Create(Sections[i].Name + "_clip", nextSectionSample - previousSectionSample, musicSource_.clip.channels, musicSource_.clip.frequency, false);
-				previousSectionSample = nextSectionSample;
-				float[] waveData = new float[clips[i].samples * clips[i].channels];
-				musicSource_.clip.GetData(waveData, Sections[i].StartTimeSamples);
-				clips[i].SetData(waveData, 0);
-				AudioSource sectionSource = new GameObject("section_" + Sections[i].Name, typeof(AudioSource)).GetComponent<AudioSource>();
-				sectionSource.transform.parent = this.transform;
-				sectionSource.clip = clips[i];
-				sectionSource.loop = Sections[i].LoopType == Section.ClipType.Loop;
-				sectionSource.outputAudioMixerGroup = musicSource_.outputAudioMixerGroup;
-				sectionSource.volume = musicSource_.volume;
-				sectionSource.pitch = musicSource_.pitch;
-				sectionSource.playOnAwake = false;
-				sectionSources_.Add(sectionSource);
-			}
-			musicSource_.Stop();
-			musicSource_.enabled = false;
-			musicSource_ = sectionSources_[0];
-		}
+        if (Current_.CreateSectionClips)
+        {
+            AudioClip[] clips = new AudioClip[Current_.Sections.Count];
+            int previousSectionSample = 0;
+            for (int i = 0; i < Current_.Sections.Count; ++i)
+            {
+                int nextSectionSample = (i + 1 < Current_.Sections.Count ? Current_.Sections[i + 1].StartTimeSamples : Current_.musicSource_.clip.samples);
+                clips[i] = AudioClip.Create(Current_.Sections[i].Name + "_clip", nextSectionSample - previousSectionSample, Current_.musicSource_.clip.channels, Current_.musicSource_.clip.frequency, false);
+                previousSectionSample = nextSectionSample;
+                float[] waveData = new float[clips[i].samples * clips[i].channels];
+                Current_.musicSource_.clip.GetData(waveData, Current_.Sections[i].StartTimeSamples);
+                clips[i].SetData(waveData, 0);
+                AudioSource sectionSource = new GameObject("section_" + Current_.Sections[i].Name, typeof(AudioSource)).GetComponent<AudioSource>();
+                sectionSource.transform.parent = Current_.gameObject.transform;
+                sectionSource.clip = clips[i];
+                sectionSource.loop = Current_.Sections[i].LoopType == Section.ClipType.Loop;
+                sectionSource.outputAudioMixerGroup = Current_.musicSource_.outputAudioMixerGroup;
+                sectionSource.volume = Current_.musicSource_.volume;
+                sectionSource.pitch = Current_.musicSource_.pitch;
+                sectionSource.playOnAwake = false;
+                Current_.sectionSources_.Add(sectionSource);
+            }
+            Current_.musicSource_.Stop();
+            Current_.musicSource_.enabled = false;
+            Current_.musicSource_ = Current_.sectionSources_[0];
+        }
 
-		Initialize();
+        Current_.Initialize();
 
-		OnSectionChanged();
-	}
+        Current_.OnSectionChanged();
+    }
+    public void Setup()
+    {
+#if UNITY_EDITOR
+        if (!UnityEditor.EditorApplication.isPlaying)
+        {
+            OnValidate();
+            return;
+        }
+#endif
+        MusicList_.Add(this);
+        musicSource_ = GetComponent<AudioSource>();
+        if (Current_ == null || musicSource_.playOnAwake)
+        {
+            Current_ = this;
+        }
+        samplingRate_ = musicSource_.clip.frequency;
+        if (musicSource_.loop)
+        {
+            samplesInLoop_ = musicSource_.clip.samples;
+            Section lastSection = Sections[Sections.Count - 1];
+            double beatSec = (60.0 / lastSection.Tempo);
+            int samplesPerBar = (int)(samplingRate_ * lastSection.UnitPerBar * (beatSec / lastSection.UnitPerBeat));
+            numLoopBar_ = lastSection.StartBar + Mathf.RoundToInt((float)(samplesInLoop_ - lastSection.StartTimeSamples) / (float)samplesPerBar);
+        }
 
-	// Use this for initialization
-	void Start()
+        if (CreateSectionClips)
+        {
+            AudioClip[] clips = new AudioClip[Sections.Count];
+            int previousSectionSample = 0;
+            for (int i = 0; i < Sections.Count; ++i)
+            {
+                int nextSectionSample = (i + 1 < Sections.Count ? Sections[i + 1].StartTimeSamples : musicSource_.clip.samples);
+                clips[i] = AudioClip.Create(Sections[i].Name + "_clip", nextSectionSample - previousSectionSample, musicSource_.clip.channels, musicSource_.clip.frequency, false);
+                previousSectionSample = nextSectionSample;
+                float[] waveData = new float[clips[i].samples * clips[i].channels];
+                musicSource_.clip.GetData(waveData, Sections[i].StartTimeSamples);
+                clips[i].SetData(waveData, 0);
+                AudioSource sectionSource = new GameObject("section_" + Sections[i].Name, typeof(AudioSource)).GetComponent<AudioSource>();
+                sectionSource.transform.parent = this.transform;
+                sectionSource.clip = clips[i];
+                sectionSource.loop = Sections[i].LoopType == Section.ClipType.Loop;
+                sectionSource.outputAudioMixerGroup = musicSource_.outputAudioMixerGroup;
+                sectionSource.volume = musicSource_.volume;
+                sectionSource.pitch = musicSource_.pitch;
+                sectionSource.playOnAwake = false;
+                sectionSources_.Add(sectionSource);
+            }
+            musicSource_.Stop();
+            musicSource_.enabled = false;
+            musicSource_ = sectionSources_[0];
+        }
+
+        Initialize();
+        OnSectionChanged();
+    }
+    #endregion
+
+    #region private functions
+    void Awake()
+    {
+        musicSource_ = GetComponent<AudioSource>();
+        if (Current_ == null || musicSource_.playOnAwake)
+        {
+            Current_ = this;
+        }
+    }
+
+    // Use this for initialization
+    void Start()
 	{
 	}
 
@@ -625,7 +695,7 @@ public class Music : MonoBehaviour
 	void OnSectionChanged()
 	{
 		if( Sections == null || Sections.Count == 0 ) return;
-		if( CurrentSection_.Tempo > 0.0f )
+        if ( CurrentSection_.Tempo > 0.0f )
 		{
 			double beatSec = (60.0 / CurrentSection_.Tempo);
 			samplesPerUnit_ = (int)(samplingRate_ * (beatSec/CurrentSection_.UnitPerBeat));

@@ -8,6 +8,8 @@ public class Dummy : Yuuki.SingletonMonoBehaviour<Dummy>
     // Start is called before the first frame update
     void Start()
     {
+        //シーン遷移後のGameMusicインスタンス差し替わるが、
+        //ロードしたAudioClipの情報は引き継ぐ
         Game.GameMusic.Instance.LoadAndFunction(
             musicFilePath,
             () => 

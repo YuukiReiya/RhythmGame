@@ -14,13 +14,14 @@ namespace Game
     public class GameMusic : Yuuki.SingletonMonoBehaviour<GameMusic>
     {
         //  serialize param
-        [SerializeField] AudioSource source;
+        //[SerializeField] AudioSource source;
         public string path;
 
         //  private param
         private IEnumerator routine;
         //  accessor
-        public AudioSource Source { get { return source; } }
+        //public AudioSource Source { get { return source; } }
+        public AudioSource Source { get; set; }
         public AudioClip Clip { get; private set; }
 
         // Start is called before the first frame update
@@ -46,8 +47,8 @@ namespace Game
                 path,
                 () =>
                 {
-                    source.clip = Clip;
-                    source.Play();
+                    Source.clip = Clip;
+                    Source.Play();
                 }
                 );
         }

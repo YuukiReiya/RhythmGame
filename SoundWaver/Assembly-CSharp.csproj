@@ -225,6 +225,7 @@
     <Compile Include="Assets\Scripts\FileIO\Test3.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileAction.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileManager.cs" />
+    <Compile Include="Assets\Scripts\FileManager\UIClickChangeSprite.cs" />
     <Compile Include="Assets\Scripts\FPS\FixedFPS.cs" />
     <Compile Include="Assets\Scripts\Framework\CoroutineExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />

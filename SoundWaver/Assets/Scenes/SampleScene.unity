@@ -693,7 +693,7 @@ GameObject:
   - component: {fileID: 686835049}
   - component: {fileID: 686835048}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,7 +712,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 0
-  source: {fileID: 1089299385}
   path: 
 --- !u!4 &686835049
 Transform:
@@ -996,7 +995,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 2.4832092e+27}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2041,7 +2040,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3655219a08e4abe43bf65b9a97f9c784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intervalSec: 0
   chartFilePath: Assets\StreamingAssets\Charts\chart_1.json
 --- !u!4 &2082187523
 Transform:

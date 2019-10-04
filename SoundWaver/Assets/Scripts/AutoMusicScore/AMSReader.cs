@@ -7,8 +7,6 @@ using UnityEngine;
 public class AMSReader : MonoBehaviour
 {
     Chart chart;
-    [SerializeField]
-    float intervalSec = 1;
     public string chartFilePath = "Assets\\StreamingAssets\\Charts\\";
 
     // Start is called before the first frame update
@@ -33,7 +31,7 @@ public class AMSReader : MonoBehaviour
         float prevSec = 0;
         foreach(var it in chart.timing)
         {
-            if (it > prevSec + intervalSec)
+            if (it > prevSec + chart.NotesInterval)
             {
                 //Debug.Log("sec = " + it);
                 var note = Game.SingleNotesPool.Instance.GetObject().GetComponent<Game.SingleNote>();
