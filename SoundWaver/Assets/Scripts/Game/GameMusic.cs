@@ -14,8 +14,6 @@ namespace Game
     public class GameMusic : Yuuki.SingletonMonoBehaviour<GameMusic>
     {
         //  serialize param
-        //[SerializeField] AudioSource source;
-        public string path;
 
         //  private param
         private IEnumerator routine;
