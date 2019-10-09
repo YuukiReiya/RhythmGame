@@ -36,6 +36,10 @@ namespace Common
         /// .iniファイル名
         /// 読み込み先は"Application.persistentDataPath"
         /// </summary>
+#if UNITY_ANDROID
+        public static readonly string c_SettingFilePath = Application.persistentDataPath + "/" + Application.productName + ".ini";
+#else
         public static readonly string c_SettingFilePath = Application.persistentDataPath + "\\" + Application.productName + ".ini";
+#endif
     }
 }
