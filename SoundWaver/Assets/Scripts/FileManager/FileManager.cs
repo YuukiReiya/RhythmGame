@@ -25,7 +25,9 @@ namespace Yuuki.FileManager
 
         //private param
         IEnumerator routine;
+
         //public param
+
         //accessor
         public string CurrentDirectory { get; private set; }
 
@@ -38,7 +40,6 @@ namespace Yuuki.FileManager
         // Update is called once per frame
         void Update()
         {
-
         }
 
         void UpdateCollider()
@@ -85,7 +86,6 @@ namespace Yuuki.FileManager
                 child.parent = null;
                 Destroy(child.gameObject);
             }
-
             //並び替え
             scrollBar.value = 0;//スクロールバーを先頭に
         }
