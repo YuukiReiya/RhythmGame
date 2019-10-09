@@ -36,8 +36,8 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     bool isExecute = false;
     GameObject musicEngineObj;
     List<float> ret;
-
-    //uint musicalBarCount = 0;//小節数
+    string currentFilePath;//参照している楽曲のパス
+    string executeFilePath;//譜面作成中の楽曲のパス
 
     //const param
     readonly string c_ChartSaveDirectory = Application.streamingAssetsPath+"\\Charts\\";
@@ -47,7 +47,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     {
         ret = new List<float>();
         mute.isEnabled = false;
-        execute.isEnabled = true;
+        execute.isEnabled = false;
         cancel.isEnabled = false;
     }
 
@@ -75,14 +75,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     
     void Execute ()
     {
-#if false
-        var spectrums = audioSource.GetSpectrumData (sampleCount, channelNumber, FFTWindow.Blackman);
-
-        if(Music.IsJustChangedBar())
-        {
-            ret.Add(audioSource.time);
-        }
-#endif
         var spectrums = audioSource.GetSpectrumData(sampleCount, channelNumber, FFTWindow.Blackman);
         float max = spectrums.Max();
 
@@ -99,48 +91,33 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         //specLists.Add(spectrums.ToList<float>());
     }
 
-    public void Setup()
+    public void SetupMusic(string fileName)
     {
-        if (musicEngineObj != null) { Destroy(musicEngineObj); }
-        GameMusic.Instance.LoadAndFunction(
-            FileManager.Instance.CurrentDirectory + "\\" + musicTitle.text,
-            //読み込み終了後の処理
-            () =>
-            {
-                bpm = (uint)UniBpmAnalyzer.AnalyzeBpm(GameMusic.Instance.Clip);
-                //MusicEngine 生成
-                musicEngineObj = Instantiate(Resources.Load<GameObject>("MusicEngine"));
-                var musicEngine = musicEngineObj.GetComponent<Music>();
-                //MusicEngineの動的設定
-                Music.CurrentSource.clip = GameMusic.Instance.Clip;
-                var sec = Music.GetSection(0);
-                sec.Tempo = bpm;
-                sec.UnitPerBar = int.Parse(unitPerBar.text);
-                sec.UnitPerBeat = int.Parse(unitPerBeat.text);
-                musicEngine.Setup();
-                //
-                GameMusic.Instance.Source = Music.CurrentSource;
-                GameMusic.Instance.Source.Play();
-                isExecute = true;
-                //buttons
-                mute.isEnabled = true;
-                execute.isEnabled = false;
-                cancel.isEnabled = true;
-            }
-       );
-    }
-
-    public void SetupMusicName(string fileName)
-    {
+#if UNITY_ANDROID
+        currentFilePath = FileManager.Instance.CurrentDirectory + "/" + fileName;
+#else
+        currentFilePath = FileManager.Instance.CurrentDirectory + "\\" + fileName;
+#endif
         musicTitle.text = fileName;
+        var ext = System.IO.Path.GetExtension(fileName);
+        switch (ext)
+        {
+            case Define.c_MP3:
+            //case Define.c_WAV://非対応？
+                execute.isEnabled = true;
+                break;
+            default:
+                execute.isEnabled = false;
+                break;
+        }
     }
-
     public void CreateChart()
     {
         var fileIO = new Yuuki.FileIO.FileIO();
         Chart chart = new Chart();
-        chart.Title = musicTitle.text;
-        chart.BPM = bpm;
+        chart.Title = musicTitle.text;//曲名
+        chart.FilePath = executeFilePath;//楽曲パス
+        chart.BPM = bpm;//BPM
         chart.timing = new float[ret.Count];
         chart.NotesInterval = float.Parse(intervalSec.text);
         chart.timing = ret.ToArray();
@@ -151,20 +128,63 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
             );
         Debug.Log("譜面データ作成:" + c_ChartSaveDirectory + chartName.text + Define.c_JSON);
     }
-    #region Button処理
-    public void MuteButton()
-    {
-        audioSource.mute = !audioSource.mute;
-    }
 
-    public void CancelButton()
-    {
-        GameMusic.Instance.Source.clip = null;
-        GameMusic.Instance.Source = null;
-        isExecute = false;
-        //buttons
-        mute.isEnabled = false;
-        execute.isEnabled = true;
-    }
-    #endregion
+#region Button処理
+        /// <summary>
+        /// 音楽ファイル読み込み-再生
+        /// </summary>
+        public void Setup()
+        {
+        ErrorManager.Instance.text.text = "";
+        ErrorManager.Instance.text.text += "tap\n";
+        if (musicEngineObj != null) { Destroy(musicEngineObj); }
+        ErrorManager.Instance.text.text += "path:" + currentFilePath;
+
+        GameMusic.Instance.LoadAndFunction(
+                currentFilePath,
+                //読み込み終了後の処理
+                () =>
+                {
+                    ErrorManager.Instance.text.text += "load end\n";
+                    bpm = (uint)UniBpmAnalyzer.AnalyzeBpm(GameMusic.Instance.Clip);
+                    //MusicEngine 生成
+                    musicEngineObj = Instantiate(Resources.Load<GameObject>("Prefab/MusicEngine"));
+                    ErrorManager.Instance.text.text = musicEngineObj ? "生成" : "インスタンスねーよ？";
+                    var musicEngine = musicEngineObj.GetComponent<Music>();
+                    //MusicEngineの動的設定
+                    Music.CurrentSource.clip = GameMusic.Instance.Clip;
+                    var sec = Music.GetSection(0);
+                    sec.Tempo = bpm;
+                    sec.UnitPerBar = int.Parse(unitPerBar.text);
+                    sec.UnitPerBeat = int.Parse(unitPerBeat.text);
+                    musicEngine.Setup();
+                    //audio
+                    GameMusic.Instance.Source = Music.CurrentSource;
+                    GameMusic.Instance.Source.Play();
+                    isExecute = true;
+                    //buttons
+                    mute.isEnabled = true;
+                    execute.isEnabled = false;
+                    cancel.isEnabled = true;
+                    //param
+                    executeFilePath = currentFilePath;
+                }
+           );
+        }
+
+        public void MuteButton()
+        {
+            audioSource.mute = !audioSource.mute;
+        }
+
+        public void CancelButton()
+        {
+            GameMusic.Instance.Source.clip = null;
+            GameMusic.Instance.Source = null;
+            isExecute = false;
+            //buttons
+            mute.isEnabled = false;
+            execute.isEnabled = true;
+        }
+#endregion
 }
