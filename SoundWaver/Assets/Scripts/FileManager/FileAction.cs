@@ -6,7 +6,8 @@ namespace Yuuki.FileManager
 {
     public class FileAction : MonoBehaviour
     {
-        [SerializeField]public UILabel fileName;
+        //serialize param
+        [SerializeField] private UILabel fileName;
         public void SetupName(string fileName)
         {
             this.fileName.text = fileName;
@@ -21,17 +22,7 @@ namespace Yuuki.FileManager
 
         public void SetupMusicFile()
         {
-            var filePath = FileManager.Instance.CurrentDirectory + "\\" + fileName.text;
-            var ext = System.IO.Path.GetExtension(filePath);
-
-            if(ext==Common.Define.c_MP3|| ext == Common.Define.c_WAV)
-            {
-                AutoMusicScoreFactor.Instance.SetupMusicName(fileName.text);
-            }
-            else
-            {
-                Debug.Log("拡張子が違います:" + ext);
-            }
+            AutoMusicScoreFactor.Instance.SetupMusic(fileName.text);
         }
     }
 }
