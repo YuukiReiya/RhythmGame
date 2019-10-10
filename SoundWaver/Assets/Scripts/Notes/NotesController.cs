@@ -19,7 +19,7 @@ namespace Game
         }
         [Header("Lane Parameter")]
         [SerializeField] TimingLine timingLine;//判定ラインの座標
-        [SerializeField] AudioSource audioSource;
+        //[SerializeField] AudioSource audioSource;
 
         //private param
         public List<INote> notes;
@@ -29,7 +29,7 @@ namespace Game
         public float NotesSpeed { get { return noteSpeed; } }
         public float WaitTime { get { return waitTime; } }
 
-        public float elapsedTime { get; private set; }
+        //public float elapsedTime { get; private set; }
 
         protected override void Awake()
         {
@@ -44,7 +44,7 @@ namespace Game
         void Update()
         {
             Move();
-            elapsedTime = audioSource.time;
+            //elapsedTime = audioSource.time;
         }
 
         /// <summary>

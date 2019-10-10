@@ -46,7 +46,8 @@ namespace Game
         public void Move()
         {
             var x = this.transform.position.x;
-            float timing = DownTime - NotesController.Instance.elapsedTime;
+            //float timing = DownTime - NotesController.Instance.elapsedTime;
+            float timing = DownTime - GameController.Instance.ElapsedTime;
 
             //TODO:汚い
             //Vector3 ndir = (this.transform.position - NotesController.Instance.JustTimingPosition).normalized;

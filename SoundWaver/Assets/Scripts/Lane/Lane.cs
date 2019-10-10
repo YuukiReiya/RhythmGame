@@ -8,8 +8,13 @@ namespace Game
 {
     public class Lane : MonoBehaviour
     {
+        //serialize param
         [SerializeField, Tooltip("ノーツの流れるレーン番号")] uint laneNumber;
         [SerializeField, Tooltip("関連付けさせるイベントトリガー")] EventTrigger eventTrigger;
+
+        //accessor
+        float elapsedTime { get { return GameController.Instance.ElapsedTime; } }
+
         private void Awake()
         {
             SetupTapEvent();
@@ -33,39 +38,41 @@ namespace Game
                 //対象のレーン
                 Where(it => it.LaneNumber == laneNumber).
                 //判定ラインに最も近いノーツ = (判定時間 - 再生時間 の差分が最も小さい)
-                OrderBy(it => Mathf.Abs(it.DownTime - NotesController.Instance.elapsedTime)).
+                OrderBy(it => Mathf.Abs(it.DownTime - elapsedTime)).
                 First();
 
             //ノーツが"n"秒経過していたら処理しない
             //TODO:処理用確認
-            var tapTime = note.DownTime - NotesController.Instance.elapsedTime;
+            var tapTime = note.DownTime - elapsedTime;
             if (Mathf.Abs(tapTime) > NotesController.Instance.WaitTime) { return; }
 
             //判定
             string judge;
+            ScoreController.Score result = ScoreController.Score.PERFECT;
 
             //TODO:汚い
             if (Mathf.Abs(tapTime) <= Common.Define.c_PerfectTime)
             {
                 judge = "perfect";
-                ScoreController.Instance.StartScoreEffect(ScoreController.Score.PERFECT);
+                result = ScoreController.Score.PERFECT;
             }
             else if (Mathf.Abs(tapTime) <= Common.Define.c_GreatTime)
             {
                 judge = "great";
-                ScoreController.Instance.StartScoreEffect(ScoreController.Score.GREAT);
+                result = ScoreController.Score.GREAT;
             }
             else if (Mathf.Abs(tapTime) <= Common.Define.c_GoodTime)
             {
                 judge = "good";
-                ScoreController.Instance.StartScoreEffect(ScoreController.Score.GOOD);
+                result = ScoreController.Score.GOOD;
             }
             else
             {
                 judge = "miss";
-                ScoreController.Instance.StartScoreEffect(ScoreController.Score.MISS);
+                result = ScoreController.Score.MISS;
             }
             Debug.Log(judge);
+            ScoreController.Instance.StartScoreEffect(result);
 
             note.Unregister();
         }

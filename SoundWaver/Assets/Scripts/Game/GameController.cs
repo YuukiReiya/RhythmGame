@@ -6,11 +6,17 @@ namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
     {
+        //serialize param
+        //private param
+        //public param
         public AudioSource source;
+        //accessor
+        public float ElapsedTime { get; private set; }
+
         protected override void Awake()
         {
             base.Awake();
-            //Dummy通った場合
+            //楽曲データロード済み
             if (GameMusic.Instance.Clip)
             {
                 source.clip = GameMusic.Instance.Clip;
@@ -19,11 +25,9 @@ namespace Game
             }
             else
             {
-                //GameMusic.Instance.LoadAndPlayAudioClip("a.mp3");
-                string c_Path = "/Sound/short_song_shiho_shining_star.mp3";
-                GameMusic.Instance.LoadAndPlayAudioClip(Application.streamingAssetsPath + c_Path);
+                //エラー処理
+                //(確認用のダイアログを出す.etc)
             }
-            //GameMusic.Instance.LoadAndPlayAudioClip("a.mp3");
         }
         // Start is called before the first frame update
         void Start()
@@ -33,7 +37,8 @@ namespace Game
         // Update is called once per frame
         void Update()
         {
-
+            //経過時間の更新
+            ElapsedTime = source.time;
         }
     }
 }
