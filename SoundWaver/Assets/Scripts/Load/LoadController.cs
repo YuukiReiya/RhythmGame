@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Yuuki;
 namespace Game
@@ -13,6 +12,7 @@ namespace Game
         void Start()
         {
             routine = null;
+            NotesController.Instance.Setup(ChartManager.Instance.Chart);
         }
 
         // Update is called once per frame
