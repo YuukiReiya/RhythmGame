@@ -1,46 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Common;
 using System.IO;
+using UnityEngine;
 using Yuuki;
 public class ChartManager : SingletonMonoBehaviour<ChartManager>
 {
     //serialize param
-    [SerializeField] GameObject chartPrefab;
-    [SerializeField] UIGrid grid;
+    [SerializeField] private GameObject prefab;
+    [SerializeField] private UIGrid grid;
     //private param
-
-    //const param
-    readonly string c_ChartPath = Application.streamingAssetsPath + "\\Charts";
-
+    public Chart Chart { get; set; }
     // Start is called before the first frame update
     void Start()
     {
-        Create();
+        //譜面リスト表示
+        Display();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// 楽曲(譜面)リストの表示
+    /// </summary>
+    void Display()
     {
-        
-    }
-
-    void Create()
-    {
-        //var charts = Directory.GetFiles(c_ChartPath, Common.Define.c_JSON);
-        var charts = Directory.GetFiles(c_ChartPath, "*" + Common.Define.c_JSON);
-        foreach(var it in charts)
-        Debug.Log(it);
-
-        Yuuki.FileIO.FileIO io = new Yuuki.FileIO.FileIO();
-        foreach(var chart in charts)
+        //譜面情報の取得
+        var charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);
+        Yuuki.FileIO.FileIO fileIO = new Yuuki.FileIO.FileIO();
+        foreach (var it in charts)
         {
-            var inst = Instantiate(chartPrefab);
-            inst.transform.parent = grid.transform;
-            inst.transform.localScale = chartPrefab.transform.localScale;
-            var data = JsonUtility.FromJson<Chart>(io.GetContents(chart));
-            var proxy = inst.GetComponent<ChartProxy>();
-            proxy.SetupChart(data);
+            var chart = JsonUtility.FromJson<Chart>(fileIO.GetContents(it));
+            Create(chart);
         }
+        //整列
+        grid.Reposition();
+    }
+
+    /// <summary>
+    /// 譜面プレハブの作成
+    /// </summary>
+    /// <param name="chart"></param>
+    /// <returns></returns>
+    GameObject Create(Chart chart)
+    {
+        var inst = Instantiate(prefab);
+        inst.transform.parent = grid.transform;
+        inst.transform.localScale = prefab.transform.localScale;
+        ChartProxy proxy;
+        if (!inst.TryGetComponent<ChartProxy>(out proxy))
+        {
+            Destroy(inst);
+            return null;
+        }
+        proxy.SetupChart(chart);
+        return inst;
     }
 }
