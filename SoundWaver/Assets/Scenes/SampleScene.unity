@@ -712,7 +712,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 0
-  path: 
 --- !u!4 &686835049
 Transform:
   m_ObjectHideFlags: 0
@@ -995,7 +994,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 2.4832092e+27}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1331,7 +1330,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c1ce2682800f6144f9df0e0fce83e003, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1762,7 +1761,6 @@ MonoBehaviour:
   timingLine:
     y: -1.5
     z: 2.23
-  audioSource: {fileID: 1089299385}
 --- !u!4 &1528042746
 Transform:
   m_ObjectHideFlags: 0

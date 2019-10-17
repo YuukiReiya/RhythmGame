@@ -340,7 +340,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3000
+  startingRenderQueue: 3002
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -589,9 +589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715cf203401b8214387e036307050766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefaultDontDestroy: 0
-  chartPrefab: {fileID: 2495827661583254983, guid: 25e117c7c1f08b246b0b3e175441efec,
-    type: 3}
+  isDefaultDontDestroy: 1
+  prefab: {fileID: 2495827661583254983, guid: 25e117c7c1f08b246b0b3e175441efec, type: 3}
   grid: {fileID: 1767032156}
 --- !u!4 &1120703335
 Transform:
