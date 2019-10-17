@@ -32,14 +32,30 @@ namespace Common
         /// WAV拡張子
         /// </summary>
         public const string c_WAV = ".wav";
+
+#if UNITY_EDITOR
+        public const string c_Delimiter = "\\";
+        public static readonly string c_ChartSaveDirectory = Application.streamingAssetsPath + "\\Charts";
+        public static readonly string c_SettingFilePath = Application.persistentDataPath + c_Delimiter + Application.productName + ".ini";
+#elif UNITY_ANDROID
+        /// <summary>
+        /// ファイル(ディレクトリ)の区切り文字
+        /// </summary>
+        public const string c_Delimiter = "/";
+        /// <summary>
+        /// StreamingAssetsPathの代替アクセスパス
+        /// R:読み取り専用
+        /// </summary>
+        private static string c_StreamingAssetsPath = "jar:file//" + Application.dataPath + "!/assets";
         /// <summary>
         /// .iniファイル名
         /// 読み込み先は"Application.persistentDataPath"
         /// </summary>
-#if UNITY_ANDROID
-        public static readonly string c_SettingFilePath = Application.persistentDataPath + "/" + Application.productName + ".ini";
-#else
-        public static readonly string c_SettingFilePath = Application.persistentDataPath + "\\" + Application.productName + ".ini";
+        public static readonly string c_SettingFilePath = Application.persistentDataPath + c_Delimiter + Application.productName + ".ini";
+        /// <summary>
+        /// 作成した譜面の保存ディレクトリ
+        /// </summary>
+        public static readonly string c_ChartSaveDirectory = Application.persistentDataPath + "/Charts";
 #endif
     }
 }
