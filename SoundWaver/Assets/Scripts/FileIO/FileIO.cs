@@ -1,15 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Yuuki.FileIO
 {
     public class FileIO
     {
+        public enum FileIODesc
+        {
+            //既に存在していれば処理しない
+            Default,
+            //上書き
+            Overwrite,
+            //追記
+            Append,
+        }
 
-        public void CreateFile(string filePath, string content, bool isOverride = false)
+        public void CreateFile(string filePath, string content, FileIODesc desc = FileIODesc.Default)
         {
             //フォルダ作成
             string dirPath = Path.GetDirectoryName(filePath);
@@ -20,11 +25,18 @@ namespace Yuuki.FileIO
             //既に存在
             if (File.Exists(filePath))
             {
-                if (!isOverride)
+                switch (desc)
                 {
-                    return;
+                    case FileIODesc.Default: return;
+                    case FileIODesc.Overwrite:
+                        {
+                            File.Delete(filePath);
+                        }
+                        break;
+                    case FileIODesc.Append: break;
+                    default:
+                        break;
                 }
-                File.Delete(filePath);
             }
             //作成
             using (StreamWriter sw = new StreamWriter(filePath, true))
@@ -32,7 +44,6 @@ namespace Yuuki.FileIO
                 sw.Write(content);
                 sw.Close();
             }
-            //return true;
         }
 
         public bool CreateFile(string filePath, string[] contents, bool isOverride = false)
@@ -70,12 +81,13 @@ namespace Yuuki.FileIO
         {
             if (!File.Exists(filePath)) { return string.Empty; }
             string contents = string.Empty;
-            using (var sr=new StreamReader(filePath))
+            using (var sr = new StreamReader(filePath))
             {
                 contents = sr.ReadToEnd();
                 sr.Close();
             }
             return contents;
         }
+
     }
 }
