@@ -220,11 +220,7 @@
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
     <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
-    <Compile Include="Assets\Scripts\FileIO\FIOtest.cs" />
     <Compile Include="Assets\Scripts\FileIO\Read.cs" />
-    <Compile Include="Assets\Scripts\FileIO\Test1.cs" />
-    <Compile Include="Assets\Scripts\FileIO\Test2.cs" />
-    <Compile Include="Assets\Scripts\FileIO\Test3.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileAction.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileManager.cs" />
     <Compile Include="Assets\Scripts\FileManager\UIClickChangeSprite.cs" />
@@ -249,8 +245,6 @@
     <Compile Include="Assets\Scripts\Select\ChartProxy.cs" />
     <Compile Include="Assets\Scripts\Select\SelectController.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
-    <Compile Include="Assets\Scripts\TestScene\CreateStreamingAssets.cs" />
-    <Compile Include="Assets\Scripts\TestScene\Test.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\SceneTransitionCommand.cs" />
