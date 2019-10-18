@@ -31,6 +31,8 @@ namespace Game
                 sceneTransitionCommand.Execute();
                 Destroy(ChartManager.Instance.gameObject);
             }
+            //管理ノーツの更新
+            NotesController.Instance.Renewal();
             //ノーツの移動
             NotesController.Instance.Move();
             //経過時間の更新

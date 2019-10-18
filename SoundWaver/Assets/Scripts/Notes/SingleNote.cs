@@ -56,15 +56,22 @@ namespace Game
             this.transform.position = pos;
         }
 
+        /// <summary>
+        /// ノーツの登録
+        /// </summary>
         public void Register()
         {
-            NotesController.Instance.notes.Add(this);
+            //空でOK?
+            //NotesController.Instance.NotesQueue.Enqueue(this);
         }
 
+        /// <summary>
+        /// ノーツの登録解除
+        /// </summary>
         public void Unregister()
         {
             this.gameObject.SetActive(false);
-            NotesController.Instance.notes.Remove(this);
+            NotesController.Instance.Notes.Remove(this);
         }
     }
 }
