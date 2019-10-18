@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game
 {
@@ -8,7 +6,7 @@ namespace Game
     {
         public bool isReset { get; }
 
-        int laneNumber;
+        uint laneNumber;
         public int LaneNumber
         {
             get { return 1; }
@@ -17,7 +15,7 @@ namespace Game
         float dt;
         public float DownTime { get { return this.dt; } }
 
-        public void Setup(int laneNumber, float downTime)
+        public void Setup(uint laneNumber, float downTime)
         {
             this.laneNumber = laneNumber;
             dt = downTime;

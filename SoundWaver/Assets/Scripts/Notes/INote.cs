@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface INote 
+﻿public interface INote
 {
     //accessor
     bool isReset { get; }
@@ -10,7 +6,7 @@ public interface INote
     float DownTime { get; }// set; }
 
     //function
-    void Setup(int laneNumber, float downTime);
+    void Setup(uint laneNumber, float downTime);
     void Register();
     void Unregister();
     void Move();
