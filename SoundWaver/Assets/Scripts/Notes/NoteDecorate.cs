@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using UnityEngine;
-using DG.Tweening;
 public class NoteDecorate : MonoBehaviour
 {
     [SerializeField] Vector3 from;
@@ -16,7 +14,7 @@ public class NoteDecorate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Music.IsJustChangedBeat())
+        if (Music.GetCurrentMusic() != null && Music.IsJustChangedBeat())
         {
             DOTween.To(t => OnScale(t), 0, 1, 0.1f);
         }
