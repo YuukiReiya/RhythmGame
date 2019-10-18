@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
     {
         //serialize param
+        [SerializeField] SceneTransitionCommand sceneTransitionCommand;
         //private param
         //public param
         public AudioSource source;
@@ -16,29 +15,42 @@ namespace Game
         protected override void Awake()
         {
             base.Awake();
+        }
+        // Start is called before the first frame update
+        void Start()
+        {
+            Setup();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            //終了タイミング
+            if (source.time == 0.0f && !source.isPlaying)
+            {
+                sceneTransitionCommand.Execute();
+                Destroy(ChartManager.Instance.gameObject);
+            }
+            //ノーツの移動
+            NotesController.Instance.Move();
+            //経過時間の更新
+            ElapsedTime = source.time;
+        }
+
+        void Setup()
+        {
             //楽曲データロード済み
             if (GameMusic.Instance.Clip)
             {
                 source.clip = GameMusic.Instance.Clip;
-                Music.CurrentSetup();
                 source.Play();
+                Music.CurrentSetup();
             }
             else
             {
                 //エラー処理
                 //(確認用のダイアログを出す.etc)
             }
-        }
-        // Start is called before the first frame update
-        void Start()
-        {
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            //経過時間の更新
-            ElapsedTime = source.time;
         }
     }
 }
