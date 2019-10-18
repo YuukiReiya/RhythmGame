@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-public struct Chart 
+﻿[System.Serializable]
+public struct Chart
 {
     public string Title;
     /// <summary>
@@ -22,7 +18,16 @@ public struct Chart
     //    public uint b;
     //}
     //public Info[] isb;
-
-
-    public float[] timing;
+    [System.Serializable]
+    public struct Note
+    {
+        public Note(float time, uint lane)
+        {
+            this.Time = time;
+            this.LaneNumber = lane;
+        }
+        public float Time;
+        public uint LaneNumber;
+    }
+    public Note[] Notes;
 }
