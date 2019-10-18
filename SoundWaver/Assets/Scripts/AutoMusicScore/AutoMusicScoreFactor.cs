@@ -33,14 +33,14 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     float prevMax = 0;
     bool isExecute = false;
     GameObject musicEngineObj;
-    List<float> ret;
+    List<Chart.Note> ret;
     string currentFilePath;//参照している楽曲のパス
     string executeFilePath;//譜面作成中の楽曲のパス
 
     // Start is called before the first frame update
     void Start()
     {
-        ret = new List<float>();
+        ret = new List<Chart.Note>();
         mute.isEnabled = false;
         execute.isEnabled = false;
         cancel.isEnabled = false;
@@ -48,6 +48,27 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     // Update is called once per frame
     void Update()
+    {
+        ////再生時間を可視化
+        //playTimeValue.fillAmount = audioSource && audioSource.clip.length > 0 ? audioSource.time / audioSource.clip.length : 0.0f;
+
+        //if (isExecute)
+        //{
+        //    Execute();
+        //    //終了タイミング
+        //    if (audioSource.time == 0.0f && !audioSource.isPlaying)
+        //    {
+        //        Debug.Log("再生終了");
+        //        isExecute = false;
+        //        mute.isEnabled = false;
+        //        execute.isEnabled = true;
+        //        cancel.isEnabled = false;
+        //        CreateChart();
+        //    }
+        //}
+    }
+
+    private void FixedUpdate()
     {
         //再生時間を可視化
         playTimeValue.fillAmount = audioSource && audioSource.clip.length > 0 ? audioSource.time / audioSource.clip.length : 0.0f;
@@ -77,7 +98,8 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         {
             if (max > prevMax + (difference / 100))
             {
-                ret.Add(audioSource.time);
+                Chart.Note note = new Chart.Note(audioSource.time, 1);
+                ret.Add(note);
             }
         }
 
@@ -108,9 +130,11 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         chart.Title = musicTitle.text;//曲名
         chart.FilePath = executeFilePath;//楽曲パス
         chart.BPM = bpm;//BPM
-        chart.timing = new float[ret.Count];
+        Debug.Log("ret.ToArray Size = " + ret.ToArray().Count());
+        chart.Notes = ret.ToArray();
+        Debug.Log("chart.Notes:" + chart.Notes);
+        Debug.Log("chart.Notes.ToArray Size = " + chart.Notes.ToArray().Count());
         chart.NotesInterval = float.Parse(intervalSec.text);
-        chart.timing = ret.ToArray();
         fileIO.CreateFile(
             Define.c_ChartSaveDirectory + Define.c_Delimiter + chartName.text + Define.c_JSON,
             JsonUtility.ToJson(chart),
