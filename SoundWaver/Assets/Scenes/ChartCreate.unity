@@ -3947,8 +3947,8 @@ MonoBehaviour:
   keyboardType: 0
   hideInput: 0
   submitOnUnselect: 0
-  validation: 1
-  characterLimit: 2
+  validation: 2
+  characterLimit: 4
   savedAs: 
   selectOnTab: {fileID: 0}
   activeTextColor: {r: 1, g: 1, b: 1, a: 1}
