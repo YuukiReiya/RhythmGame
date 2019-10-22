@@ -129,12 +129,13 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         Chart chart = new Chart();
         chart.Title = musicTitle.text;//曲名
         chart.FilePath = executeFilePath;//楽曲パス
+        chart.Comb = (uint)ret.Count;
         chart.BPM = bpm;//BPM
         Debug.Log("ret.ToArray Size = " + ret.ToArray().Count());
         chart.Notes = ret.ToArray();
         Debug.Log("chart.Notes:" + chart.Notes);
         Debug.Log("chart.Notes.ToArray Size = " + chart.Notes.ToArray().Count());
-        chart.NotesInterval = float.Parse(intervalSec.text);
+        chart.Interval = float.Parse(intervalSec.text);
         fileIO.CreateFile(
             Define.c_ChartSaveDirectory + Define.c_Delimiter + chartName.text + Define.c_JSON,
             JsonUtility.ToJson(chart),
@@ -183,9 +184,10 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
            );
     }
 
+ 
     public void MuteButton()
     {
-        audioSource.mute = !audioSource.mute;
+        audioSource.volume = audioSource.volume == 0.0f ? 1.0f : 0.0f;
     }
 
     public void CancelButton()
