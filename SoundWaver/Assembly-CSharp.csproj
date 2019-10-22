@@ -228,7 +228,6 @@
     <Compile Include="Assets\Scripts\Framework\MethodExpansion.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
-    <Compile Include="Assets\Scripts\Game\Dummy.cs" />
     <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
