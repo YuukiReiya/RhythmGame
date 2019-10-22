@@ -19,6 +19,12 @@ namespace Game
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            //ゲームシーンでエディター起動時セレクトに戻してあげる
+            if (!source.clip)
+            {
+            }
+#endif
             Setup();
         }
 
@@ -35,6 +41,8 @@ namespace Game
             NotesController.Instance.Renewal();
             //ノーツの移動
             NotesController.Instance.Move();
+            //ノーツの廃棄
+            NotesController.Instance.Discard();
             //経過時間の更新
             ElapsedTime = source.time;
         }

@@ -2,12 +2,12 @@
 {
     //accessor
     bool isReset { get; }
-    int LaneNumber { get; }// set; }
+    uint LaneNumber { get; }// set; }
     float DownTime { get; }// set; }
 
     //function
-    void Setup(uint laneNumber, float downTime);
-    void Register();
+    //void Setup();
+    void Register(uint laneNumber, float downTime);
     void Unregister();
     void Move();
 }

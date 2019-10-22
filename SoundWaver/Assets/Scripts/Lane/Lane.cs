@@ -70,7 +70,7 @@ namespace Game
             Debug.Log(judge);
             ScoreController.Instance.StartScoreEffect(result);
 
-            //note.Unregister();
+            note.Unregister();
         }
 
         private void Reset()

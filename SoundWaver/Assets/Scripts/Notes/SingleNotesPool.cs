@@ -21,6 +21,11 @@ namespace Game
 
         }
 
+        public override GameObject GetObject()
+        {
+            return base.GetObject();
+        }
+
         #region コンテキストメニュー
         [ContextMenu("Create Pool Object Instances")]
         protected override void CreatePoolObjects()

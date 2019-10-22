@@ -10,7 +10,6 @@ namespace Game
         [SerializeField] float noteSpeed;
         [SerializeField, Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 5.0f;
         [SerializeField, Range(1.0f, 10.0f), Tooltip("ノーツを出現させる時間")] float activeTime;
-        [SerializeField, Range(-10.0f, 0.0f), Tooltip("ノーツを強制削除する時間")] float disableTime;
         [System.Serializable]
         struct TimingLine
         {
@@ -47,21 +46,22 @@ namespace Game
         /// </summary>
         public void Renewal()
         {
-            //登録するノーツのキュー
-            foreach (var it in noteQueue)
+            while (noteQueue.Count > 0)
             {
+                var ptr = noteQueue.Peek();
                 //押す時間 - 経過時間 <= アクティブ時間
-                if ((it.Time - GameController.Instance.ElapsedTime) <= activeTime)
+                if ((ptr.Time - GameController.Instance.ElapsedTime) <= activeTime)
                 {
                     //初期化処理
                     var inst = SingleNotesPool.Instance.GetObject();
                     INote note;
-                    if (inst.TryGetComponent(out note))
+                    if (!inst.TryGetComponent(out note))
                     {
                         Debug.LogError("プールするノーツのプレハブにINoteコンポーネントがアタッチされていない");
                         continue;
                     }
-                    note.Setup(it.LaneNumber, it.Time);
+                    // note.Register(ptr.LaneNumber, ptr.Time);
+                    note.Register(0, ptr.Time);
                     //登録するノーツキューの更新
                     noteQueue.Dequeue();
                     //更新リストに追加
@@ -80,6 +80,33 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// ノーツリストの廃棄処理
+        /// </summary>
+        public void Discard()
+        {
+            //foreach文内ではコレクションの書き換えが出来ないためリストを分ける
+            var discardNotes = new Queue<INote>();
+            foreach(var it in Notes)
+            {
+                //押されるべき時間 - 実際の時間 > -(Good判定時間)
+                if ((it.DownTime - GameController.Instance.ElapsedTime) < -Common.Define.c_GoodTime)
+                {
+                    //ミス判定処理
+                    ScoreController.Instance.StartScoreEffect(ScoreController.Score.MISS);
+
+                    //ノーツの登録解除
+                    it.Unregister();
+
+                    //破棄リストに追加
+                    discardNotes.Enqueue(it);
+                }
+                break;
+            }
+            //破棄リスト内のノーツの登録を解除しているだけ
+            foreach (var it in discardNotes) { Notes.Remove(it); }
+        }
+
         void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -88,24 +115,5 @@ namespace Game
             Gizmos.DrawLine(new Vector3(left, timingLine.y, timingLine.z), new Vector3(right, timingLine.y, timingLine.z));
         }
 
-        public void Setup(Chart chart)
-        {
-            Debug.Log("notes:" + chart.Notes.Length);
-            Debug.Log("chart:" + chart);
-            foreach (var it in chart.Notes)
-            {
-                //var note = SingleNotesPool.Instance.GetObject().GetComponent<SingleNote>();
-                //note.Setup(it.LaneNumber, it.Time);
-                SingleNote note;
-                if (SingleNotesPool.Instance.GetObject().TryGetComponent(out note))
-                {
-                    note.Setup(it.LaneNumber, it.Time);
-                }
-                else
-                {
-                    //Debug.Log("not found");
-                }
-            }
-        }
     }
 }
