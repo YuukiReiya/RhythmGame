@@ -12,7 +12,6 @@ namespace Game
         void Start()
         {
             routine = null;
-            NotesController.Instance.Setup(ChartManager.Instance.Chart);
         }
 
         // Update is called once per frame

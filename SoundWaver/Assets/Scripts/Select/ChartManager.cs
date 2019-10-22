@@ -9,17 +9,11 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [SerializeField] private UIGrid grid;
     //private param
     public Chart Chart { get; set; }
-    // Start is called before the first frame update
-    void Start()
-    {
-        //譜面リスト表示
-        Display();
-    }
 
     /// <summary>
     /// 楽曲(譜面)リストの表示
     /// </summary>
-    void Display()
+    public void LoadToDisplay()
     {
         //譜面情報の取得
         var charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);

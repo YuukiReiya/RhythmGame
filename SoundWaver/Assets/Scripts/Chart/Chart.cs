@@ -7,9 +7,10 @@ public struct Chart
     /// </summary>
     public string FilePath;//楽曲ファイルが格納されているパス
     public uint BPM;
-    public string ResistName;//登録名
-    public uint Number;//楽曲番号
-    public float NotesInterval;
+    public uint Comb;//ノーツカウント / コンボ
+    //public string ResistName;//登録名
+    //public uint Number;//楽曲番号
+    public float Interval;
     //TODO:小節、拍子を入れる構造体に置換
     //[System.Serializable]
     //public struct Info
