@@ -292,6 +292,8 @@ MonoBehaviour:
   isDefaultDontDestroy: 1
   noteSpeed: 10
   waitTime: 1
+  activeTime: 10
+  disableTime: -5
   timingLine:
     y: -1.5
     z: 2.23
