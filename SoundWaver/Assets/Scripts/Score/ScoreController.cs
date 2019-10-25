@@ -6,14 +6,15 @@ using Yuuki.MethodExpansions;
 
 public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
 {
-    public enum Score
+    //enum
+    public enum Judge
     {
         PERFECT,
         GREAT,
         GOOD,
         MISS,
     }
-
+    //struct
     [System.Serializable]
     struct DecorateScoreEffectParameter
     {
@@ -31,19 +32,22 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         public Sprite good;
         public Sprite miss;
     }
+    //serialize param
     [SerializeField] ScoreSprites sprites;
     [SerializeField] DecorateScoreEffectParameter effectParam;
     [SerializeField] float displayTime;
     [SerializeField] Image image;
+    //private param
     IEnumerator routine;
-
+    //accessor
+    public uint Score { get; private set; }
     protected override void Awake()
     {
         base.Awake();
         if (image.GetComponent<Image>() == null) { return; }
         image.gameObject.SetActive(false);
     }
-    public void StartScoreEffect(Score score)
+    public void StartScoreEffect(Judge judge)
     {
         if (image.GetComponent<Image>() == null) { return; }
         //アクティブ化
@@ -51,12 +55,12 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         if (routine != null) { StopCoroutine(routine); }
 
         //評価分け
-        switch(score)
+        switch (judge)
         {
-            case Score.PERFECT: image.sprite = sprites.perfect; break;
-            case Score.GREAT:image.sprite = sprites.great;break;
-            case Score.GOOD: image.sprite = sprites.good; break;
-            case Score.MISS: image.sprite = sprites.miss; break;
+            case Judge.PERFECT: Perfect(); break;
+            case Judge.GREAT: Great(); break;
+            case Judge.GOOD: Good(); break;
+            case Judge.MISS: Miss(); break;
         }
         routine = DecorateScoreEffectRoutine();
         //コルーチンが終了したらroutineの初期化
@@ -85,8 +89,37 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         image.gameObject.SetActive(false);
     }
 
+    #region 判定ごとの処理
+    //TODO:コンボ処理とコンボ時のUI表示もココに入れてるけど
+    //本来ならコールバック用のイベントキューを用意したほうがいい…
+    private void Perfect()
+    {
+        image.sprite = sprites.perfect;
+        Game.GameController.Instance.Comb++;
+        CombEffectCanvas.Instance.Execute(Game.GameController.Instance.Comb);
+    }
+    private void Great()
+    {
+        image.sprite = sprites.great;
+        Game.GameController.Instance.Comb++;
+        CombEffectCanvas.Instance.Execute(Game.GameController.Instance.Comb);
+    }
+    private void Good()
+    {
+        image.sprite = sprites.good;
+        Game.GameController.Instance.Comb = 0;
+    }
+    private void Miss()
+    {
+        image.sprite = sprites.miss;
+        Game.GameController.Instance.Comb = 0;
+    }
+    #endregion
+
+#if UNITY_EDITOR
     private void Reset()
     {
         image = GetComponentInChildren<Image>();
     }
+#endif
 }

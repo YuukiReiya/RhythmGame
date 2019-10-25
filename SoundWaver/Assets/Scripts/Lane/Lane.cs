@@ -44,28 +44,28 @@ namespace Game
 
             //判定
             string judge;
-            ScoreController.Score result = ScoreController.Score.PERFECT;
+            ScoreController.Judge result = ScoreController.Judge.PERFECT;
 
             //TODO:汚い
             if (Mathf.Abs(tapTime) <= Common.Define.c_PerfectTime)
             {
                 judge = "perfect";
-                result = ScoreController.Score.PERFECT;
+                result = ScoreController.Judge.PERFECT;
             }
             else if (Mathf.Abs(tapTime) <= Common.Define.c_GreatTime)
             {
                 judge = "great";
-                result = ScoreController.Score.GREAT;
+                result = ScoreController.Judge.GREAT;
             }
             else if (Mathf.Abs(tapTime) <= Common.Define.c_GoodTime)
             {
                 judge = "good";
-                result = ScoreController.Score.GOOD;
+                result = ScoreController.Judge.GOOD;
             }
             else
             {
                 judge = "miss";
-                result = ScoreController.Score.MISS;
+                result = ScoreController.Judge.MISS;
             }
             Debug.Log(judge);
             ScoreController.Instance.StartScoreEffect(result);

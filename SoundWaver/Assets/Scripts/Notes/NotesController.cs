@@ -93,7 +93,7 @@ namespace Game
                 if ((it.DownTime - GameController.Instance.ElapsedTime) < -Common.Define.c_GoodTime)
                 {
                     //ミス判定処理
-                    ScoreController.Instance.StartScoreEffect(ScoreController.Score.MISS);
+                    ScoreController.Instance.StartScoreEffect(ScoreController.Judge.MISS);
 
                     //ノーツの登録解除
                     it.Unregister();
