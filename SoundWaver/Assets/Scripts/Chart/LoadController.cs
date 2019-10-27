@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Yuuki;
+using API.Util;
+using Common;
 namespace Game
 {
 
@@ -12,6 +14,7 @@ namespace Game
         void Start()
         {
             routine = null;
+            FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
         // Update is called once per frame

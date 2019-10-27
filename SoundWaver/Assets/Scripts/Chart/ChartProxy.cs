@@ -1,6 +1,8 @@
 ﻿using Game;
 using UnityEngine;
-
+using API.Util;
+using Common;
+using UnityEngine.SceneManagement;
 public class ChartProxy : MonoBehaviour
 {
     //serialize param
@@ -21,8 +23,15 @@ public class ChartProxy : MonoBehaviour
     #region ボタン処理
     public void OnTap()
     {
-        this.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
-        ChartManager.Instance.Chart = this.chart;
+        FadeController.Instance.EventQueue.Enqueue(
+            () =>
+            {
+                this.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
+                ChartManager.Instance.Chart = this.chart;
+                SceneManager.LoadScene("Load");
+            }
+            );
+        FadeController.Instance.FadeIn(Define.c_FadeTime);
     }
     #endregion
 }
