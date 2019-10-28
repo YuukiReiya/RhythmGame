@@ -8,14 +8,17 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [SerializeField] private GameObject prefab;
     [SerializeField] private UIGrid grid;
     //private param
-    public Chart Chart { get; set; }
+    public static Chart Chart { get; set; }
 
     /// <summary>
     /// 楽曲(譜面)リストの表示
     /// </summary>
     public void LoadToDisplay()
     {
-        //譜面情報の取得
+        //ゲーム上に保存されたの情報の取得
+
+
+        //オリジナル譜面情報の取得
         var charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);
         Yuuki.FileIO.FileIO fileIO = new Yuuki.FileIO.FileIO();
         foreach (var it in charts)
@@ -25,6 +28,14 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         }
         //整列
         grid.Reposition();
+    }
+
+    /// <summary>
+    /// 既存(プリセット)の楽曲ファイルの表示
+    /// </summary>
+    private void PresetMusicDisplay()
+    {
+
     }
 
     /// <summary>
