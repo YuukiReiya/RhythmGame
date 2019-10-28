@@ -6,6 +6,7 @@ namespace Common
 {
     public static class Define
     {
+        public const float c_FadeTime = 0.25f;
         /// <summary>
         /// レーン数
         /// </summary>
