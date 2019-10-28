@@ -23,6 +23,10 @@ namespace Game
         IEnumerator MainRoutine()
         {
             //yield return new WaitForSeconds(1.0f);
+
+            //ノーツの初期化
+            NotesController.Instance.SetupNotes();
+
             //楽曲ファイルのロード中は待機
             yield return new WaitWhile(
                 () => { return GameMusic.Instance.Clip.loadState != AudioDataLoadState.Loaded; }

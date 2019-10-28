@@ -1,6 +1,7 @@
 ﻿using Common;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using Yuuki;
 public class ChartManager : SingletonMonoBehaviour<ChartManager>
 {
@@ -15,10 +16,8 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     /// </summary>
     public void LoadToDisplay()
     {
-        //ゲーム上に保存されたの情報の取得
-
-
-        //オリジナル譜面情報の取得
+        //PresetMusicLoad();
+        //譜面情報の取得
         var charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);
         Yuuki.FileIO.FileIO fileIO = new Yuuki.FileIO.FileIO();
         foreach (var it in charts)
@@ -33,9 +32,19 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     /// <summary>
     /// 既存(プリセット)の楽曲ファイルの表示
     /// </summary>
-    private void PresetMusicDisplay()
+    private void PresetMusicLoad()
     {
-
+        //var path = System.IO.Path.Combine(Application.streamingAssetsPath, "test.txt");
+        //var path = System.IO.Path.Combine(Application, "test.txt");
+        var path = Define.c_PresetFilePath[0].Item2;
+        StartCoroutine(get(path));
+    }
+    System.Collections.IEnumerator get(string filePath)
+    {
+        var www = UnityWebRequest.Get(filePath);
+        yield return www.SendWebRequest();
+        var ret = www.downloadHandler.text;
+        DialogController.Instance.Open(ret);
     }
 
     /// <summary>

@@ -225,7 +225,6 @@
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
     <Compile Include="Assets\Scripts\Fade\FadeController.cs" />
     <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
-    <Compile Include="Assets\Scripts\FileIO\Read.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileAction.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileManager.cs" />
     <Compile Include="Assets\Scripts\FileManager\UIClickChangeSprite.cs" />
@@ -253,8 +252,6 @@
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
-    <Compile Include="Assets\Scripts\WWW\WWWLoader.cs" />
-    <Compile Include="Assets\Scripts\WWW\WWWTest.cs" />
     <Compile Include="Assets\Tool\FPSmeter\Scripts\FPSmeter.cs" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\ReadMe - 2018.3.0.txt" />
@@ -299,6 +296,7 @@
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\StreamingAssets\test.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Text.shader" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTween\DOTween43.xml" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />

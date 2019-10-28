@@ -293,7 +293,6 @@ MonoBehaviour:
   noteSpeed: 10
   waitTime: 1
   activeTime: 10
-  disableTime: -5
   timingLine:
     y: -1.5
     z: 2.23
@@ -439,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
   prefab: {fileID: 5176470465313054875, guid: 8d50fc19acf03904599d566c0c88009a, type: 3}
-  poolCount: 10
+  poolCount: 30
 --- !u!1 &2041574421
 GameObject:
   m_ObjectHideFlags: 0
