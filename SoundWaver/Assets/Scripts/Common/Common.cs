@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Common 
@@ -15,6 +16,21 @@ namespace Common
         public const float c_PerfectTime = 0.033f;
         public const float c_GreatTime = 0.1f;
         public const float c_GoodTime = 0.2f;
+
+        #region プリセットファイルのパス
+        /// <summary>
+        /// プリセットファイルのパス
+        /// item1:楽曲パス
+        /// item2:譜面パス
+        /// </summary>
+        public static readonly (string, string)[] c_PresetFilePath = 
+            { 
+                (
+                    Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_kei_harujion"+c_MP3,
+                    Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Harujion"+c_JSON
+                ),
+        };
+        #endregion
 
         /// <summary>
         /// ローカルファイル指定用のパス
@@ -36,7 +52,8 @@ namespace Common
 
 #if UNITY_EDITOR
         public const string c_Delimiter = "\\";
-        public static readonly string c_ChartSaveDirectory = Application.streamingAssetsPath + "\\Charts";
+        public static string c_StreamingAssetsPath = Application.streamingAssetsPath;
+        public static readonly string c_ChartSaveDirectory = c_StreamingAssetsPath + "\\Charts";
         public static readonly string c_SettingFilePath = Application.persistentDataPath + c_Delimiter + Application.productName + ".ini";
 #elif UNITY_ANDROID
         /// <summary>
@@ -47,7 +64,7 @@ namespace Common
         /// StreamingAssetsPathの代替アクセスパス
         /// R:読み取り専用
         /// </summary>
-        private static string c_StreamingAssetsPath = "jar:file//" + Application.dataPath + "!/assets";
+        public static string c_StreamingAssetsPath = "jar:file//" + Application.dataPath + "!/assets";
         /// <summary>
         /// .iniファイル名
         /// 読み込み先は"Application.persistentDataPath"
