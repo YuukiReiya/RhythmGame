@@ -35,6 +35,13 @@ public class CombEffectCanvas : Yuuki.SingletonMonoBehaviour<CombEffectCanvas>
         this.StartCoroutine(routine, () => { routine = null; });
     }
 
+    public void Stop()
+    {
+        CombUI.SetActive(false);
+        if (routine != null) { StopCoroutine(routine); }
+        routine = null;
+    }
+
     private IEnumerator DecorateCombEffectRoutine(DecorateParam arg)
     {
         //最初の大きさ
