@@ -8,6 +8,9 @@ public abstract class SingletonObjectPool<T> : Yuuki.SingletonMonoBehaviour<Sing
     [SerializeField] protected uint poolCount;
     protected List<GameObject> poolList;
 
+    //accessor
+    public List<GameObject> PoolList { get { return poolList; } }
+
     /// <summary>
     /// 初期化
     /// 
