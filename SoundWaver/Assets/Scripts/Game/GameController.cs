@@ -30,6 +30,11 @@ namespace Game
             }
 #endif
             Setup();
+            #region ノーツの初期表示
+            //※これがないと曲が鳴っていきなり表れてしまう
+            NotesController.Instance.Renewal();
+            NotesController.Instance.Move();
+            #endregion
             StartCoroutine(DelayStart());
         }
 
