@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -32,14 +33,18 @@ namespace Game
             base.Awake();
             Notes = new List<INote>();
             noteQueue = new Queue<Chart.Note>(ChartManager.Chart.Notes);
-            //NotesQueue = new Queue<INote>();
         }
 
-        // Start is called before the first frame update
-        void Start() { }
-
-        // Update is called once per frame
-        void Update() { }
+        public void SetupNotes()
+        {
+            Notes.Clear();
+            noteQueue.Clear();
+            foreach (var it in ChartManager.Chart.Notes)
+            {
+                noteQueue.Enqueue(it);
+            }
+            foreach (var it in SingleNotesPool.Instance.PoolList) { it.SetActive(false); }
+        }
 
         /// <summary>
         /// 管理リストの更新
@@ -61,7 +66,7 @@ namespace Game
                         continue;
                     }
                     // note.Register(ptr.LaneNumber, ptr.Time);
-                    note.Register(0, ptr.Time);
+                    note.Register(ptr.LaneNumber, ptr.Time);
                     //登録するノーツキューの更新
                     noteQueue.Dequeue();
                     //更新リストに追加
