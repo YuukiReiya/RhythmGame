@@ -96,9 +96,27 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
         if (Music.IsJustChanged)
         {
-            if (max > prevMax + (difference / 100))
+            //古い
+            //if (max > prevMax + (difference / 100))
+            //{
+            //    Chart.Note note = new Chart.Note(audioSource.time, 1);
+            //    ret.Add(note);
+            //}
+
+            //新しい
+            var v = max - prevMax;
+            var diff = Mathf.Abs(v);
+            if (diff > (difference / 100))
             {
-                Chart.Note note = new Chart.Note(audioSource.time, 1);
+                uint lane = 1;
+                //真ん中
+                if (diff < (difference / 50)) { lane = 1; }
+                //左
+                else if (v < 0) { lane = 0; }
+                //右
+                else { lane = 2; }
+
+                Chart.Note note = new Chart.Note(audioSource.time, lane);
                 ret.Add(note);
             }
         }
@@ -131,6 +149,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         chart.FilePath = executeFilePath;//楽曲パス
         chart.Comb = (uint)ret.Count;
         chart.BPM = bpm;//BPM
+        chart.ResistName = chartName.text;//譜面の名前
         Debug.Log("ret.ToArray Size = " + ret.ToArray().Count());
         chart.Notes = ret.ToArray();
         Debug.Log("chart.Notes:" + chart.Notes);

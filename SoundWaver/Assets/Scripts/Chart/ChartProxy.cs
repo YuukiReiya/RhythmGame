@@ -18,7 +18,7 @@ public class ChartProxy : MonoBehaviour
     public void SetupChart(Chart chart)
     {
         this.chart = chart;
-        this.title.text = chart.Title;
+        this.title.text = chart.ResistName;
     }
     #region ボタン処理
     public void OnTap()
