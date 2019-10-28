@@ -146,7 +146,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         var fileIO = new Yuuki.FileIO.FileIO();
         Chart chart = new Chart();
         chart.Title = musicTitle.text;//曲名
-        chart.FilePath = executeFilePath;//楽曲パス
+        chart.FilePath = Define.c_LocalFilePath + executeFilePath;//楽曲パス
         chart.Comb = (uint)ret.Count;
         chart.BPM = bpm;//BPM
         chart.ResistName = chartName.text;//譜面の名前

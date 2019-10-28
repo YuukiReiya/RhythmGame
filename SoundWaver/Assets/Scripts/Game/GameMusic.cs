@@ -73,7 +73,7 @@ namespace Game
         public IEnumerator LoadToAudioClip(string path)
         {
             var type = GetAudioType(path);
-            path = Define.c_LocalFilePath + path;
+            //path = Define.c_LocalFilePath + path;
             using (var request = UnityWebRequestMultimedia.GetAudioClip(path,type))
             {
                 //リクエスト送信
