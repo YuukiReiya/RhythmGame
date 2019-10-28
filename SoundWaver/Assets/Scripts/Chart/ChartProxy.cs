@@ -27,7 +27,8 @@ public class ChartProxy : MonoBehaviour
             () =>
             {
                 this.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
-                ChartManager.Instance.Chart = this.chart;
+                //TODO:代入前に初期化したい?
+                ChartManager.Chart = this.chart;
                 SceneManager.LoadScene("Load");
             }
             );
