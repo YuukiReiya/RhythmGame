@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using System.Collections;
+using API.Util;
 namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
     {
         //serialize param
-        [SerializeField] SceneTransitionCommand sceneTransitionCommand;
+        //[SerializeField] SceneTransitionCommand sceneTransitionCommand;
+        [SerializeField,Tooltip("ゲーム開始前に待機(遅延)する時間")] private float delayTime;
         //private param
+        private bool isStart;
         //public param
         public AudioSource source;
         //accessor
@@ -26,16 +30,18 @@ namespace Game
             }
 #endif
             Setup();
+            StartCoroutine(DelayStart());
         }
 
         // Update is called once per frame
         void Update()
         {
+            //ゲームが始まっている?
+            if (!isStart) { return; }
             //終了タイミング
             if (source.time == 0.0f && !source.isPlaying)
             {
-                sceneTransitionCommand.Execute();
-                Destroy(ChartManager.Instance.gameObject);
+                GameEnd();
             }
             //管理ノーツの更新
             NotesController.Instance.Renewal();
@@ -47,6 +53,7 @@ namespace Game
             ElapsedTime = source.time;
         }
 
+
         void Setup()
         {
             //パラメータの初期化
@@ -56,7 +63,7 @@ namespace Game
             if (GameMusic.Instance.Clip)
             {
                 source.clip = GameMusic.Instance.Clip;
-                source.Play();
+                //source.Play();
                 Music.CurrentSetup();
             }
             else
@@ -64,6 +71,27 @@ namespace Game
                 //エラー処理
                 //(確認用のダイアログを出す.etc)
             }
+        }
+
+        private IEnumerator DelayStart()
+        {
+            FadeController.Instance.Stop();
+            float alp = 0.3f;
+            FadeController.Instance.SetAlpha(alp);
+            //FadeController.Instance.EventQueue.Enqueue()
+                FadeController.Instance.FadeOut(delayTime / 8);
+            yield return new WaitForSeconds(delayTime);
+            isStart = true;
+            source.Play();
+        }
+
+        /// <summary>
+        /// ゲーム終了
+        /// </summary>
+        private void GameEnd()
+        {
+            SceneManager.LoadScene("Select");
+            Destroy(NotesController.Instance.gameObject);
         }
     }
 }
