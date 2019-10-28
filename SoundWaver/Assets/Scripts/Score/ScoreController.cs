@@ -57,10 +57,10 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         //評価分け
         switch (judge)
         {
-            case Judge.PERFECT: Perfect(); break;
-            case Judge.GREAT: Great(); break;
-            case Judge.GOOD: Good(); break;
-            case Judge.MISS: Miss(); break;
+            case Judge.PERFECT: image.sprite = sprites.perfect; break;
+            case Judge.GREAT: image.sprite = sprites.great; break;
+            case Judge.GOOD: image.sprite = sprites.good; break;
+            case Judge.MISS: image.sprite = sprites.miss; break;
         }
         routine = DecorateScoreEffectRoutine();
         //コルーチンが終了したらroutineの初期化
@@ -88,33 +88,6 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         //非アクティブ化
         image.gameObject.SetActive(false);
     }
-
-    #region 判定ごとの処理
-    //TODO:コンボ処理とコンボ時のUI表示もココに入れてるけど
-    //本来ならコールバック用のイベントキューを用意したほうがいい…
-    private void Perfect()
-    {
-        image.sprite = sprites.perfect;
-        Game.GameController.Instance.Comb++;
-        CombEffectCanvas.Instance.Execute(Game.GameController.Instance.Comb);
-    }
-    private void Great()
-    {
-        image.sprite = sprites.great;
-        Game.GameController.Instance.Comb++;
-        CombEffectCanvas.Instance.Execute(Game.GameController.Instance.Comb);
-    }
-    private void Good()
-    {
-        image.sprite = sprites.good;
-        Game.GameController.Instance.Comb = 0;
-    }
-    private void Miss()
-    {
-        image.sprite = sprites.miss;
-        Game.GameController.Instance.Comb = 0;
-    }
-    #endregion
 
 #if UNITY_EDITOR
     private void Reset()

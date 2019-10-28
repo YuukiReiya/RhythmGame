@@ -11,7 +11,7 @@ namespace Game
         [SerializeField, Tooltip("関連付けさせるイベントトリガー")] EventTrigger eventTrigger;
 
         //accessor
-        float elapsedTime { get { return GameController.Instance.ElapsedTime; } }
+        private float elapsedTime { get { return GameController.Instance.ElapsedTime; } }
 
         private void Awake()
         {
@@ -41,35 +41,9 @@ namespace Game
             //TODO:処理用確認
             var tapTime = note.DownTime - elapsedTime;
             if (Mathf.Abs(tapTime) > NotesController.Instance.WaitTime) { return; }
-
-            //判定
-            string judge;
-            ScoreController.Judge result = ScoreController.Judge.PERFECT;
-
-            //TODO:汚い
-            if (Mathf.Abs(tapTime) <= Common.Define.c_PerfectTime)
-            {
-                judge = "perfect";
-                result = ScoreController.Judge.PERFECT;
-            }
-            else if (Mathf.Abs(tapTime) <= Common.Define.c_GreatTime)
-            {
-                judge = "great";
-                result = ScoreController.Judge.GREAT;
-            }
-            else if (Mathf.Abs(tapTime) <= Common.Define.c_GoodTime)
-            {
-                judge = "good";
-                result = ScoreController.Judge.GOOD;
-            }
-            else
-            {
-                judge = "miss";
-                result = ScoreController.Judge.MISS;
-            }
-            Debug.Log(judge);
-            ScoreController.Instance.StartScoreEffect(result);
-
+            //判定処理
+            Judge.Execute(tapTime);
+            //ノーツの登録解除
             note.Unregister();
         }
 

@@ -31,7 +31,7 @@ namespace Game
         {
             base.Awake();
             Notes = new List<INote>();
-            noteQueue = new Queue<Chart.Note>(ChartManager.Instance.Chart.Notes);
+            noteQueue = new Queue<Chart.Note>(ChartManager.Chart.Notes);
             //NotesQueue = new Queue<INote>();
         }
 
@@ -89,11 +89,12 @@ namespace Game
             var discardNotes = new Queue<INote>();
             foreach(var it in Notes)
             {
+                var time = (it.DownTime - GameController.Instance.ElapsedTime);
                 //押されるべき時間 - 実際の時間 > -(Good判定時間)
-                if ((it.DownTime - GameController.Instance.ElapsedTime) < -Common.Define.c_GoodTime)
+                if (time < -Common.Define.c_GoodTime)
                 {
                     //ミス判定処理
-                    ScoreController.Instance.StartScoreEffect(ScoreController.Judge.MISS);
+                    Judge.Execute(time);
 
                     //ノーツの登録解除
                     it.Unregister();
