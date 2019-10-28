@@ -8,3 +8,5 @@ SoundWaver/Assets/ImportAsset/Standard/
 SoundWaver/Assets/Resources/Sound/
 SoundWaver/.vs/
 *.zip
+*.mp3
+*.wav
