@@ -12,11 +12,6 @@ public class ErrorManager : Yuuki.SingletonMonoBehaviour<ErrorManager>
         Application.logMessageReceived += HandleLog;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     void HandleLog(string condition, string stackTrace, LogType type)
     {
         text.text += condition + "\n" + stackTrace + "\n" + type.ToString() + "\n";
