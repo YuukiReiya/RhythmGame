@@ -131,10 +131,9 @@ GameObject:
   - component: {fileID: 349458804}
   - component: {fileID: 349458807}
   - component: {fileID: 349458806}
-  - component: {fileID: 349458805}
   - component: {fileID: 349458808}
   m_Layer: 5
-  m_Name: Sprite
+  m_Name: Home
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,19 +153,6 @@ Transform:
   m_Father: {fileID: 486769322}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &349458805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349458803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0842f621a6d012949b56a092abd78682, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneIndex: 0
 --- !u!114 &349458806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,8 +179,8 @@ MonoBehaviour:
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
   onClick:
-  - mTarget: {fileID: 349458805}
-    mMethodName: Execute
+  - mTarget: {fileID: 886694945}
+    mMethodName: TransitionStart
     mParameters: []
     oneShot: 0
 --- !u!114 &349458807
@@ -589,7 +575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94661efdd41ec94fa2773c2661c0f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefaultDontDestroy: 0
 --- !u!4 &886694946
 Transform:
   m_ObjectHideFlags: 0
@@ -633,7 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715cf203401b8214387e036307050766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefaultDontDestroy: 1
+  isDefaultDontDestroy: 0
   prefab: {fileID: 2495827661583254983, guid: 25e117c7c1f08b246b0b3e175441efec, type: 3}
   grid: {fileID: 1767032156}
 --- !u!4 &1120703335

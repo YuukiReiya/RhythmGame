@@ -1105,7 +1105,8 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: -Infinity, y: 1.615587e-27, z: 0, w: 1.8e-43}
+  m_BoundingSphereOverride: {x: 8.559424e-39, y: 7.2156034e+22, z: 0.00000066070714,
+    w: 1.7077752e+19}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1458,7 +1459,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 279
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1833,7 +1834,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1374449066}
   - component: {fileID: 1374449065}
-  - component: {fileID: 1374449067}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 0
-  sceneTransitionCommand: {fileID: 1374449067}
+  delayTime: 3
   source: {fileID: 1089299385}
 --- !u!4 &1374449066
 Transform:
@@ -1870,19 +1870,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1374449067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374449064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0842f621a6d012949b56a092abd78682, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneIndex: 1
 --- !u!1 &1506363988
 GameObject:
   m_ObjectHideFlags: 0
