@@ -111,7 +111,7 @@ MonoBehaviour:
   renderQueue: 0
   startingRenderQueue: 3000
   mClipTexture: {fileID: 0}
-  mAlpha: 0
+  mAlpha: 1
   mClipping: 0
   mClipRange: {x: 0, y: 0, z: 300, w: 200}
   mClipSoftness: {x: 4, y: 4}
@@ -196,7 +196,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 0, g: 0, b: 0, a: 1}
   mPivot: 4
   mWidth: 1024
   mHeight: 1024
@@ -240,7 +240,6 @@ GameObject:
   - component: {fileID: 7484083469356671352}
   - component: {fileID: 7484083469356671355}
   - component: {fileID: 7484083469356671354}
-  - component: {fileID: 7484083469356671353}
   m_Layer: 5
   m_Name: Camera
   m_TagString: Untagged
@@ -348,11 +347,3 @@ MonoBehaviour:
   cancelKey0: 27
   cancelKey1: 331
   autoHideCursor: 1
---- !u!81 &7484083469356671353
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7484083469356671359}
-  m_Enabled: 1
