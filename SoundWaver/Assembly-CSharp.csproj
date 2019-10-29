@@ -218,7 +218,6 @@
     <Compile Include="Assets\Scripts\Chart\Chart.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartManager.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartProxy.cs" />
-    <Compile Include="Assets\Scripts\Chart\LoadController.cs" />
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
@@ -245,6 +244,7 @@
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
     <Compile Include="Assets\Scripts\SceneController\ChartCreateController.cs" />
     <Compile Include="Assets\Scripts\SceneController\Dummy.cs" />
+    <Compile Include="Assets\Scripts\SceneController\LoadController.cs" />
     <Compile Include="Assets\Scripts\SceneController\SelectController.cs" />
     <Compile Include="Assets\Scripts\SceneController\StartController.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreController.cs" />

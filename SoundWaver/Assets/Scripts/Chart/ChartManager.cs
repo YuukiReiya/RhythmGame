@@ -30,24 +30,6 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     }
 
     /// <summary>
-    /// 既存(プリセット)の楽曲ファイルの表示
-    /// </summary>
-    private void PresetMusicLoad()
-    {
-        //var path = System.IO.Path.Combine(Application.streamingAssetsPath, "test.txt");
-        //var path = System.IO.Path.Combine(Application, "test.txt");
-        var path = Define.c_PresetFilePath[0].Item2;
-        StartCoroutine(get(path));
-    }
-    System.Collections.IEnumerator get(string filePath)
-    {
-        var www = UnityWebRequest.Get(filePath);
-        yield return www.SendWebRequest();
-        var ret = www.downloadHandler.text;
-        DialogController.Instance.Open(ret);
-    }
-
-    /// <summary>
     /// 譜面プレハブの作成
     /// </summary>
     /// <param name="chart"></param>

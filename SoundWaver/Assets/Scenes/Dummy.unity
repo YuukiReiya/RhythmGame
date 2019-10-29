@@ -187,6 +187,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7484083468325342747, guid: 36dd65508d19c5440aceef8fd6802b7c,
+        type: 3}
+      propertyPath: mAlpha
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36dd65508d19c5440aceef8fd6802b7c, type: 3}
 --- !u!1001 &233908217
@@ -256,6 +261,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8600081608418651893, guid: cc2749ff02dce57459664378a09ac20a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600081607318519784, guid: cc2749ff02dce57459664378a09ac20a,
+        type: 3}
+      propertyPath: mText
+      value: "\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F\u3002\n\u30BF\u30A4\u30C8\u30EB\u306B\u623B\u308A\u307E\u3059\u3002"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2749ff02dce57459664378a09ac20a, type: 3}
 --- !u!1001 &692033892
@@ -269,6 +284,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ErrorObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001640362112173062, guid: bd6801b1f8da396408b401dd048cdbd9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5001640362112173060, guid: bd6801b1f8da396408b401dd048cdbd9,
         type: 3}
@@ -427,7 +447,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 279
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -22,18 +22,6 @@ namespace Game
         public AudioSource Source { get; set; }
         public AudioClip Clip { get; private set; }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            //LoadAndPlayAudioClip(path);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         /// <summary>
         /// 楽曲をロードした後、再生する。
         /// </summary>
@@ -72,8 +60,10 @@ namespace Game
         /// <returns></returns>
         public IEnumerator LoadToAudioClip(string path)
         {
+            Clip = null;
             var type = GetAudioType(path);
             //path = Define.c_LocalFilePath + path;
+            if (!File.Exists(path)) { yield break; }
             using (var request = UnityWebRequestMultimedia.GetAudioClip(path,type))
             {
                 //リクエスト送信
