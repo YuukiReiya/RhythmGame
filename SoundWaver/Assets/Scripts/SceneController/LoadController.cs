@@ -4,6 +4,7 @@ using Yuuki;
 using API.Util;
 using Common;
 using UnityEngine.SceneManagement;
+using System.IO;
 namespace Game
 {
 
@@ -22,14 +23,23 @@ namespace Game
 
         IEnumerator MainRoutine()
         {
-            //yield return new WaitForSeconds(1.0f);
-
             //ノーツの初期化
             NotesController.Instance.SetupNotes();
 
+            //ファイルが無い
+            if (!File.Exists(ChartManager.Chart.FilePath))
+            {
+                OnCallNotFoundMusic();
+                yield break;
+            }
+
+            //クリップオブジェクトの生成まで待機
+            yield return new WaitUntil(
+                () => { return GameMusic.Instance.Clip; }
+                );
             //楽曲ファイルのロード中は待機
             yield return new WaitWhile(
-                () => { return GameMusic.Instance.Clip.loadState != AudioDataLoadState.Loaded; }
+                () => { return GameMusic.Instance.Clip.loadState == AudioDataLoadState.Loading; }
                 );
             //ロード状況によって切り替える
             switch (GameMusic.Instance.Clip.loadState)
@@ -71,12 +81,25 @@ namespace Game
         {
             FadeController.Instance.Stop();
             DialogController.Instance.Open(
-                "楽曲が見つかりません。\nタイトルに戻ります",
+                "読み込みに失敗しました。\nタイトルに戻ります",
                 () => {
                              FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
                              FadeController.Instance.FadeIn(Define.c_FadeTime);
                           }
                 );
+        }
+        /// <summary>
+        /// 音楽ファイルが見つからなかった処理
+        /// </summary>
+        private void OnCallNotFoundMusic()
+        {
+            DialogController.Instance.Open(
+            "楽曲が見つかりません。\nタイトルに戻ります",
+            () =>{
+                FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
+                FadeController.Instance.FadeIn(Define.c_FadeTime);
+            }
+            );
         }
     }
 }
