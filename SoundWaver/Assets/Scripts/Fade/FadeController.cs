@@ -42,7 +42,6 @@ namespace API.Util
         public void FadeOut(float time, float from = 1.0f, float to = 0.0f)
         {
             if (routine != null) { return; }
-            Debug.Log("yes");
             routine = Execute(from, to, time);
             this.StartCoroutine(routine, () => { routine = null; });
         }
