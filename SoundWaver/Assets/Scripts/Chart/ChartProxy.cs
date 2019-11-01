@@ -46,8 +46,11 @@ public class ChartProxy : MonoBehaviour
                 ChartManager.Chart = this.chart;
                 SceneManager.LoadScene("Load");
                 //MEMO:シーン遷移間にコルーチンを回すので、DontDestroyObjectでStartCoroutineをする必要がある
-                //GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
+#if UNITY_EDITOR
                 GameMusic.Instance.StartCoroutine(TestRoutine());
+#else
+                GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
+#endif
             }
             );
         FadeController.Instance.FadeIn(Define.c_FadeTime);

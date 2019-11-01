@@ -15,7 +15,7 @@ namespace Game
         public AudioSource source;
         //accessor
         public float ElapsedTime { get; private set; }
-        public uint Comb { get; set; }
+        //public uint Comb { get; set; }
         protected override void Awake()
         {
             base.Awake();
@@ -61,9 +61,6 @@ namespace Game
 
         void Setup()
         {
-            //パラメータの初期化
-            Comb = 0;
-
             //楽曲データロード済み
             if (GameMusic.Instance.Clip)
             {
@@ -83,8 +80,7 @@ namespace Game
             FadeController.Instance.Stop();
             float alp = 0.3f;
             FadeController.Instance.SetAlpha(alp);
-            //FadeController.Instance.EventQueue.Enqueue()
-                FadeController.Instance.FadeOut(delayTime / 8);
+            FadeController.Instance.FadeOut(delayTime / 4);
             yield return new WaitForSeconds(delayTime);
             isStart = true;
             source.Play();
@@ -95,7 +91,8 @@ namespace Game
         /// </summary>
         private void GameEnd()
         {
-            SceneManager.LoadScene("Select");
+            isStart = false;
+            SceneManager.LoadScene("Result");
             Destroy(NotesController.Instance.gameObject);
         }
     }

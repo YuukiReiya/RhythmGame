@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Common;
 using System;
+using count =System.UInt32;
 
 namespace Game
 {
@@ -12,11 +13,32 @@ namespace Game
     public class Judge
     {
         //決定表で用いる疑似テーブル
-        private static readonly Dictionary<ScoreController.Judge, float> c_Pair = new Dictionary<ScoreController.Judge, float>() {
-            { ScoreController.Judge.PERFECT,Define.c_PerfectTime },
-            { ScoreController.Judge.GREAT,Define.c_GreatTime },
-            { ScoreController.Judge.GOOD,Define.c_GoodTime },
+        private static readonly Dictionary<ScoreEffectCanvas.Judge, float> c_Pair = new Dictionary<ScoreEffectCanvas.Judge, float>() {
+            { ScoreEffectCanvas.Judge.PERFECT,Define.c_PerfectTime },
+            { ScoreEffectCanvas.Judge.GREAT,Define.c_GreatTime },
+            { ScoreEffectCanvas.Judge.GOOD,Define.c_GoodTime },
         };
+
+        public struct Score
+        {
+            public count Comb;
+            public count MaxComb;
+            public count Perfect;
+            public count Great;
+            public count Good;
+            public count Miss;
+        }
+        public static Score score;
+
+        public static void Reset()
+        {
+            score.Comb = 0;
+            score.MaxComb = 0;
+            score.Perfect = 0;
+            score.Great = 0;
+            score.Good = 0;
+            score.Miss = 0;
+        }
 
         /// <summary>
         /// 実行処理
@@ -26,7 +48,7 @@ namespace Game
         {
             var absTime = Mathf.Abs(time);
             //決定表のどれにも当てはまらなければ"MISS"にするための初期化
-            ScoreController.Judge ret = ScoreController.Judge.MISS;
+            ScoreEffectCanvas.Judge ret = ScoreEffectCanvas.Judge.MISS;
             //C#版 自作決定表
             foreach(var it in c_Pair)
             {
@@ -36,24 +58,42 @@ namespace Game
                     break;
                 }
             }
+
+            //カウント
+            CountUp(ret);
+
             //コンボ
-            switch(ret)
+            switch (ret)
             {
                 //"PERFECT"と"GREAT"なら加算
-                case ScoreController.Judge.PERFECT:
-                case ScoreController.Judge.GREAT:
-                    GameController.Instance.Comb++;
-                    CombEffectCanvas.Instance.Execute(GameController.Instance.Comb);
+                case ScoreEffectCanvas.Judge.PERFECT:
+                case ScoreEffectCanvas.Judge.GREAT:
+                    score.Comb++;
+                    CombEffectCanvas.Instance.Execute(score.Comb);
                     break;
                 //"GOOD"又は"MISS"ならリセット
-                case ScoreController.Judge.GOOD:
-                case ScoreController.Judge.MISS:
-                    GameController.Instance.Comb = 0;
+                case ScoreEffectCanvas.Judge.GOOD:
+                case ScoreEffectCanvas.Judge.MISS:
+                    score.Comb = 0;
                     CombEffectCanvas.Instance.Stop();
                     break;
             }
+
+            //最大コンボ
+            score.MaxComb = score.Comb > score.MaxComb ? score.Comb : score.MaxComb;
+
             //判定エフェクト
-            ScoreController.Instance.StartScoreEffect(ret);
+            ScoreEffectCanvas.Instance.StartScoreEffect(ret);
+        }
+        private static void CountUp(ScoreEffectCanvas.Judge judge)
+        {
+            switch (judge)
+            {
+                case ScoreEffectCanvas.Judge.PERFECT:score.Perfect++;break;
+                case ScoreEffectCanvas.Judge.GREAT:score.Great++;break;
+                case ScoreEffectCanvas.Judge.GOOD:score.Good++;break;
+                case ScoreEffectCanvas.Judge.MISS:score.Miss++;break;
+            }
         }
     }
 }
