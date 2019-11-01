@@ -242,12 +242,14 @@
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
+    <Compile Include="Assets\Scripts\Result\ResultScoreCanvas.cs" />
     <Compile Include="Assets\Scripts\SceneController\ChartCreateController.cs" />
     <Compile Include="Assets\Scripts\SceneController\Dummy.cs" />
     <Compile Include="Assets\Scripts\SceneController\LoadController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\ResultController.cs" />
     <Compile Include="Assets\Scripts\SceneController\SelectController.cs" />
     <Compile Include="Assets\Scripts\SceneController\StartController.cs" />
-    <Compile Include="Assets\Scripts\Score\ScoreController.cs" />
+    <Compile Include="Assets\Scripts\Score\ScoreEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
