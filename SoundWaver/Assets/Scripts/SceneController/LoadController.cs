@@ -23,9 +23,11 @@ namespace Game
 
         IEnumerator MainRoutine()
         {
+            #region パラメータの初期化
             //ノーツの初期化
+            Judge.Reset();
             NotesController.Instance.SetupNotes();
-
+            #endregion
             //ファイルが無い
             if (!File.Exists(ChartManager.Chart.FilePath))
             {
