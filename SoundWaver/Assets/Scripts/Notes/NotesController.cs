@@ -9,7 +9,7 @@ namespace Game
         //serialeze param
         [Header("Notes Control Parameter")]
         [SerializeField] float noteSpeed;
-        [SerializeField, Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 5.0f;
+        [SerializeField, Range(0, 1), Tooltip("算出されたノーツのキーを受け付けない時間")] float waitTime = 0.5f;
         [SerializeField, Range(1.0f, 10.0f), Tooltip("ノーツを出現させる時間")] float activeTime;
         [System.Serializable]
         struct TimingLine
