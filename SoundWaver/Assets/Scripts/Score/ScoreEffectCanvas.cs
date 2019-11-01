@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Yuuki.MethodExpansions;
 
-public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
+public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
 {
     //enum
     public enum Judge
@@ -32,6 +32,7 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
         public Sprite good;
         public Sprite miss;
     }
+
     //serialize param
     [SerializeField] ScoreSprites sprites;
     [SerializeField] DecorateScoreEffectParameter effectParam;
@@ -40,7 +41,6 @@ public class ScoreController : Yuuki.SingletonMonoBehaviour<ScoreController>
     //private param
     IEnumerator routine;
     //accessor
-    public uint Score { get; private set; }
     protected override void Awake()
     {
         base.Awake();
