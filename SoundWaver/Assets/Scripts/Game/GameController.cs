@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using API.Util;
+using Common;
+using UnityEngine.UI;
 namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
@@ -9,10 +11,11 @@ namespace Game
         //serialize param
         //[SerializeField] SceneTransitionCommand sceneTransitionCommand;
         [SerializeField,Tooltip("ゲーム開始前に待機(遅延)する時間")] private float delayTime;
+        [SerializeField] private AudioSource source;
+        [SerializeField] PauseCanvas pauseCanvas;
         //private param
         private bool isStart;
         //public param
-        public AudioSource source;
         //accessor
         public float ElapsedTime { get; private set; }
         //public uint Comb { get; set; }
@@ -61,6 +64,10 @@ namespace Game
 
         void Setup()
         {
+            //param
+            isStart = false;
+            pauseCanvas.Setup(source);
+
             //楽曲データロード済み
             if (GameMusic.Instance.Clip)
             {
@@ -91,7 +98,7 @@ namespace Game
         /// </summary>
         private void GameEnd()
         {
-            isStart = false;
+            //isStart = false;
             SceneManager.LoadScene("Result");
             Destroy(NotesController.Instance.gameObject);
         }
