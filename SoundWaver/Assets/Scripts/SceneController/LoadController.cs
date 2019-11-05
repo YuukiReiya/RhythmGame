@@ -83,6 +83,7 @@ namespace Game
         {
             FadeController.Instance.Stop();
             DialogController.Instance.Open(
+                DialogController.Type.Check,
                 "読み込みに失敗しました。\nタイトルに戻ります",
                 () => {
                              FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
@@ -96,11 +97,12 @@ namespace Game
         private void OnCallNotFoundMusic()
         {
             DialogController.Instance.Open(
-            "楽曲が見つかりません。\nタイトルに戻ります",
-            () =>{
-                FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
-                FadeController.Instance.FadeIn(Define.c_FadeTime);
-            }
+                DialogController.Type.Check,
+                "楽曲が見つかりません。\nタイトルに戻ります",
+                () =>{
+                    FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                }
             );
         }
     }
