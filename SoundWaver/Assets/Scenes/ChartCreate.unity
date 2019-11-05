@@ -255,7 +255,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3017
+  startingRenderQueue: 3013
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -2987,21 +2987,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 1415521377}
-  inputType: 0
+  inputType: 1
   onReturnKey: 0
   keyboardType: 0
   hideInput: 0
   submitOnUnselect: 0
-  validation: 0
-  characterLimit: 0
+  validation: 6
+  characterLimit: 25
   savedAs: 
   selectOnTab: {fileID: 0}
-  activeTextColor: {r: 1, g: 1, b: 1, a: 1}
-  caretColor: {r: 1, g: 1, b: 1, a: 0.8}
-  selectionColor: {r: 1, g: 0.8745098, b: 0.5529412, a: 0.5}
+  activeTextColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  caretColor: {r: 0, g: 0, b: 0, a: 0.8}
+  selectionColor: {r: 1, g: 1, b: 1, a: 0.5}
   onSubmit: []
   onChange: []
-  mValue: chart_
+  mValue: 
 --- !u!114 &1415521377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3031,7 +3031,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 1, b: 1, a: 1}
+  mColor: {r: 0.2830189, g: 0.2763439, b: 0.2763439, a: 1}
   mPivot: 4
   mWidth: 460
   mHeight: 60
@@ -3044,7 +3044,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: fa2586e83ec4b084a8d15689d9bb6f16, type: 3}
   mFont: {fileID: 0}
-  mText: Chart_
+  mText: "\u8868\u793A\u3059\u308B\u540D\u524D\u3092\u5165\u529B"
   mFontSize: 60
   mFontStyle: 1
   mAlignment: 0
@@ -3055,7 +3055,7 @@ MonoBehaviour:
   mSymbols: 1
   mEffectDistance: {x: 1, y: 1}
   mOverflow: 0
-  mApplyGradient: 1
+  mApplyGradient: 0
   mGradientTop: {r: 0, g: 0, b: 0, a: 1}
   mGradientBottom: {r: 0, g: 0, b: 0, a: 1}
   mSpacingX: 0
@@ -3475,7 +3475,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3017
+  startingRenderQueue: 3013
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -4628,7 +4628,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3014
+  startingRenderQueue: 3010
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -4903,7 +4903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2079482870
 Transform:
   m_ObjectHideFlags: 0
