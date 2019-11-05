@@ -234,6 +234,7 @@
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
     <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
+    <Compile Include="Assets\Scripts\Game\PauseCanvas.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
