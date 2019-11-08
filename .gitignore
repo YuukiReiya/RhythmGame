@@ -10,3 +10,5 @@ SoundWaver/.vs/
 *.zip
 *.mp3
 *.wav
+SoundWaver/Assets/StreamingAssets/
+SoundWaver/Assets/StreamingAssets.meta
