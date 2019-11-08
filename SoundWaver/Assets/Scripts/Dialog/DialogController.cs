@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DialogController : Yuuki.SingletonMonoBehaviour<DialogController>
 {
+
     #region 構造体_宣言
+    interface Dialog { }
     [System.Serializable]
-    struct CheckDialog
+    struct CheckDialog:Dialog
     {
         public GameObject Parent;
         public UILabel Message;
@@ -24,7 +26,7 @@ public class DialogController : Yuuki.SingletonMonoBehaviour<DialogController>
         }
     }
     [System.Serializable]
-    struct YesNoDialog
+    struct YesNoDialog:Dialog
     {
         public GameObject Parent;
         public UILabel Message;
@@ -70,15 +72,34 @@ public class DialogController : Yuuki.SingletonMonoBehaviour<DialogController>
     [SerializeField] private CheckDialog checkDialog;
     [SerializeField] private YesNoDialog yesNoDialog;
     //private param
-    Type type;
     //pubic param
 
     public void Open(Type type, string message, System.Action callback = null)
     {
-        this.type = type;
-        checkDialog.Message.text = message;
-        checkDialog.Callback = callback;
-        checkDialog.Open();
+        switch (type)
+        {
+            case Type.Check:
+                checkDialog.Message.text = message;
+                checkDialog.Callback = callback;
+                checkDialog.Open();
+                break;
+            case Type.YesNo:
+                yesNoDialog.Message.text = message;
+                yesNoDialog.EndOfFunc = callback;
+                yesNoDialog.Open();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Open(string message,System.Action yes,System.Action no,System.Action end = null)
+    {
+        yesNoDialog.Message.text = message;
+        yesNoDialog.YesOfFunc = yes;
+        yesNoDialog.NoOfFunc = no;
+        yesNoDialog.EndOfFunc = end;
+        yesNoDialog.Open();
     }
 
     public void Check()

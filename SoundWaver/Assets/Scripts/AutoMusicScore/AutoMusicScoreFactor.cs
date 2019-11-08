@@ -3,6 +3,8 @@
 //Pauseは使えないのでラッピングする必要がある
 using Common;
 using Game;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +16,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     [SerializeField] int channelNumber = 0;
     [SerializeField, Range(0, 100.0f), Tooltip("直前のフレームの最大スペクトラムと比較して、(この値 / 100) 大きければノーツを生成")]
     float difference = 0.3f;
-    [Header("Chart info")]
+    [Header("Chart Info")]
     [SerializeField] UILabel musicTitle;
     [SerializeField] UILabel intervalSec;
     [SerializeField] UILabel chartName;
@@ -46,28 +48,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         cancel.isEnabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        ////再生時間を可視化
-        //playTimeValue.fillAmount = audioSource && audioSource.clip.length > 0 ? audioSource.time / audioSource.clip.length : 0.0f;
-
-        //if (isExecute)
-        //{
-        //    Execute();
-        //    //終了タイミング
-        //    if (audioSource.time == 0.0f && !audioSource.isPlaying)
-        //    {
-        //        Debug.Log("再生終了");
-        //        isExecute = false;
-        //        mute.isEnabled = false;
-        //        execute.isEnabled = true;
-        //        cancel.isEnabled = false;
-        //        CreateChart();
-        //    }
-        //}
-    }
-
     private void FixedUpdate()
     {
         //再生時間を可視化
@@ -84,7 +64,8 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
                 mute.isEnabled = false;
                 execute.isEnabled = true;
                 cancel.isEnabled = false;
-                CreateChart();
+                CreateData();
+                ProcessEnd();
             }
         }
     }
@@ -141,7 +122,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
                 break;
         }
     }
-    public void CreateChart()
+    public void CreateData()
     {
         var fileIO = new Yuuki.FileIO.FileIO();
         Chart chart = new Chart();
@@ -166,44 +147,90 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         //ErrorManager.Instance.text.text += System.IO.File.Exists(chart.FilePath) ? "譜面ファイルのパスは正常に動作" : "譜面に書き込まれたパスはありません。";
     }
 
+    private void ProcessEnd()
+    {
+        DialogController.Instance.Open(
+            DialogController.Type.Check,
+            "譜面ファイルの生成を完了しました。"
+            );
+    }
+
     #region Button処理
     /// <summary>
     /// 音楽ファイル読み込み-再生
+    /// TODO:既存譜面の判定が雑…
     /// </summary>
-    public void Setup()
+    public void ProcessStart()
     {
         if (musicEngineObj != null) { Destroy(musicEngineObj); }
-        GameMusic.Instance.LoadAndFunction(
-                currentFilePath,
-                //読み込み終了後の処理
-                () =>
-                {
-                    bpm = (uint)UniBpmAnalyzer.AnalyzeBpm(GameMusic.Instance.Clip);
-                    //MusicEngine 生成
-                    musicEngineObj = Instantiate(Resources.Load<GameObject>("Prefab/MusicEngine"));
-                    var musicEngine = musicEngineObj.GetComponent<Music>();
-                    //MusicEngineの動的設定
-                    Music.CurrentSource.clip = GameMusic.Instance.Clip;
-                    var sec = Music.GetSection(0);
-                    sec.Tempo = bpm;
-                    sec.UnitPerBar = int.Parse(unitPerBar.text);
-                    sec.UnitPerBeat = int.Parse(unitPerBeat.text);
-                    musicEngine.Setup();
-                    //audio
-                    GameMusic.Instance.Source = Music.CurrentSource;
-                    GameMusic.Instance.Source.Play();
-                    isExecute = true;
-                    //buttons
-                    mute.isEnabled = true;
-                    execute.isEnabled = false;
-                    cancel.isEnabled = true;
-                    //param
-                    executeFilePath = currentFilePath;
-                }
-           );
+
+        //譜面名が入力されていない場合
+        //TODO:マジックナンバーだけど、ここだけだしインスペクターなんだよなぁ。。。
+        if (chartName.text == "表示する名前を入力")
+        {
+            DialogController.Instance.Open(
+                DialogController.Type.Check,
+                "譜面の名前を未入力にすることはできません。"
+                );
+            return;
+        }
+
+        //譜面名が被った場合
+        var charts = Directory.GetFiles(Define.c_ChartSaveDirectory);
+        Debug.Log("譜面ファイル一覧");
+        foreach(var it in charts) { Debug.Log(Path.GetFileNameWithoutExtension(it)); }
+
+        if(charts.Where(i => Path.GetFileNameWithoutExtension(i) == chartName.text).Count() > 0)
+        {
+            DialogController.Instance.Open(
+                "譜面が既に存在しています\n上書きしますか？",
+                () => { MakeChartProcess(); },
+                null, null
+                );
+        }
+        else
+        {
+            MakeChartProcess();
+        }
     }
 
- 
+    private void MakeChartProcess()
+    {
+        GameMusic.Instance.LoadAndFunction(
+        currentFilePath,
+        //読み込み終了後の処理
+        () =>
+        {
+            bpm = (uint)UniBpmAnalyzer.AnalyzeBpm(GameMusic.Instance.Clip);
+            //MusicEngine 生成
+            musicEngineObj = Instantiate(Resources.Load<GameObject>("Prefab/MusicEngine"));
+            var musicEngine = musicEngineObj.GetComponent<Music>();
+            //MusicEngineの動的設定
+            Music.CurrentSource.clip = GameMusic.Instance.Clip;
+            var sec = Music.GetSection(0);
+            sec.Tempo = bpm;
+            sec.UnitPerBar = int.Parse(unitPerBar.text);
+            sec.UnitPerBeat = int.Parse(unitPerBeat.text);
+            musicEngine.Setup();
+            //audio
+            GameMusic.Instance.Source = Music.CurrentSource;
+            GameMusic.Instance.Source.Play();
+            isExecute = true;
+            //buttons
+            mute.isEnabled = true;
+            execute.isEnabled = false;
+            cancel.isEnabled = true;
+            //param
+            executeFilePath = currentFilePath;
+        }
+   );
+
+    }
+
+    private IEnumerator SetupRoutine()
+    {
+        yield break;
+    }
     public void MuteButton()
     {
         audioSource.volume = audioSource.volume == 0.0f ? 1.0f : 0.0f;
