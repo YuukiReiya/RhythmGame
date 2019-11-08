@@ -1083,7 +1083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1895970735
 Transform:
   m_ObjectHideFlags: 0
@@ -1460,8 +1460,8 @@ MonoBehaviour:
     Parent: {fileID: 8600081608418651893}
     Message: {fileID: 8600081607318519784}
   yesNoDialog:
-    Parent: {fileID: 0}
-    Message: {fileID: 0}
+    Parent: {fileID: 1895970734}
+    Message: {fileID: 202383531}
 --- !u!114 &8600081607505784200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3000
+  startingRenderQueue: 3004
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
