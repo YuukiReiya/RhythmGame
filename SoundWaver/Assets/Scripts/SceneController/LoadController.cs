@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using System.IO;
 namespace Game
 {
-
     public class LoadController : SingletonMonoBehaviour<LoadController>
     {
         //serialize param
@@ -28,12 +27,6 @@ namespace Game
             Judge.Reset();
             NotesController.Instance.SetupNotes();
             #endregion
-            //ファイルが無い
-            if (!File.Exists(ChartManager.Chart.FilePath))
-            {
-                OnCallNotFoundMusic();
-                yield break;
-            }
 
             //クリップオブジェクトの生成まで待機
             yield return new WaitUntil(
@@ -49,7 +42,7 @@ namespace Game
             {
                 //読み込み成功
                 case AudioDataLoadState.Loaded: 
-                    OnLoadSuccess(); 
+                    OnLoadSuccess();
                     break;
                 //読み込み失敗
                 case AudioDataLoadState.Failed:
@@ -58,6 +51,7 @@ namespace Game
                     break;
             }
         }
+
         /// <summary>
         /// ロード成功処理
         /// </summary>
@@ -72,10 +66,11 @@ namespace Game
             //フェード終了後にロード完了
             else
             {
-                FadeController.Instance.EventQueue.Enqueue(() => { UnityEngine.SceneManagement.SceneManager.LoadScene("Game"); });
+                FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Game"); });
                 FadeController.Instance.FadeIn(Define.c_FadeTime);
             }
         }
+
         /// <summary>
         /// ロード失敗処理
         /// </summary>
@@ -90,20 +85,6 @@ namespace Game
                              FadeController.Instance.FadeIn(Define.c_FadeTime);
                           }
                 );
-        }
-        /// <summary>
-        /// 音楽ファイルが見つからなかった処理
-        /// </summary>
-        private void OnCallNotFoundMusic()
-        {
-            DialogController.Instance.Open(
-                DialogController.Type.Check,
-                "楽曲が見つかりません。\nタイトルに戻ります",
-                () =>{
-                    FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
-                    FadeController.Instance.FadeIn(Define.c_FadeTime);
-                }
-            );
         }
     }
 }
