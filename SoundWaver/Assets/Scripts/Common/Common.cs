@@ -25,6 +25,7 @@ namespace Common
         /// </summary>
         public static readonly (string, string)[] c_PresetFilePath = 
             { 
+            //ハルジオン
                 (
                     Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_kei_harujion"+c_MP3,
                     Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Harujion"+c_JSON
@@ -36,7 +37,6 @@ namespace Common
         /// ローカルファイル指定用のパス
         /// </summary>
         public const string c_LocalFilePath = "file:///";
-        
         /// <summary>
         /// JSON拡張子
         /// </summary>
@@ -64,7 +64,7 @@ namespace Common
         /// StreamingAssetsPathの代替アクセスパス
         /// R:読み取り専用
         /// </summary>
-        public static string c_StreamingAssetsPath = "jar:file//" + Application.dataPath + "!/assets";
+        public static string c_StreamingAssetsPath = "jar:file://" + Application.dataPath + "!/assets";
         /// <summary>
         /// .iniファイル名
         /// 読み込み先は"Application.persistentDataPath"
