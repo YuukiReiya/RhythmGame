@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Common;
+
 namespace Scenes
 {
     public class StartController : MonoBehaviour
@@ -15,12 +17,12 @@ namespace Scenes
         public void TransitionSelect()
         {
             API.Util.FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Select"); });
-            API.Util.FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+            API.Util.FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
         public void TransitionChartCreate()
         {
             API.Util.FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreate"); });
-            API.Util.FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+            API.Util.FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
 }
