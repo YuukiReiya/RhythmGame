@@ -5,6 +5,7 @@ using System.IO;
 using Common;
 using UnityEngine.Networking;
 using Yuuki.MethodExpansions;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -18,7 +19,6 @@ namespace Game
         //  private param
         private IEnumerator routine;
         //  accessor
-        //public AudioSource Source { get { return source; } }
         public AudioSource Source { get; set; }
         public AudioClip Clip { get; private set; }
 
@@ -28,7 +28,6 @@ namespace Game
         /// <param name="path"></param>
         public void LoadAndPlayAudioClip(string path)
         {
-            routine = LoadToAudioClip(path);
             LoadAndFunction(
                 path,
                 () =>
@@ -46,7 +45,6 @@ namespace Game
         /// <param name="successFunction"></param>
         public void LoadAndFunction(string path,CoroutineExpansion.CoroutineFinishedFunc successFunction)
         {
-            if (!File.Exists(path)) { return; }
             ResetCoroutine();
             routine = LoadToAudioClip(path);
             this.StartCoroutine(routine, successFunction);
@@ -62,13 +60,21 @@ namespace Game
         {
             Clip = null;
             var type = GetAudioType(path);
-            //path = Define.c_LocalFilePath + path;
-            if (!File.Exists(path)) { yield break; }
             using (var request = UnityWebRequestMultimedia.GetAudioClip(path,type))
             {
                 //リクエスト送信
                 yield return request.SendWebRequest();
-                if (request.isNetworkError) { yield break; }
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.LogError("GameMusic.cs line69: UnityWebRequest Error\n" + request.error);
+                    ErrorManager.Save();
+                    DialogController.Instance.Open(
+                        DialogController.Type.Check,
+                        "楽曲の読み込みに失敗しました。\nタイトルに戻ります。",
+                        () => { SceneManager.LoadScene("Start"); }
+                        );
+                    yield break;
+                }
                 Clip = ((DownloadHandlerAudioClip)request.downloadHandler).audioClip;
             }
         }
