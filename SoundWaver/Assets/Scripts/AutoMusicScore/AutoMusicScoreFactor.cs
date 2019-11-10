@@ -108,9 +108,9 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     public void SetupMusic(string fileName)
     {
-        currentFilePath = FileManager.Instance.CurrentDirectory + Define.c_Delimiter + fileName;
+        currentFilePath = Define.c_LocalFilePath + FileManager.Instance.CurrentDirectory + Define.c_Delimiter + fileName;
         musicTitle.text = fileName;
-        var ext = System.IO.Path.GetExtension(fileName);
+        var ext = Path.GetExtension(fileName);
         switch (ext)
         {
             case Define.c_MP3:
@@ -122,12 +122,13 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
                 break;
         }
     }
+
     public void CreateData()
     {
         var fileIO = new Yuuki.FileIO.FileIO();
         Chart chart = new Chart();
         chart.Title = musicTitle.text;//曲名
-        chart.FilePath = Define.c_LocalFilePath + executeFilePath;//楽曲パス
+        chart.FilePath = executeFilePath;//楽曲パス
         chart.Comb = (uint)ret.Count;
         chart.BPM = bpm;//BPM
         chart.ResistName = chartName.text;//譜面の名前
@@ -141,10 +142,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
             JsonUtility.ToJson(chart),
             Yuuki.FileIO.FileIO.FileIODesc.Overwrite
             );
-        //ErrorManager.Instance.text.text += "譜面データ作成:" + Define.c_ChartSaveDirectory + Define.c_Delimiter + chartName.text + Define.c_JSON + "\n";
-        //ErrorManager.Instance.text.text += System.IO.File.Exists(Define.c_ChartSaveDirectory + Define.c_Delimiter + chartName.text + Define.c_JSON) ? "正常に処理" : "譜面ファイルは作られていません";
-        //ErrorManager.Instance.text.text += "\n" + chart.FilePath + "\n";
-        //ErrorManager.Instance.text.text += System.IO.File.Exists(chart.FilePath) ? "譜面ファイルのパスは正常に動作" : "譜面に書き込まれたパスはありません。";
     }
 
     private void ProcessEnd()
@@ -177,9 +174,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
         //譜面名が被った場合
         var charts = Directory.GetFiles(Define.c_ChartSaveDirectory);
-        Debug.Log("譜面ファイル一覧");
-        foreach(var it in charts) { Debug.Log(Path.GetFileNameWithoutExtension(it)); }
-
         if(charts.Where(i => Path.GetFileNameWithoutExtension(i) == chartName.text).Count() > 0)
         {
             DialogController.Instance.Open(
@@ -196,6 +190,10 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     private void MakeChartProcess()
     {
+        //音楽ファイルの確認
+        //※ファイルの有無はそのままのパス。
+        //ただし、読み込み時は"file:"を付けローカルファイルの指定とする必要がある。
+
         GameMusic.Instance.LoadAndFunction(
         currentFilePath,
         //読み込み終了後の処理
@@ -227,10 +225,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     }
 
-    private IEnumerator SetupRoutine()
-    {
-        yield break;
-    }
     public void MuteButton()
     {
         audioSource.volume = audioSource.volume == 0.0f ? 1.0f : 0.0f;
