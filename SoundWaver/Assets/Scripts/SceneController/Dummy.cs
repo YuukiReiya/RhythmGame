@@ -9,6 +9,10 @@ namespace Game.Setup
 {
     public class Dummy : MonoBehaviour
     {
+        private void Awake()
+        {
+            ErrorManager.Setup();
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -20,17 +24,37 @@ namespace Game.Setup
         /// <returns></returns>
         IEnumerator MainRoutine()
         {
-            Debug.Log("main routine in");
-            //check
+            //プリセットの譜面ファイルの確認
             foreach(var it in Define.c_PresetFilePath)
             {
+                //読み込むパス
                 var path = Define.c_ChartSaveDirectory + Define.c_Delimiter + Path.GetFileName(it.Item2);
-                //ない場合生成
-                if (!File.Exists(path))
+                //check
+                if (File.Exists(path))
                 {
-                    Chart chart = new Chart();
-                    yield return SubRoutine(path, it, chart);
+                    using (var www = UnityWebRequest.Get(path))
+                    {
+                        //通信終了まで待機
+                        yield return www.SendWebRequest();
+                        if (www.isNetworkError || www.isHttpError)
+                        {
+                            Debug.LogError("ファイルはあったけど中身の読み取りに失敗。。。");
+                            Debug.LogError("エラーコード:" + www.error);
+                            ErrorManager.Save();
+                        }
+                        else
+                        {
+                            //譜面データに置換
+                            var musicFilePath = JsonUtility.FromJson<Chart>(www.downloadHandler.text).FilePath;
+                            //設定されているパスを比較
+                            if (musicFilePath.Contains(Define.c_StreamingAssetsPath)) { continue; }//正しいのでスキップ
+                        }
+                    }
                 }
+                var chart = new Chart();
+                //"譜面がない"もしくは"キャッシュが異なる"ので生成しなおす
+                yield return SubRoutine(path, it, chart);
+                continue;
             }
             //遷移
             SceneManager.LoadScene("Start");
@@ -48,7 +72,6 @@ namespace Game.Setup
             Yuuki.FileIO.FileIO file = new Yuuki.FileIO.FileIO();
             var uwr = UnityWebRequest.Get(tuple.Item2);
             yield return uwr.SendWebRequest();
-            Debug.Log("subroutine proccess:" + Time.deltaTime);
             chart = JsonUtility.FromJson<Chart>(uwr.downloadHandler.text);
             chart.FilePath = tuple.Item1;
             file.CreateFile(
