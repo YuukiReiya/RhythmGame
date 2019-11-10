@@ -221,6 +221,7 @@
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
+    <Compile Include="Assets\Scripts\Email\EmailController.cs" />
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
     <Compile Include="Assets\Scripts\Fade\FadeController.cs" />
     <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
@@ -316,6 +317,7 @@
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Refractive.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Text (TextureClip).shader" />
+    <None Include="Assets\StreamingAssets\Sounds\Test.txt" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
