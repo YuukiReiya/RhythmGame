@@ -74,6 +74,12 @@ public class DialogController : Yuuki.SingletonMonoBehaviour<DialogController>
     //private param
     //pubic param
 
+    private void Start()
+    {
+        checkDialog.Parent.gameObject.SetActive(false);
+        yesNoDialog.Parent.gameObject.SetActive(false);
+    }
+
     public void Open(Type type, string message, System.Action callback = null)
     {
         switch (type)
