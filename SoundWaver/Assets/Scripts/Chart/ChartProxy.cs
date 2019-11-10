@@ -26,16 +26,6 @@ public class ChartProxy : MonoBehaviour
     public void OnTap()
     {
         this.StartCoroutine(MainRoutine());
-        //FadeController.Instance.EventQueue.Enqueue(
-        //    () =>
-        //    {
-        //        //this.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
-        //        //TODO:代入前に初期化したい?
-        //        ChartManager.Chart = this.chart;
-        //        SceneManager.LoadScene("Load");
-        //    }
-        //    );
-        //FadeController.Instance.FadeIn(Define.c_FadeTime);
     }
 
     IEnumerator MainRoutine()
@@ -46,22 +36,11 @@ public class ChartProxy : MonoBehaviour
                 ChartManager.Chart = this.chart;
                 SceneManager.LoadScene("Load");
                 //MEMO:シーン遷移間にコルーチンを回すので、DontDestroyObjectでStartCoroutineをする必要がある
-#if UNITY_EDITOR
-                GameMusic.Instance.StartCoroutine(TestRoutine());
-#else
                 GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
-#endif
             }
             );
         FadeController.Instance.FadeIn(Define.c_FadeTime);
         yield break;
     }
-#if UNITY_EDITOR
-    IEnumerator TestRoutine()
-    {
-        yield return new WaitForSeconds(2.0f);
-        yield return GameMusic.Instance.LoadToAudioClip(chart.FilePath);
-    }
-#endif
 #endregion
 }
