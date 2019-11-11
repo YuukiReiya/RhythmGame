@@ -172,13 +172,6 @@
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\Module\Functions\Editor\VibratorControllerEditor.cs" />
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\Editor\LocalizeStringResourceEditor.cs" />
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\Editor\SceneLoadWithKeyEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\Tool\Editor\ObjectArrangeToolEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\Tool\Editor\XGizmoEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\UI\Editor\CpuRateBarEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\UI\Editor\CpuRateBarsViewEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\UI\Editor\LocalizeTextEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\UI\Editor\ToggleButtonEditor.cs" />
-    <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\UI\Editor\ToggleObjectEditor.cs" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
