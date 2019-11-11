@@ -11,6 +11,7 @@ public class ResultScoreCanvas : MonoBehaviour
         public UILabel Great;
         public UILabel Good;
         public UILabel Miss;
+        public UILabel MaxComb;
     }
     [SerializeField] private ScoreLabels labels;
 
@@ -20,5 +21,6 @@ public class ResultScoreCanvas : MonoBehaviour
         labels.Great.text = Judge.score.Great.ToString();
         labels.Good.text = Judge.score.Good.ToString();
         labels.Miss.text = Judge.score.Miss.ToString();
+        labels.MaxComb.text = Judge.score.MaxComb.ToString();
     }
 }

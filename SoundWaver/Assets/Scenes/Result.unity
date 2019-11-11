@@ -261,6 +261,7 @@ MonoBehaviour:
     Great: {fileID: 502255686}
     Good: {fileID: 1081346641}
     Miss: {fileID: 1191483785}
+    MaxComb: {fileID: 0}
 --- !u!1 &194755399
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +391,7 @@ GameObject:
   - component: {fileID: 300234806}
   - component: {fileID: 300234807}
   m_Layer: 5
-  m_Name: Label
+  m_Name: MaxComb_str
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1608,7 +1609,7 @@ GameObject:
   - component: {fileID: 1526142272}
   - component: {fileID: 1526142273}
   m_Layer: 5
-  m_Name: Label
+  m_Name: MaxComb_count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
