@@ -4419,7 +4419,6 @@ GameObject:
   - component: {fileID: 1876528673}
   - component: {fileID: 1876528675}
   - component: {fileID: 1876528674}
-  - component: {fileID: 1876528676}
   m_Layer: 5
   m_Name: Mute
   m_TagString: Untagged
@@ -4470,7 +4469,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 1, g: 0.6117647, b: 0, a: 1}
+  mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 200
   mHeight: 200
@@ -4494,7 +4493,7 @@ MonoBehaviour:
   bottomType: 1
   topType: 1
   mAtlas: {fileID: 11400000, guid: 6daa94b83ac4de74f9ba5c0f457e2042, type: 2}
-  mSpriteName: volume_1
+  mSpriteName: mute_1
   mFixedAspect: 0
   mFillCenter: 1
 --- !u!65 &1876528674
@@ -4523,8 +4522,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 1876528671}
-  hover: {r: 0.5686275, g: 0.5686275, b: 0.5686275, a: 1}
-  pressed: {r: 1, g: 0.6117647, b: 0, a: 1}
+  hover: {r: 1, g: 0.6117647, b: 0, a: 1}
+  pressed: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.1
   dragHighlight: 0
@@ -4540,22 +4539,6 @@ MonoBehaviour:
     mMethodName: MuteButton
     mParameters: []
     oneShot: 0
---- !u!114 &1876528676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876528671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cce4399c3be37a4a84287c4eec0dcb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprite: {fileID: 1876528673}
-  button: {fileID: 1876528675}
-  secondSprite: mute_1
-  changeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1884941191
 GameObject:
   m_ObjectHideFlags: 0
