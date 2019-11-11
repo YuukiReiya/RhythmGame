@@ -32,12 +32,12 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     public uint bpm { get; set; }
     AudioSource audioSource { get { return Game.GameMusic.Instance.Source; } }
     //private param
-    float prevMax = 0;
-    bool isExecute = false;
-    GameObject musicEngineObj;
-    List<Chart.Note> ret;
-    string currentFilePath;//参照している楽曲のパス
-    string executeFilePath;//譜面作成中の楽曲のパス
+    private float prevMax = 0;
+    private bool isExecute = false;
+    private GameObject musicEngineObj;
+    private List<Chart.Note> ret;
+    private string currentFilePath;//参照している楽曲のパス
+    private string executeFilePath;//譜面作成中の楽曲のパス
 
     // Start is called before the first frame update
     void Start()
@@ -227,7 +227,9 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     public void MuteButton()
     {
-        audioSource.volume = audioSource.volume == 0.0f ? 1.0f : 0.0f;
+#if UNITY_ANDROID
+        FantomLib.AndroidPlugin.SetMediaVolume(0, true);
+#endif
     }
 
     public void CancelButton()
