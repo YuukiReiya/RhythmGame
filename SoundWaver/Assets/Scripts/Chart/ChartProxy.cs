@@ -12,15 +12,16 @@ public class ChartProxy : MonoBehaviour
     //private param
     private Chart chart;
     //public param
-
+    public UILabel number;
     private void Reset()
     {
         title = GetComponentInChildren<UILabel>();
     }
-    public void SetupChart(Chart chart)
+    public void SetupChart(Chart chart,uint number)
     {
         this.chart = chart;
         this.title.text = chart.ResistName;
+        this.number.text = number.ToString();
     }
     #region ボタン処理
     public void OnTap()
