@@ -206,6 +206,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadeManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7484083468325342745, guid: 36dd65508d19c5440aceef8fd6802b7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7484083468325342741, guid: 36dd65508d19c5440aceef8fd6802b7c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -284,6 +289,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Dialog Root
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600081607505784245, guid: cc2749ff02dce57459664378a09ac20a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8600081607505784201, guid: cc2749ff02dce57459664378a09ac20a,
         type: 3}
