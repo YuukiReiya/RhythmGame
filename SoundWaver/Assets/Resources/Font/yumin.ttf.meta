@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 6660a9799a8c5b448942ea5dc9c59438
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Yu Mincho
+  fontNames:
+  - Yu Mincho
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1f75464e7ffb5674f879e7461a045c03, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
