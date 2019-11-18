@@ -318,6 +318,8 @@
     <Compile Include="Assets\Scripts\Chart\Chart.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartManager.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartProxy.cs" />
+    <Compile Include="Assets\Scripts\CheckBox\CheckBox.cs" />
+    <Compile Include="Assets\Scripts\CheckBox\CheckBoxGroop.cs" />
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
