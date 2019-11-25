@@ -4,17 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Yuuki;
 using API.Util;
-using Game.UI;
 namespace Game
 {
     public class SelectController : MonoBehaviour
     {
         //serialize param
-        [Header("Refine param")]
-        [SerializeField] private CheckBoxGroop chartGroop;
-        [SerializeField] private CheckBoxGroop sortGroop;
-        [SerializeField] private CheckBoxGroop orderGroop;
-
+        [SerializeField] private GameObject refinePanel;
         //privtae param
 
         //public param
@@ -23,9 +18,12 @@ namespace Game
         void Start()
         {
             //絞り込み初期化
-            chartGroop.Setup();
-            sortGroop.Setup();
-            orderGroop.Setup();
+            ChartManager.Instance.chartGroop.Setup();
+            ChartManager.Instance.sortGroop.Setup();
+            ChartManager.Instance.orderGroop.Setup();
+
+            //絞り込みパネルの非表示
+            CloseRefine();
 
             //楽曲リストの表示
             FadeController.Instance.FadeOut(Common.Define.c_FadeTime);
@@ -42,6 +40,16 @@ namespace Game
         {
             FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
             FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+        }
+
+        public void OpenRefine()
+        {
+            refinePanel.SetActive(true);
+        }
+
+        public void CloseRefine()
+        {
+            refinePanel.SetActive(false);
         }
     }
 }
