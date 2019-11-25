@@ -25,6 +25,10 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         public UITexture frameTexture;
     }
     [SerializeField] private ScrollBarUI scrollBarUI;
+    [Header("Image")]
+    [SerializeField] private Texture2D noImage;
+    [SerializeField] private UITexture chartImage;
+    [SerializeField] string testPath;
 
     //private param
     private uint number;
@@ -257,5 +261,32 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     {
         //子オブジェクトの削除
         foreach (var child in grid.GetChildList()) { Destroy(child.gameObject); }
+    }
+
+    [ContextMenu("LT")]
+    void Loat()
+    {
+        testPath = Define.c_StreamingAssetsPath + testPath;
+        StartCoroutine(test());
+
+        //chartImage.mainTexture = 
+    }
+
+    IEnumerator test()
+    {
+        using(var www = UnityWebRequestTexture.GetTexture(testPath))
+        {
+            yield return www.SendWebRequest();
+            if(www.isNetworkError||www.isHttpError)
+            {
+                Debug.LogError(testPath);
+                Debug.LogError("Error:" + www.error);
+                chartImage.mainTexture = noImage;
+                ErrorManager.Save();
+                yield break;
+            }
+            chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
+        }
+        yield break;
     }
 }
