@@ -318,8 +318,6 @@
     <Compile Include="Assets\Scripts\Chart\Chart.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartManager.cs" />
     <Compile Include="Assets\Scripts\Chart\ChartProxy.cs" />
-    <Compile Include="Assets\Scripts\CheckBox\CheckBox.cs" />
-    <Compile Include="Assets\Scripts\CheckBox\CheckBoxGroop.cs" />
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
@@ -341,11 +339,14 @@
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
+    <Compile Include="Assets\Scripts\NGUI\SyncTextureColorUtil.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
     <Compile Include="Assets\Scripts\Notes\NoteDecorate.cs" />
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
+    <Compile Include="Assets\Scripts\RadioButton\RadioButton.cs" />
+    <Compile Include="Assets\Scripts\RadioButton\RadioButtonGroop.cs" />
     <Compile Include="Assets\Scripts\Result\ResultScoreCanvas.cs" />
     <Compile Include="Assets\Scripts\SceneController\ChartCreateController.cs" />
     <Compile Include="Assets\Scripts\SceneController\Dummy.cs" />
