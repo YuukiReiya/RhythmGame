@@ -321,7 +321,6 @@
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
-    <Compile Include="Assets\Scripts\Email\EmailController.cs" />
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
     <Compile Include="Assets\Scripts\Fade\FadeController.cs" />
     <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
