@@ -5,7 +5,8 @@ public struct Chart
     /// <summary>
     /// 譜面データは一律同じ場所で連番で管理するようにする
     /// </summary>
-    public string FilePath;//楽曲ファイルが格納されているパス
+    public string MusicFilePath;//楽曲ファイルが格納されているパス
+    public string ImageFilePath;//イメージ画像が格納されているパス
     public uint BPM;
     public uint Comb;//ノーツカウント / コンボ
     public string ResistName;//登録名
