@@ -13,6 +13,8 @@ public class ChartProxy : MonoBehaviour
     private Chart chart;
     //public param
     public UILabel number;
+    [System.NonSerialized]
+    public Color color;
     private void Reset()
     {
         title = GetComponentInChildren<UILabel>();
@@ -26,22 +28,10 @@ public class ChartProxy : MonoBehaviour
     #region ボタン処理
     public void OnTap()
     {
-        this.StartCoroutine(MainRoutine());
-    }
-
-    IEnumerator MainRoutine()
-    {
-        FadeController.Instance.EventQueue.Enqueue(
-            () =>
-            {
-                ChartManager.Chart = this.chart;
-                SceneManager.LoadScene("Load");
-                //MEMO:シーン遷移間にコルーチンを回すので、DontDestroyObjectでStartCoroutineをする必要がある
-                GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.FilePath));
-            }
-            );
-        FadeController.Instance.FadeIn(Define.c_FadeTime);
-        yield break;
+        ChartManager.Chart = this.chart;
+        //選択した譜面に更新
+        ChartManager.Instance.SetImageEffectColor(color);
+        ChartManager.Instance.UpdateChartPanel();
     }
 #endregion
 }

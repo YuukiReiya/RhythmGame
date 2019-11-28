@@ -45,7 +45,7 @@ namespace Game.Setup
                         else
                         {
                             //譜面データに置換
-                            var musicFilePath = JsonUtility.FromJson<Chart>(www.downloadHandler.text).FilePath;
+                            var musicFilePath = JsonUtility.FromJson<Chart>(www.downloadHandler.text).MusicFilePath;
                             //設定されているパスを比較
                             if (musicFilePath.Contains(Define.c_StreamingAssetsPath)) { continue; }//正しいのでスキップ
                         }
@@ -67,13 +67,19 @@ namespace Game.Setup
         /// <param name="path">プリセットの譜面パス</param>
         /// <param name="chart">譜面</param>
         /// <returns></returns>
-        IEnumerator SubRoutine(string path,(string,string) tuple, Chart chart)
+        IEnumerator SubRoutine(string path, (string, string, string) tuple, Chart chart)
         {
+            //プリセットの読み込み
             Yuuki.FileIO.FileIO file = new Yuuki.FileIO.FileIO();
             var uwr = UnityWebRequest.Get(tuple.Item2);
             yield return uwr.SendWebRequest();
             chart = JsonUtility.FromJson<Chart>(uwr.downloadHandler.text);
-            chart.FilePath = tuple.Item1;
+
+            //中身
+            chart.MusicFilePath = tuple.Item1;
+            chart.ImageFilePath = tuple.Item3;
+
+            //作成
             file.CreateFile(
                 path,
                 JsonUtility.ToJson(chart),

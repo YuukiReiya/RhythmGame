@@ -22,13 +22,15 @@ namespace Common
         /// プリセットファイルのパス
         /// item1:楽曲パス
         /// item2:譜面パス
+        /// item3:イメージパス
         /// </summary>
-        public static readonly (string, string)[] c_PresetFilePath = 
+        public static readonly (string, string,string)[] c_PresetFilePath = 
             { 
             //ハルジオン
                 (
                     Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_kei_harujion"+c_MP3,
-                    Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Harujion"+c_JSON
+                    Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Harujion"+c_JSON,
+                    Application.streamingAssetsPath+c_Delimiter+"Image"+c_Delimiter+"Harujion"+c_PNG
                 ),
         };
         #endregion
@@ -41,6 +43,7 @@ namespace Common
         /// JSON拡張子
         /// </summary>
         public const string c_JSON = ".json";
+        public const string c_PNG = ".png";
         /// <summary>
         /// MP3拡張子
         /// </summary>
