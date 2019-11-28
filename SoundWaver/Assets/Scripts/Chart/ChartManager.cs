@@ -17,18 +17,31 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [SerializeField] private UIGrid grid;
     [Header("Scroll")]
     [SerializeField] private UIScrollBar scrollBar;
-    [SerializeField]private float tweenSpeed=0.3f;
+    [SerializeField] private float tweenSpeed = 0.3f;
     [System.Serializable] struct ScrollBarUI
     {
         public UITexture barTexture;
         public UITexture trgTexture;
-        public UITexture frameTexture;
     }
     [SerializeField] private ScrollBarUI scrollBarUI;
     [Header("Image")]
     [SerializeField] private Texture2D noImage;
-    [SerializeField] private UITexture chartImage;
-    [SerializeField] string testPath;
+    [System.Serializable]
+    struct ChartImageUI
+    {
+        public UITexture chartImage;
+        public UITexture effectImage;
+        /// <summary>
+        /// 譜面タップ時のランダム色を反映させるテクスチャ
+        /// </summary>
+        public UITexture[] otherImages;
+        /// <summary>
+        /// タップされたら非アクティブ化するオブジェクト
+        /// ※最初の表示のみ
+        /// </summary>
+        public GameObject tapDisableObj;
+    }
+    [SerializeField] private ChartImageUI chartImageUI;
 
     //private param
     private uint number;
@@ -54,6 +67,9 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     public RadioButtonGroop sortGroop;
     public RadioButtonGroop orderGroop;
 
+    //const param
+    const uint c_WaitForSyncFrame = 3;
+
     /// <summary>
     /// 楽曲(譜面)リストの表示
     /// </summary>
@@ -69,12 +85,10 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         grid.onCustomSort = (a, b) => { return ChartSort(a, b); };
 
         //譜面情報の取得
-        CreateCharts();
+        CreateList();
 
         #region スクロールバー関連
         {
-            //フレームをトグルのアルファ値に合わせ、表示を合わせる
-            StartCoroutine(ScrollBarFrameAlphaSync());
             //スクロールバーを初期位置に戻す
             StartCoroutine(ScrollBarValueResetZero());
         }
@@ -102,6 +116,9 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         }
         inst.name = chart.ResistName;
         proxy.SetupChart(chart, number++);
+        //色の設定
+        //TODO:暖色限定にしたり、そこら辺はとりま考えない。。。
+        proxy.color = new Color(Random.value, Random.value, Random.value);
         return inst;
     }
 
@@ -111,7 +128,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    int ChartSort(Transform a, Transform b)
+    public int ChartSort(Transform a, Transform b)
     {
         int ret = 0;
         switch (sortType)
@@ -133,7 +150,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         return isSortAsc ? ret : -ret;
     }
 
-    void CreateCharts()
+    void CreateList()
     {
         //譜面ファイルのパス格納配列
         string[] charts = null;
@@ -180,44 +197,21 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     }
 
     /// <summary>
-    /// スクロールバーのフレームのカラーをトグルに合わせる
-    /// スクロールバーのフレームは別途同期させる必要があるため、専用の処理を追加
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator ScrollBarFrameAlphaSync()
-    {
-        //スクロールバーのバーとトグルのアルファ値はUpdateの後で更新されるため、
-        //同期用にコルーチンで実装
-        yield return new WaitForEndOfFrame();
-        var cr = scrollBarUI.frameTexture.color;
-        cr.a = scrollBarUI.barTexture.alpha;
-        scrollBarUI.frameTexture.color = cr;
-    }
-
-    /// <summary>
     /// スクロールバーのvalueをゼロに初期化
     /// </summary>
     /// <returns></returns>
     IEnumerator ScrollBarValueResetZero()
     {
-        //スクロールバーの"value"を"0"に初期化する
-        //"LoadToDisplay"内に置いていたが、初回呼び出し時のみ値が"0.7..."とおかしくなるため別に同期を実装する羽目に。
-        //ちなみに"EndOfFrame","null"の場合強制的に戻しているのが見えてしまうので"FixedUpdate"の後という謎のタイミングで呼び出している。
-        // yield return new WaitForFixedUpdate();
-        //yield return null;
         scrollBar.value = 1;
-        int w = 3;
-        for(int c = 0; c < w; ++c) { yield return null; }
+        for (int c = 0; c < c_WaitForSyncFrame; ++c) { yield return null; }
         //yield return new WaitForEndOfFrame();
+        //yield return new WaitWhile(() => { return scrollBar.value != 1; });
         DOTween.To(
             () => scrollBar.value,
             v => scrollBar.value = v,
             0.0f,
             tweenSpeed);
-        //yield return new WaitUntil(() => { return scrollBar.value != 0; });
-        //yield return null;
         yield break;
-        //scrollBar.value = 0;
     }
 
     /// <summary>
@@ -263,29 +257,61 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         foreach (var child in grid.GetChildList()) { Destroy(child.gameObject); }
     }
 
-    [ContextMenu("LT")]
-    void Loat()
+    public void UpdateChartPanel()
     {
-        testPath = Define.c_StreamingAssetsPath + testPath;
-        StartCoroutine(test());
+        //イメージの背景画像
+        foreach(var it in chartImageUI.otherImages)
+        {
+            if (!it.gameObject.activeSelf)
+            {
+                it.gameObject.SetActive(true);
+            }
+        }
 
-        //chartImage.mainTexture = 
+        //イメージの効果画像
+        if (!chartImageUI.effectImage.gameObject.activeSelf)
+        {
+            chartImageUI.effectImage.gameObject.SetActive(true);
+        }
+
+        //非アクティブ化
+        if(chartImageUI.tapDisableObj.activeSelf)
+        {
+            chartImageUI.tapDisableObj.SetActive(false);
+        }
+
+        //イメージ画像の表示
+        StartCoroutine(LoadChartImageRoutine(Chart.ImageFilePath));
+
     }
 
-    IEnumerator test()
+    public void SetImageEffectColor(Color cr)
     {
-        using(var www = UnityWebRequestTexture.GetTexture(testPath))
+        foreach(var it in chartImageUI.otherImages)
+        {
+            var color = it.color;
+            color = cr;
+            color.a = it.color.a;
+            it.color = color;
+        }
+    }
+
+    IEnumerator LoadChartImageRoutine(string path)
+    {
+
+        //イメージファイルのロード
+        using(var www = UnityWebRequestTexture.GetTexture(path))
         {
             yield return www.SendWebRequest();
             if(www.isNetworkError||www.isHttpError)
             {
-                Debug.LogError(testPath);
+                Debug.LogError("path:\n" + path);
                 Debug.LogError("Error:" + www.error);
-                chartImage.mainTexture = noImage;
+                chartImageUI.chartImage.mainTexture = noImage;
                 ErrorManager.Save();
                 yield break;
             }
-            chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
+            chartImageUI.chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
         }
         yield break;
     }
