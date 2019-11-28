@@ -361,7 +361,7 @@ MonoBehaviour:
     relative: 1
     absolute: 0
   updateAnchors: 1
-  mColor: {r: 0.990566, g: 0.9689558, b: 0.81768423, a: 1}
+  mColor: {r: 1, g: 0.9877787, b: 0.9103774, a: 1}
   mPivot: 4
   mWidth: 2048
   mHeight: 256
@@ -438,6 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 2495827661389228328}
   number: {fileID: 6545299814550962763}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!65 &2495827661583254980
 BoxCollider:
   m_ObjectHideFlags: 0
