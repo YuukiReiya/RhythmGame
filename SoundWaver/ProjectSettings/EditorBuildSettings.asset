@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Start.unity
     guid: 003683d8d888de649899864e67868bce
   - enabled: 1
-    path: Assets/Scenes/Select.unity
-    guid: c3a1c34ffe3f22347bce7620fb663832
+    path: Assets/Scenes/SelectDev.unity
+    guid: e072afc265d7b90468cf8b35038a5297
   - enabled: 1
     path: Assets/Scenes/ChartCreate.unity
     guid: e9a126dba2ee1004a967bc0dbbe81756
