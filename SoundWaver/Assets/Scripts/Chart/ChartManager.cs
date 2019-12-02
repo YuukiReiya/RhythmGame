@@ -18,12 +18,9 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [Header("Scroll")]
     [SerializeField] private UIScrollBar scrollBar;
     [SerializeField] private float tweenSpeed = 0.3f;
-    [System.Serializable] struct ScrollBarUI
-    {
-        public UITexture barTexture;
-        public UITexture trgTexture;
-    }
-    [SerializeField] private ScrollBarUI scrollBarUI;
+    [SerializeField] UITexture backImage;
+    [SerializeField] Color backImageColor;
+    //[SerializeField] private ScrollBarUI scrollBarUI;
     [Header("Image")]
     [SerializeField] private Texture2D noImage;
     [System.Serializable]
@@ -68,13 +65,15 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     public RadioButtonGroop orderGroop;
 
     //const param
-    const uint c_WaitForSyncFrame = 3;
 
     /// <summary>
     /// 楽曲(譜面)リストの表示
     /// </summary>
     public void LoadToDisplay()
     {
+        //背景イメージ色の再調整
+        StartCoroutine(SetupBackImageColorRoutine());
+
         //子が削除されてなければ削除
         if (grid.GetChildList().Count > 0) { DestroyCharts(); }
 
@@ -87,15 +86,22 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         //譜面情報の取得
         CreateList();
 
+        //整列
+        grid.Reposition();
+
         #region スクロールバー関連
         {
             //スクロールバーを初期位置に戻す
-            StartCoroutine(ScrollBarValueResetZero());
+            //StartCoroutine(ScrollBarValueResetZero());
+            scrollBar.value = 1;
+            DOTween.To(
+                () => scrollBar.value,
+                v => scrollBar.value = v,
+                0.0f,
+                tweenSpeed);
         }
         #endregion
 
-        //整列
-        grid.Reposition();
     }
 
     /// <summary>
@@ -106,6 +112,8 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     GameObject Create(Chart chart)
     {
         var inst = Instantiate(prefab);
+        //TODO:NGUITool.AddChildでスケール問題を防げるらしい
+        //現状できてるし、変にテスト増やしたくないので気が向いたらやる
         inst.transform.parent = grid.transform;
         inst.transform.localScale = prefab.transform.localScale;
         ChartProxy proxy;
@@ -203,9 +211,6 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     IEnumerator ScrollBarValueResetZero()
     {
         scrollBar.value = 1;
-        for (int c = 0; c < c_WaitForSyncFrame; ++c) { yield return null; }
-        //yield return new WaitForEndOfFrame();
-        //yield return new WaitWhile(() => { return scrollBar.value != 1; });
         DOTween.To(
             () => scrollBar.value,
             v => scrollBar.value = v,
@@ -314,5 +319,11 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
             chartImageUI.chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
         }
         yield break;
+    }
+
+    IEnumerator SetupBackImageColorRoutine()
+    {
+        yield return new WaitForEndOfFrame();
+        backImage.color = backImageColor;
     }
 }

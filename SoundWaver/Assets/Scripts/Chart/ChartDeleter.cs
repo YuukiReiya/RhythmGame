@@ -5,6 +5,8 @@ using Common;
 using System.IO;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.Networking;
+using Yuuki.MethodExpansions;
 
 namespace Game.UI
 {
@@ -47,24 +49,28 @@ namespace Game.UI
         [Header("ALL")]
         [SerializeField] private AllCheck allCheckBox;
         //private param
-        private List<CheckBox> list;
+        struct Item
+        {
+            public string filePath;
+            public CheckBox checkBox;
+        }
+        private List<Item> list;
         private uint number;
 
         //const param
-        const uint c_WaitForSyncFrame = 10;
 
         private void Awake()
         {
-            list = new List<CheckBox>();
+            list = new List<Item>();
         }
 
         public void LoadToDisplay()
         {
+            //背景色の再調整
+            StartCoroutine(BackScrollTextureRoutine());
+
             //子が削除されてなければ削除
-            if (grid.GetChildList().Count > 0)
-            {
-                foreach (var child in grid.GetChildList()) { Destroy(child.gameObject); }
-            }
+            if (grid.GetChildList().Count > 0) { DestroyScrollChildren(); }
 
             //譜面番号の初期化
             number = 1;
@@ -78,16 +84,11 @@ namespace Game.UI
             //全選択チェックボックスの更新
             UpdateAllCheckBox();
 
-            //スクロールバーを初期位置に戻す
-            StartCoroutine(ScrollBarValueResetZero());
-
             //整列
             grid.Reposition();
-        }
-
-        public void SetupBackScrollTexture()
-        {
-            StartCoroutine(BackScrollTextureRoutine());
+          
+            //スクロールバーを初期位置に戻す
+            StartCoroutine(ScrollBarValueResetZero());
         }
 
         /// <summary>
@@ -105,37 +106,39 @@ namespace Game.UI
         /// </summary>
         /// <param name="chart"></param>
         /// <returns></returns>
-        GameObject Create(Chart chart)
+        GameObject Create(Chart chart, string filePath)
         {
             var inst = Instantiate(prefab);
             inst.transform.parent = grid.transform;
             inst.transform.localScale = prefab.transform.localScale;
-            CheckBox checkBox = inst.GetComponentInChildren<CheckBox>();
-            if (!checkBox)
-            {
+            Item item = new Item();
+            item.checkBox = inst.GetComponentInChildren<CheckBox>();
 #if UNITY_EDITOR
+            if (!item.checkBox)
+            {
                 Debug.LogError("prefabの子オブジェクトにCheckBoxがアタッチされていない。");
                 Destroy(inst);
                 return null;
-#endif
             }
+#endif
             ChartProxy proxy;
-            if (!inst.TryGetComponent(out proxy) )
+            if (!inst.TryGetComponent(out proxy))
             {
                 Destroy(inst);
                 return null;
             }
             inst.name = chart.ResistName;
             proxy.SetupChart(chart, number++);
+            item.filePath = filePath;
 
-            list.Add(checkBox);
-            checkBox.CallDisable();
-            checkBox.onActiveFunc =
+            list.Add(item);
+            item.checkBox.CallDisable();
+            item.checkBox.onActiveFunc =
                 () =>
                 {
                     UpdateAllCheckBox();
                 };
-            checkBox.onDisableFunc =
+            item.checkBox.onDisableFunc =
                 () =>
                 {
                     UpdateAllCheckBox();
@@ -155,11 +158,21 @@ namespace Game.UI
             //全取得
             charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);
 
-            //プリセットファイルの譜面名を取得
-            var presetChartsName = Define.c_PresetFilePath.Select(it => Path.GetFileName(it.Item2));
+            //プリセットファイルの譜面名(拡張子を除く)を取得
+            var presetChartsName = Define.c_PresetFilePath.Select(it => Path.GetFileNameWithoutExtension(it.Item2));
             
             //取得した譜面名のなかからプリセットでないものを取得
-            charts = charts.Where(it => !presetChartsName.Contains(Path.GetFileName(it))).ToArray();
+            charts = charts.Where(it => !presetChartsName.Contains(Path.GetFileNameWithoutExtension(it))).ToArray();
+
+            //譜面を選択している場合
+            if (ChartManager.Chart.ResistName != string.Empty)
+            {
+                //現在選択中の譜面は削除リストから外す => 選択中の譜面以外を取得
+                //※("登録名 = ファイル名")で判定
+                charts = charts.Where(
+                    it => Path.GetFileNameWithoutExtension(it) != ChartManager.Chart.ResistName
+                    ).ToArray();
+            }
 
             //リストの初期化
             list.Clear();
@@ -169,14 +182,13 @@ namespace Game.UI
             foreach (var it in charts)
             {
                 var chart = JsonUtility.FromJson<Chart>(fileIO.GetContents(it));
-                Create(chart);
+                Create(chart, it);
             }
         }
 
         IEnumerator ScrollBarValueResetZero()
         {
             scrollBar.value = 1;
-            for (int c = 0; c < c_WaitForSyncFrame; ++c) { yield return null; }
             DOTween.To(
                 () => scrollBar.value,
                 v => scrollBar.value = v,
@@ -185,17 +197,59 @@ namespace Game.UI
             yield break;
         }
 
+        public void DestroyScrollChildren()
+        {
+            //子が削除されてなければ削除
+            foreach (var child in grid.GetChildList()) { Destroy(child.gameObject); }
+        }
+
+        /// <summary>
+        /// チェックを付けた譜面の削除処理
+        /// </summary>
+        public void CheckDeleteCharts()
+        {
+            DialogController.Instance.Open(
+                "選択した譜面を削除します。\nよろしいですか?",
+                () => 
+                {
+                    this.StartCoroutine(
+                        DeleteExecuteRoutine(),
+                        ()=> { LoadToDisplay(); }
+                        );
+                },
+                null
+                );
+        }
+        IEnumerator DeleteExecuteRoutine()
+        {
+            //譜面の削除
+            var deleteCharts = list.Where(it => it.checkBox.IsActive);
+            foreach (var it in deleteCharts)
+            {
+                using (var uwr = UnityWebRequest.Get(it.filePath))
+                {
+                    yield return uwr.SendWebRequest();
+                    if(uwr.isNetworkError||uwr.isHttpError)
+                    {
+                        continue;
+                    }
+                    File.Delete(it.filePath);
+                }
+            }
+
+            //更新データの再表示
+            LoadToDisplay();
+            ChartManager.Instance.LoadToDisplay();
+            DialogController.Instance.Open("選択した譜面は削除されました。");
+            yield return new WaitForEndOfFrame();
+        }
+
         /// <summary>
         /// 全選択のチェックボックスの状態を更新
         /// </summary>
         void UpdateAllCheckBox()
         {
-            bool isAllCheck = list.All(it => it.IsActive);
-
-            //var a=list.FindAll(p=>p.IsActive)
-            Debug.Log("a:" + allCheckBox.active.activeSelf);
-            Debug.Log("b:" + allCheckBox.mismatch.activeSelf);
-
+            bool isAllCheck = list.All(it => it.checkBox.IsActive);
 
             //全選択されていたら
             if(isAllCheck)
@@ -206,7 +260,7 @@ namespace Game.UI
             else
             {
                 //全部選択されていなかった場合
-                if(list.All(it=>!it.IsActive))
+                if(list.All(it=>!it.checkBox.IsActive))
                 {
                     allCheckBox.active.SetActive(false);
                     allCheckBox.mismatch.SetActive(false);
@@ -224,7 +278,7 @@ namespace Game.UI
         {
             foreach(var it in list)
             {
-                it.CallActive();
+                it.checkBox.CallActive();
             }
         }
 
@@ -232,7 +286,7 @@ namespace Game.UI
         {
             foreach (var it in list)
             {
-                it.CallDisable();
+                it.checkBox.CallDisable();
             }
 
         }
@@ -240,7 +294,7 @@ namespace Game.UI
         public void OnAllCheckBox()
         {
             //全部選択済みにする
-            bool isActivate = !list.All(it => it.IsActive);
+            bool isActivate = !list.All(it => it.checkBox.IsActive);
             //bool isActivate = !allCheckBox.active.activeSelf;//選択が交互
             //全部アクティブ化する
             if (isActivate)
