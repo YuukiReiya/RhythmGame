@@ -147,7 +147,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
     private void ProcessEnd()
     {
         DialogController.Instance.Open(
-            DialogController.Type.Check,
             "譜面ファイルの生成を完了しました。"
             );
     }
@@ -166,7 +165,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         if (chartName.text == "表示する名前を入力")
         {
             DialogController.Instance.Open(
-                DialogController.Type.Check,
                 "譜面の名前を未入力にすることはできません。"
                 );
             return;

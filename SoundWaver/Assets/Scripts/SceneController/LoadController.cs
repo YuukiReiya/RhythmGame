@@ -78,7 +78,6 @@ namespace Game
         {
             FadeController.Instance.Stop();
             DialogController.Instance.Open(
-                DialogController.Type.Check,
                 "読み込みに失敗しました。\nタイトルに戻ります",
                 () => {
                              FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });

@@ -69,7 +69,6 @@ namespace Game
                     Debug.LogError("GameMusic.cs line69: UnityWebRequest Error\n" + request.error);
                     ErrorManager.Save();
                     DialogController.Instance.Open(
-                        DialogController.Type.Check,
                         "楽曲の読み込みに失敗しました。\nタイトルに戻ります。",
                         () => { SceneManager.LoadScene("Start"); }
                         );
