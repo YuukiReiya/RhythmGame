@@ -18,6 +18,7 @@ namespace Game
         }
         [Header("Lane Parameter")]
         [SerializeField] TimingLine timingLine;//判定ラインの座標
+        [SerializeField] private Vector3 notesDirection;//ノーツの移動方向
         //[SerializeField] AudioSource audioSource;
 
         //private param
@@ -27,11 +28,23 @@ namespace Game
         public float NotesSpeed { get { return noteSpeed; } }
         public float WaitTime { get { return waitTime; } }
         public List<INote> Notes { get; private set; }
+        public Vector3 NotesDirection { get { return notesDirection; } }
         //public Queue<INote> NotesQueue { get; private set; }
         protected override void Awake()
         {
             base.Awake();
             Notes = new List<INote>();
+#if UNITY_EDITOR
+            if (ChartManager.Chart.Notes != null)
+            {
+                noteQueue = new Queue<Chart.Note>(ChartManager.Chart.Notes);
+            }
+            else
+            {
+                noteQueue = new Queue<Chart.Note>();
+            }
+            return;
+#endif
             noteQueue = new Queue<Chart.Note>(ChartManager.Chart.Notes);
         }
 
@@ -120,6 +133,5 @@ namespace Game
             float left = -10, right = 10;
             Gizmos.DrawLine(new Vector3(left, timingLine.y, timingLine.z), new Vector3(right, timingLine.y, timingLine.z));
         }
-
     }
 }

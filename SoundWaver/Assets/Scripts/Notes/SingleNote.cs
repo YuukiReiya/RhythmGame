@@ -24,13 +24,8 @@ namespace Game
         public void Move()
         {
             var x = this.transform.position.x;
-            //float timing = DownTime - NotesController.Instance.elapsedTime;
             float timing = DownTime - GameController.Instance.ElapsedTime;
-
-            //TODO:汚い
-            //Vector3 ndir = (this.transform.position - NotesController.Instance.JustTimingPosition).normalized;
-            Vector3 ndir = (-this.transform.up.normalized);
-
+            Vector3 ndir = NotesController.Instance.NotesDirection.normalized;
             var pos = NotesController.Instance.JustTimingPosition - ndir * timing * NotesController.Instance.NotesSpeed;
             pos.x = x;
             this.transform.position = pos;

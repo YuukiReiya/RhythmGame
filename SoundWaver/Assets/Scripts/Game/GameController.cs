@@ -19,6 +19,11 @@ namespace Game
         //accessor
         public float ElapsedTime { get; private set; }
         //public uint Comb { get; set; }
+
+#if UNITY_EDITOR
+        public bool isTest; 
+#endif
+
         protected override void Awake()
         {
             base.Awake();
@@ -27,9 +32,47 @@ namespace Game
         void Start()
         {
 #if UNITY_EDITOR
-            //ゲームシーンでエディター起動時セレクトに戻してあげる
-            if (!source.clip)
+            //ゲームシーンのテスト
+            if (isTest)
             {
+                Judge.Reset();
+                var path = Define.c_StreamingAssetsPath + Define.c_Delimiter + "Sounds\\" + Define.c_Delimiter + System.IO.Path.GetFileNameWithoutExtension(Define.c_PresetFilePath[0].Item1) + Define.c_MP3;
+                IEnumerator routine()
+                {
+                    yield return GameMusic.Instance.LoadToAudioClip(path);
+
+                    using (var www = UnityEngine.Networking.UnityWebRequest.Get(
+                        Define.c_ChartSaveDirectory + Define.c_Delimiter + System.IO.Path.GetFileName(Define.c_PresetFilePath[0].Item2)
+                        ))
+                    {
+                        yield return www.SendWebRequest();
+                        if (www.isNetworkError || www.isHttpError) { Debug.LogError(www.error); }
+                        ChartManager.Chart = JsonUtility.FromJson<Chart>(www.downloadHandler.text);
+                    }
+
+                    //クリップオブジェクトの生成まで待機
+                    yield return new WaitUntil(
+                        () => { return GameMusic.Instance.Clip; }
+                        );
+                    //楽曲ファイルのロード中は待機
+                    yield return new WaitWhile(
+                        () => { return GameMusic.Instance.Clip.loadState == AudioDataLoadState.Loading; }
+                        );
+                    source.clip = GameMusic.Instance.Clip;
+
+                    NotesController.Instance.SetupNotes();
+                    Setup();
+                    #region ノーツの初期表示
+                    //※これがないと曲が鳴っていきなり表れてしまう
+                    NotesController.Instance.Renewal();
+                    NotesController.Instance.Move();
+                    #endregion
+                    StartCoroutine(DelayStart());
+
+                    yield break;
+                }
+                StartCoroutine(routine());
+                return;
             }
 #endif
             Setup();
