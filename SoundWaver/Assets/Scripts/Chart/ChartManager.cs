@@ -365,9 +365,9 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         }
 
         //スコア出現
-        DisplayScore();
+        SetupScoreObject();
 
-        //スコア更新
+        //スコア設定
         UpdateScore();
 
         //イメージ画像の表示
@@ -422,7 +422,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         backImage.color = backImageColor;
     }
 
-    void DisplayScore()
+    void SetupScoreObject()
     {
         if (onceProcces.scoreObj.activeSelf) { return; }
         onceProcces.scoreObj.SetActive(true);
@@ -441,6 +441,15 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         {
             score.text = Chart.Score.ToString();
         }
+
+        //裏面
+        switchingObject.Name.text = Chart.ResistName;//名前
+        switchingObject.MaxComb.text = Chart.wasCleared ? Chart.Comb.ToString() : "0";//コンボ
+        switchingObject.NotesCount.text = Chart.Notes.Length.ToString();//ノーツ数
+        switchingObject.PerfectCount.text = Chart.ScoreCounts.Perfect.ToString();
+        switchingObject.GreatCount.text = Chart.ScoreCounts.Great.ToString();
+        switchingObject.GoodCount.text = Chart.ScoreCounts.Good.ToString();
+        switchingObject.MissCount.text = Chart.ScoreCounts.Miss.ToString();
     }
 
     public void SwitchingChartPanel()

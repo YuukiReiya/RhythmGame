@@ -26,4 +26,14 @@ public struct Chart
         public uint LaneNumber;
     }
     public Note[] Notes;
+
+    [System.Serializable]
+    public struct Counts
+    {
+        public uint Perfect;
+        public uint Great;
+        public uint Good;
+        public uint Miss;
+    }
+    public Counts ScoreCounts;
 }
