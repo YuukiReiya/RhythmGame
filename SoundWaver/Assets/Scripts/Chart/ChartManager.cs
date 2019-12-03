@@ -12,7 +12,14 @@ using DG.Tweening;
 public class ChartManager : SingletonMonoBehaviour<ChartManager>
 {
     //serialize param
-    [SerializeField] private GameObject prefab;
+    [System.Serializable]
+    struct Prefabs
+    {
+        public GameObject clear;
+        public GameObject notClear;
+    }
+    [Header("Prefabs")]
+    [SerializeField] Prefabs prefabs;
     [Header("NGUI")]
     [SerializeField] private UIGrid grid;
     [Header("Scroll")]
@@ -20,7 +27,6 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [SerializeField] private float tweenSpeed = 0.3f;
     [SerializeField] UITexture backImage;
     [SerializeField] Color backImageColor;
-    //[SerializeField] private ScrollBarUI scrollBarUI;
     [Header("Image")]
     [SerializeField] private Texture2D noImage;
     [System.Serializable]
@@ -32,19 +38,63 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         /// 譜面タップ時のランダム色を反映させるテクスチャ
         /// </summary>
         public UITexture[] otherImages;
-        /// <summary>
-        /// タップされたら非アクティブ化するオブジェクト
-        /// ※最初の表示のみ
-        /// </summary>
-        public GameObject tapDisableObj;
     }
     [SerializeField] private ChartImageUI chartImageUI;
+    [System.Serializable]
+    struct TapObjects
+    {
+        /// <summary>
+        /// タップされたときに非アクティブ化するオブジェクト・アクティブ化するオブジェクト
+        /// </summary>
+        public GameObject[] disableObjects;
+        public GameObject[] activeObjects;
 
+    }
+    [Header("Tap")]
+    [SerializeField] TapObjects tapObjects;
+    [System.Serializable]
+    struct TapOnceProcces
+    {
+        //スコア関連
+        public GameObject scoreObj;
+        public float time;
+        public Vector3 to;
+    }
+    [Header("Initial Tap Once Process")]
+    [SerializeField] private TapOnceProcces onceProcces;
+    [Header("Score")]
+    [SerializeField] private UILabel score;
+    [SerializeField] private GameObject wasClearObj;
+    [SerializeField] private GameObject notClearObj;
+    [Header("Refine param")]
+    [SerializeField] private RadioButtonGroop chartGroop;
+    [SerializeField] private RadioButtonGroop sortGroop;
+    [SerializeField] private RadioButtonGroop orderGroop;
+    [System.Serializable]
+    struct SwitchingObject
+    {
+        public GameObject ImageObj;
+        public GameObject DetailObj;
+        public UITexture detailTexture;
+        public UILabel Name;
+        public UILabel NotesCount;
+        public UILabel MusicTime;
+        //score count
+        public UILabel PerfectCount;
+        public UILabel GreatCount;
+        public UILabel GoodCount;
+        public UILabel MissCount;
+    }
+    [Header("Switching chart panel")]
+    [SerializeField] private SwitchingObject switchingObject;
+    [SerializeField] private UIButton switchingButton;
+    
     //private param
     private uint number;
     private SortType sortType = SortType.Hierarchy;
     private ChartType chartType = ChartType.All;
     private bool isSortAsc = true;//並び順が昇順?
+    private IEnumerator dispScoreRoutine;
 
     //public param
     public static Chart Chart { get; set; }
@@ -59,12 +109,26 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         Preset,//プリセットのみ
         Original,//オリジナルのみ
     }
-    [Header("Refine param")]
-    public RadioButtonGroop chartGroop;
-    public RadioButtonGroop sortGroop;
-    public RadioButtonGroop orderGroop;
 
     //const param
+
+    public void Setup()
+    {
+        //スコアの初期化
+        onceProcces.scoreObj.SetActive(false);//しないと動かない
+
+        //切り替えボタンOFF
+        switchingButton.isEnabled = false;
+
+        //グループ初期化
+        chartGroop.Setup();
+        sortGroop.Setup();
+        orderGroop.Setup();
+
+        //譜面パネルの初期化
+        switchingObject.ImageObj.SetActive(true);
+        switchingObject.DetailObj.SetActive(false);
+    }
 
     /// <summary>
     /// 楽曲(譜面)リストの表示
@@ -111,6 +175,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     /// <returns></returns>
     GameObject Create(Chart chart)
     {
+        var prefab = chart.wasCleared ? prefabs.clear : prefabs.notClear;
         var inst = Instantiate(prefab);
         //TODO:NGUITool.AddChildでスケール問題を防げるらしい
         //現状できてるし、変にテスト増やしたくないので気が向いたらやる
@@ -279,11 +344,31 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
             chartImageUI.effectImage.gameObject.SetActive(true);
         }
 
-        //非アクティブ化
-        if(chartImageUI.tapDisableObj.activeSelf)
+        //アクティブ化⇒非アクティブ化
+        foreach (var it in tapObjects.disableObjects)
         {
-            chartImageUI.tapDisableObj.SetActive(false);
+            if (it.activeSelf) { it.SetActive(false); }
         }
+
+        //非アクティブ化⇒アクティブ化
+        foreach (var it in tapObjects.activeObjects)
+        {
+            if (!it.activeSelf) { it.SetActive(true); }
+        }
+
+        //切り替えボタンON(最初だけ有効)
+        {
+            if (!switchingButton.isEnabled) 
+            {
+                switchingButton.isEnabled = true;
+            }
+        }
+
+        //スコア出現
+        DisplayScore();
+
+        //スコア更新
+        UpdateScore();
 
         //イメージ画像の表示
         StartCoroutine(LoadChartImageRoutine(Chart.ImageFilePath));
@@ -303,21 +388,31 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
 
     IEnumerator LoadChartImageRoutine(string path)
     {
-
+        Texture2D tex = null;
         //イメージファイルのロード
-        using(var www = UnityWebRequestTexture.GetTexture(path))
+        using (var www = UnityWebRequestTexture.GetTexture(path))
         {
             yield return www.SendWebRequest();
-            if(www.isNetworkError||www.isHttpError)
+            if (www.isNetworkError || www.isHttpError)
             {
                 Debug.LogError("path:\n" + path);
                 Debug.LogError("Error:" + www.error);
                 chartImageUI.chartImage.mainTexture = noImage;
                 ErrorManager.Save();
-                yield break;
+                tex = noImage;
             }
-            chartImageUI.chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
+            else
+            {
+                tex = DownloadHandlerTexture.GetContent(www);
+                //chartImageUI.chartImage.mainTexture = DownloadHandlerTexture.GetContent(www);
+            }
         }
+        //該当テクスチャ割り当て
+        chartImageUI.chartImage.mainTexture = tex;
+
+        //詳細画面表示時の後ろにも割り当てる
+        //TODO:暇なら直す
+        switchingObject.detailTexture.mainTexture = tex;
         yield break;
     }
 
@@ -325,5 +420,33 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     {
         yield return new WaitForEndOfFrame();
         backImage.color = backImageColor;
+    }
+
+    void DisplayScore()
+    {
+        if (onceProcces.scoreObj.activeSelf) { return; }
+        onceProcces.scoreObj.SetActive(true);
+        onceProcces.scoreObj.transform.DOLocalMove
+            (
+            onceProcces.to,
+            onceProcces.time
+            );
+    }
+
+    public void UpdateScore()
+    {
+        wasClearObj.SetActive(Chart.wasCleared);
+        notClearObj.SetActive(!Chart.wasCleared);
+        if (Chart.wasCleared)
+        {
+            score.text = Chart.Score.ToString();
+        }
+    }
+
+    public void SwitchingChartPanel()
+    {
+        bool isImageActive = switchingObject.ImageObj.activeSelf;
+        switchingObject.ImageObj.SetActive(!isImageActive);
+        switchingObject.DetailObj.SetActive(isImageActive);
     }
 }

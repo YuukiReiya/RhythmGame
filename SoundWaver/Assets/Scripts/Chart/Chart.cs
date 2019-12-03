@@ -11,6 +11,8 @@ public struct Chart
     public uint Comb;//ノーツカウント / コンボ
     public string ResistName;//登録名
     //public uint Number;//楽曲番号
+    public uint Score;//スコア
+    public bool wasCleared;//クリアしたか?
     public float Interval;
     [System.Serializable]
     public struct Note
