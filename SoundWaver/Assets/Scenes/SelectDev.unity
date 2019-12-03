@@ -6572,7 +6572,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: "\u697D\u66F2\u6642\u9593"
+  mText: "\u6700\u5927\u30B3\u30F3\u30DC"
   mFontSize: 60
   mFontStyle: 1
   mAlignment: 0
@@ -8315,7 +8315,7 @@ MonoBehaviour:
     detailTexture: {fileID: 378763501}
     Name: {fileID: 36051877}
     NotesCount: {fileID: 1742929157}
-    MusicTime: {fileID: 2118576824}
+    MaxComb: {fileID: 2118576824}
     PerfectCount: {fileID: 664850734}
     GreatCount: {fileID: 674668347}
     GoodCount: {fileID: 1186062870}
@@ -8742,7 +8742,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3010
+  startingRenderQueue: 3009
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -9558,7 +9558,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3012
+  startingRenderQueue: 3011
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -10551,7 +10551,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3010
+  startingRenderQueue: 3009
   mClipTexture: {fileID: 2800000, guid: 1dfba2d7d5621e341a91ee6f2770f2d7, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -10981,7 +10981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562342844}
   m_Layer: 5
-  m_Name: Time
+  m_Name: Comb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15115,7 +15115,7 @@ GameObject:
   - component: {fileID: 2118576823}
   - component: {fileID: 2118576824}
   m_Layer: 5
-  m_Name: time_value
+  m_Name: comb_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15177,7 +15177,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: "99\u520659\u79D2"
+  mText: 99999
   mFontSize: 60
   mFontStyle: 1
   mAlignment: 0

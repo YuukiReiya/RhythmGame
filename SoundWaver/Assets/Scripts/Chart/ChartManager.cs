@@ -78,7 +78,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         public UITexture detailTexture;
         public UILabel Name;
         public UILabel NotesCount;
-        public UILabel MusicTime;
+        public UILabel MaxComb;
         //score count
         public UILabel PerfectCount;
         public UILabel GreatCount;
