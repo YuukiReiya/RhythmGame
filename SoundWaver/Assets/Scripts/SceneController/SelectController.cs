@@ -19,10 +19,8 @@ namespace Game
         // Start is called before the first frame update
         void Start()
         {
-            //絞り込み初期化
-            ChartManager.Instance.chartGroop.Setup();
-            ChartManager.Instance.sortGroop.Setup();
-            ChartManager.Instance.orderGroop.Setup();
+            //初期化
+            ChartManager.Instance.Setup();
 
             //絞り込みパネルの非表示
             CloseRefine();
@@ -60,12 +58,12 @@ namespace Game
         public void OpenDelete()
         {
             deletePanel.gameObject.SetActive(true);
-            deletePanel.SetupBackScrollTexture();
         }
 
         public void CloseDelete()
         {
             deletePanel.gameObject.SetActive(false);
+            deletePanel.DestroyScrollChildren();
         }
 
         /// <summary>
