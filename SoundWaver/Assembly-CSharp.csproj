@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\gomiSceneMove.cs" />
     <Compile Include="Assets\ImportAsset\AssetStore\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
     <Compile Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
