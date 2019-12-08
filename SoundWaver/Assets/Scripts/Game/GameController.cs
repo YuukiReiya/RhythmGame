@@ -60,6 +60,12 @@ namespace Game
                         );
                     source.clip = GameMusic.Instance.Clip;
 
+                    if (NotesController.Instance == null)
+                    {
+                        SceneManager.LoadScene("SelectDev");
+                        yield break;
+                    }
+
                     NotesController.Instance.SetupNotes();
                     Setup();
                     #region ノーツの初期表示
