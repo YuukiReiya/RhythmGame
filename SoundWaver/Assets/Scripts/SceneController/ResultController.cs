@@ -18,8 +18,8 @@ namespace Scenes
 
         public void TransitionSelect()
         {
-            API.Util.FadeController.Instance.EventQueue.Enqueue(() => { UnityEngine.SceneManagement.SceneManager.LoadScene("Select"); });
-            API.Util.FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+            FadeController.Instance.EventQueue.Enqueue(() => { UnityEngine.SceneManagement.SceneManager.LoadScene("SelectDev"); });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
 }

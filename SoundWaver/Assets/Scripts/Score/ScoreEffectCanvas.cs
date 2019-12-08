@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using Yuuki.MethodExpansions;
 
 public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
@@ -27,29 +27,41 @@ public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
     [System.Serializable]
     struct ScoreSprites
     {
-        public Sprite perfect;
-        public Sprite great;
-        public Sprite good;
-        public Sprite miss;
+        //public Sprite perfect;
+        //public Sprite great;
+        //public Sprite good;
+        //public Sprite miss;
+        public Texture2D perfect;
+        public Texture2D great;
+        public Texture2D good;
+        public Texture2D miss;
     }
 
     //serialize param
     [SerializeField] ScoreSprites sprites;
     [SerializeField] DecorateScoreEffectParameter effectParam;
-    [SerializeField] float displayTime;
-    [SerializeField] Image image;
+    //scaleTime:0.03
+    //startScale:0.8,0.8
+    //endScale:1,1
+
+
+    [SerializeField] float displayTime = 0.3f;
+    [SerializeField] UITexture image;
     //private param
     IEnumerator routine;
     //accessor
     protected override void Awake()
     {
         base.Awake();
-        if (image.GetComponent<Image>() == null) { return; }
-        image.gameObject.SetActive(false);
+        //if (image.GetComponent<Image>() == null) { return; }
+        //image.gameObject.SetActive(false);
+
+#if UNITY_EDITOR
+        if (image == null) { Debug.LogError("imageがアタッチされていません。"); }
+#endif
     }
     public void StartScoreEffect(Judge judge)
     {
-        if (image.GetComponent<Image>() == null) { return; }
         //アクティブ化
         image.gameObject.SetActive(true);
         if (routine != null) { StopCoroutine(routine); }
@@ -57,10 +69,10 @@ public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
         //評価分け
         switch (judge)
         {
-            case Judge.PERFECT: image.sprite = sprites.perfect; break;
-            case Judge.GREAT: image.sprite = sprites.great; break;
-            case Judge.GOOD: image.sprite = sprites.good; break;
-            case Judge.MISS: image.sprite = sprites.miss; break;
+            case Judge.PERFECT: image.mainTexture = sprites.perfect; break;
+            case Judge.GREAT: image.mainTexture = sprites.great; break;
+            case Judge.GOOD: image.mainTexture = sprites.good; break;
+            case Judge.MISS: image.mainTexture = sprites.miss; break;
         }
         routine = DecorateScoreEffectRoutine();
         //コルーチンが終了したらroutineの初期化
@@ -77,10 +89,12 @@ public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
         {
             float rate = effectParam.scaleTime > 0.0f ? (Time.time - time) / effectParam.scaleTime : 1.0f;
             var scale = Vector2.Lerp(effectParam.startScale, effectParam.endScale, effectParam.scaleTime);
-            image.rectTransform.localScale = new Vector3(scale.x, scale.y, 1);
+            //image.rectTransform.localScale = new Vector3(scale.x, scale.y, 1);
+            image.transform.localScale = new Vector3(scale.x, scale.y, 1);
             yield return null;
         }
-        image.rectTransform.localScale = new Vector3(effectParam.endScale.x, effectParam.endScale.y, 1);
+        //image.rectTransform.localScale = new Vector3(effectParam.endScale.x, effectParam.endScale.y, 1);
+        image.transform.localScale = new Vector3(effectParam.endScale.x, effectParam.endScale.y, 1);
         //表示時間
         time = Time.time;
         while (Time.time < time + displayTime) { yield return null; }
@@ -92,7 +106,7 @@ public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
 #if UNITY_EDITOR
     private void Reset()
     {
-        image = GetComponentInChildren<Image>();
+        image = this.GetComponentInChildren<UITexture>();
     }
 #endif
 }

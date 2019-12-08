@@ -61,12 +61,12 @@ namespace Game
             //フェード中にロードが完了してしまった場合
             if ((time - startTime) < Define.c_FadeTime)
             {
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("GameDev");
             }
             //フェード終了後にロード完了
             else
             {
-                FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Game"); });
+                FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("GameDev"); });
                 FadeController.Instance.FadeIn(Define.c_FadeTime);
             }
         }

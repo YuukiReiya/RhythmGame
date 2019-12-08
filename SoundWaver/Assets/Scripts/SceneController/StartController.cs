@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Common;
+using API.Util;
 
 namespace Scenes
 {
@@ -11,18 +12,18 @@ namespace Scenes
         // Start is called before the first frame update
         void Start()
         {
-            API.Util.FadeController.Instance.FadeOut(Common.Define.c_FadeTime);
+            FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
         public void TransitionSelect()
         {
-            API.Util.FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Select"); });
-            API.Util.FadeController.Instance.FadeIn(Define.c_FadeTime);
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("SelectDev"); });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
         public void TransitionChartCreate()
         {
-            API.Util.FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreate"); });
-            API.Util.FadeController.Instance.FadeIn(Define.c_FadeTime);
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreate"); });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
 }

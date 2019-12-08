@@ -261,7 +261,7 @@ MonoBehaviour:
     Great: {fileID: 502255686}
     Good: {fileID: 1081346641}
     Miss: {fileID: 1191483785}
-    MaxComb: {fileID: 0}
+    MaxComb: {fileID: 300234807}
 --- !u!1 &194755399
 GameObject:
   m_ObjectHideFlags: 0

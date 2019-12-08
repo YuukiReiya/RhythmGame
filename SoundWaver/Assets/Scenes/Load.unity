@@ -296,6 +296,7 @@ MonoBehaviour:
   timingLine:
     y: -1.5
     z: 2.23
+  notesDirection: {x: 0, y: -33.26521, z: -71.40975}
 --- !u!4 &1528042746
 Transform:
   m_ObjectHideFlags: 0
