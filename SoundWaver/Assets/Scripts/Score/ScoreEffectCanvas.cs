@@ -53,12 +53,10 @@ public class ScoreEffectCanvas : Yuuki.SingletonMonoBehaviour<ScoreEffectCanvas>
     protected override void Awake()
     {
         base.Awake();
-        //if (image.GetComponent<Image>() == null) { return; }
-        //image.gameObject.SetActive(false);
-
 #if UNITY_EDITOR
         if (image == null) { Debug.LogError("imageがアタッチされていません。"); }
 #endif
+        image.gameObject.SetActive(false);
     }
     public void StartScoreEffect(Judge judge)
     {
