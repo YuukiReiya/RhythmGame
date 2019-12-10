@@ -5,6 +5,7 @@ using API.Util;
 using Common;
 using Game;
 using Yuuki.FileIO;
+using System.IO;
 namespace Scenes
 {
     public class ResultController : MonoBehaviour
@@ -28,14 +29,34 @@ namespace Scenes
         private void SaveClearData()
         {
             var chart = ChartManager.Chart;
+            string path = string.Empty;
 
-            //TODO:RegistNameで判定すると、プリセットファイルの譜面が複製されてしまう。
-            //原因は FilePath != RegistName だから。 対策はChartに別途FilePathを加える
-            var path = Define.c_ChartSaveDirectory + Define.c_Delimiter + chart.ResistName + Define.c_JSON;
+            //譜面ファイルのパスを求める
+
+            //プリセット楽曲
+            if(chart.isPreset)
+            {
+                //どのプリセットファイルなのか判定
+                foreach (var preset in Define.c_PresetFilePath)
+                {
+                    //とりま音楽ファイルのパスで判定する
+                    //TODO:なんとかしたい
+                    if (preset.Item1 == chart.MusicFilePath)
+                    {
+                        path = Define.c_ChartSaveDirectory + Define.c_Delimiter + Path.GetFileName(preset.Item2);
+                        break;
+                    }
+                    continue;
+                }
+            }
+            //オリジナル楽曲
+            else
+            {
+                path = Define.c_ChartSaveDirectory + Define.c_Delimiter + chart.ResistName + Define.c_JSON;
+            }
 
             //パラメーターの更新
             chart.wasCleared = true;//クリア済みフラグON
-
             //ハイスコアが更新されれば保存
             if (chart.Score < Judge.score.Point)
             {

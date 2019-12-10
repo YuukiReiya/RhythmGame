@@ -78,6 +78,7 @@ namespace Game.Setup
             //中身
             chart.MusicFilePath = tuple.Item1;
             chart.ImageFilePath = tuple.Item3;
+            chart.isPreset = true;//プリセットの譜面であるという証明
 
             //作成
             file.CreateFile(
