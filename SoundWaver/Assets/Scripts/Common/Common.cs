@@ -9,6 +9,11 @@ namespace Common
     {
         public const float c_FadeTime = 0.25f;
         /// <summary>
+        /// ゲーム開始時とアンポーズ時の待機時間(整数で)
+        /// ※1秒に割り当てられる時間はCountdwonスクリプトのインスペクタからどうぞ!
+        /// </summary>
+        public const uint c_WaitTimeCount = 3;
+        /// <summary>
         /// レーン数
         /// </summary>
         public const uint c_LaneCount = 3;
@@ -16,7 +21,13 @@ namespace Common
         public const float c_PerfectTime = 0.033f;
         public const float c_GreatTime = 0.1f;
         public const float c_GoodTime = 0.2f;
-
+        /// <summary>
+        /// 判定時の加算スコアポイント
+        /// </summary>
+        public const uint c_PerfectAddPoint = 500;
+        public const uint c_GreatAddPoint = 100;
+        public const uint c_GoodAddPoint = 50;
+        public const uint c_MissAddPoint = 0;
         #region プリセットファイルのパス
         /// <summary>
         /// プリセットファイルのパス
@@ -26,11 +37,17 @@ namespace Common
         /// </summary>
         public static readonly (string, string,string)[] c_PresetFilePath = 
             { 
-            //ハルジオン
+                //ハルジオン
                 (
                     Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_kei_harujion"+c_MP3,
                     Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Harujion"+c_JSON,
                     Application.streamingAssetsPath+c_Delimiter+"Image"+c_Delimiter+"Harujion"+c_PNG
+                ),
+                //シャイニングスター
+                (
+                    Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_shiho_shining_star"+c_MP3,
+                    Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "ShiningStar"+c_JSON,
+                    Application.streamingAssetsPath+c_Delimiter+"Image"+c_Delimiter+"ShiningStar"+c_PNG
                 ),
         };
         #endregion
