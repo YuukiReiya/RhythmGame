@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using Game.UI;
 namespace Game
 {
     public class Lane : MonoBehaviour
