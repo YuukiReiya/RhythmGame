@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Common;
 using System;
+using Game.UI;
 using count =System.UInt32;
 
 namespace Game
@@ -21,6 +22,7 @@ namespace Game
 
         public struct Score
         {
+            public uint Point;
             public count Comb;
             public count MaxComb;
             public count Perfect;
@@ -32,6 +34,7 @@ namespace Game
 
         public static void Reset()
         {
+            score.Point = 0;
             score.Comb = 0;
             score.MaxComb = 0;
             score.Perfect = 0;
@@ -79,6 +82,9 @@ namespace Game
                     break;
             }
 
+            //スコア
+            GetScore(ret);
+
             //最大コンボ
             score.MaxComb = score.Comb > score.MaxComb ? score.Comb : score.MaxComb;
 
@@ -93,6 +99,19 @@ namespace Game
                 case ScoreEffectCanvas.Judge.GREAT:score.Great++;break;
                 case ScoreEffectCanvas.Judge.GOOD:score.Good++;break;
                 case ScoreEffectCanvas.Judge.MISS:score.Miss++;break;
+            }
+        }
+
+        private static void GetScore(ScoreEffectCanvas.Judge judge)
+        {
+            switch (judge)
+            {
+                case ScoreEffectCanvas.Judge.PERFECT:score.Point += Define.c_PerfectAddPoint; break;
+                case ScoreEffectCanvas.Judge.GREAT: score.Point += Define.c_GreatAddPoint; break;
+                case ScoreEffectCanvas.Judge.GOOD: score.Point += Define.c_GoodAddPoint; break;
+                case ScoreEffectCanvas.Judge.MISS: score.Point += Define.c_MissAddPoint; break;
+                default:
+                    break;
             }
         }
     }

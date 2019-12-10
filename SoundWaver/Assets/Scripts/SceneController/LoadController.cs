@@ -5,6 +5,7 @@ using API.Util;
 using Common;
 using UnityEngine.SceneManagement;
 using System.IO;
+using Game.UI;
 namespace Game
 {
     public class LoadController : SingletonMonoBehaviour<LoadController>
