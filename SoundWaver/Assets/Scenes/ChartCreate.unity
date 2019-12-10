@@ -2026,7 +2026,7 @@ MonoBehaviour:
   isDefaultDontDestroy: 0
   sampleCount: 2048
   channelNumber: 0
-  difference: 0.3
+  difference: 3
   musicTitle: {fileID: 299594510}
   intervalSec: {fileID: 1764588812}
   chartName: {fileID: 1415521377}

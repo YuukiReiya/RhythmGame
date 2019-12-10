@@ -4345,7 +4345,7 @@ MonoBehaviour:
   mWidth: 2160
   mHeight: 1620
   mDepth: 0
-  mMat: {fileID: 2100000, guid: e7eca2569f7e38d469a2f8c0f54a5755, type: 2}
+  mMat: {fileID: 2100000, guid: a7facf233dad61841b9d2401fed504d2, type: 2}
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 1
@@ -4354,7 +4354,7 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 1
+  mFlip: 0
   mApplyGradient: 0
   mGradientTop: {r: 1, g: 1, b: 1, a: 1}
   mGradientBottom: {r: 0.7, g: 0.7, b: 0.7, a: 1}

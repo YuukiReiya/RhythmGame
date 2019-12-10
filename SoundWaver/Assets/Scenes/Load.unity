@@ -292,11 +292,11 @@ MonoBehaviour:
   isDefaultDontDestroy: 1
   noteSpeed: 10
   waitTime: 0.5
-  activeTime: 10
+  activeTime: 5
   timingLine:
-    y: -1.5
-    z: 2.23
-  notesDirection: {x: 0, y: -33.26521, z: -71.40975}
+    y: 0.5
+    z: -0.45
+  notesDirection: {x: 0, y: 0, z: -1}
 --- !u!4 &1528042746
 Transform:
   m_ObjectHideFlags: 0

@@ -323,6 +323,7 @@
     <Compile Include="Assets\Scripts\CheckBox\CheckBoxGroop.cs" />
     <Compile Include="Assets\Scripts\Comb\CombEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Common\Common.cs" />
+    <Compile Include="Assets\Scripts\CountDown\Countdown.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
     <Compile Include="Assets\Scripts\Fade\FadeController.cs" />
@@ -337,7 +338,6 @@
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
     <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
-    <Compile Include="Assets\Scripts\Game\PauseCanvas.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
@@ -347,6 +347,7 @@
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
+    <Compile Include="Assets\Scripts\Pause\PauseCanvas.cs" />
     <Compile Include="Assets\Scripts\RadioButton\RadioButton.cs" />
     <Compile Include="Assets\Scripts\RadioButton\RadioButtonGroop.cs" />
     <Compile Include="Assets\Scripts\Result\ResultScoreCanvas.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="Assets\Scripts\SceneController\SelectController.cs" />
     <Compile Include="Assets\Scripts\SceneController\StartController.cs" />
     <Compile Include="Assets\Scripts\Score\ScoreEffectCanvas.cs" />
+    <Compile Include="Assets\Scripts\Score\ScorePanel.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
@@ -378,6 +380,7 @@
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (TextureClip).shader" />
+    <None Include="Assets\Shaders\SelectBackScroll.shader" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />

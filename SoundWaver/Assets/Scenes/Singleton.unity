@@ -269,7 +269,7 @@ PrefabInstance:
     - target: {fileID: 7484083468325342747, guid: 36dd65508d19c5440aceef8fd6802b7c,
         type: 3}
       propertyPath: startingRenderQueue
-      value: 3002
+      value: 3007
       objectReference: {fileID: 0}
     - target: {fileID: 7484083468325342747, guid: 36dd65508d19c5440aceef8fd6802b7c,
         type: 3}
