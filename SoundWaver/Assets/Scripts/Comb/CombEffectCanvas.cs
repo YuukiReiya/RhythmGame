@@ -14,12 +14,12 @@ namespace Game.UI
             public Vector2 startScale;
             public Vector2 endScale;
         }
-        //serialize param
+        //  serialize param
         [SerializeField] private GameObject combObject;
         [SerializeField] private UILabel combCount;
         [SerializeField] private DecorateParam decorateParam;
         [SerializeField] private float displayTime;
-        //private param
+        //  private param
         private IEnumerator routine;
         //  accessor
         private GameObject CombUI { get { return combObject; } }
