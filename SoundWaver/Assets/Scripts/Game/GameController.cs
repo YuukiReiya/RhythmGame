@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using API.Util;
 using Common;
-using UnityEngine.UI;
+using Game.UI;
 namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
@@ -12,6 +12,9 @@ namespace Game
         //[SerializeField] SceneTransitionCommand sceneTransitionCommand;
         [SerializeField,Tooltip("ゲーム開始前に待機(遅延)する時間")] private float delayTime;
         [SerializeField] private AudioSource source;
+        [Header("SCORE")]
+        [SerializeField] ScorePanel scorePanel;
+        [Header("Pause")]
         [SerializeField] PauseCanvas pauseCanvas;
         //private param
         private bool isStart;
@@ -73,8 +76,6 @@ namespace Game
                     NotesController.Instance.Renewal();
                     NotesController.Instance.Move();
                     #endregion
-                    StartCoroutine(DelayStart());
-
                     yield break;
                 }
                 StartCoroutine(routine());
@@ -87,7 +88,6 @@ namespace Game
             NotesController.Instance.Renewal();
             NotesController.Instance.Move();
             #endregion
-            StartCoroutine(DelayStart());
         }
 
         // Update is called once per frame
@@ -115,7 +115,10 @@ namespace Game
         {
             //param
             isStart = false;
-            pauseCanvas.Setup(source);
+            scorePanel.Setup();
+            pauseCanvas.Setup(source);//初期化
+            pauseCanvas.PauseButton.isEnabled = false;//ポーズボタン無効化
+            Countdown.Instance.Widget.alpha = 0;
 
             //楽曲データロード済み
             if (GameMusic.Instance.Clip)
@@ -129,17 +132,23 @@ namespace Game
                 //エラー処理
                 //(確認用のダイアログを出す.etc)
             }
-        }
 
-        private IEnumerator DelayStart()
-        {
+            //フェード
             FadeController.Instance.Stop();
             float alp = 0.3f;
             FadeController.Instance.SetAlpha(alp);
             FadeController.Instance.FadeOut(delayTime / 4);
-            yield return new WaitForSeconds(delayTime);
-            isStart = true;
-            source.Play();
+
+            //カウントによる遅延処理
+            Countdown.Instance.Execute(
+                Define.c_WaitTimeCount,
+                () =>
+                {
+                    isStart = true;
+                    source.Play();
+                    pauseCanvas.PauseButton.isEnabled = true;//ポーズボタン有効化
+                }
+                );
         }
 
         /// <summary>
@@ -150,6 +159,15 @@ namespace Game
             //isStart = false;
             SceneManager.LoadScene("Result");
             Destroy(NotesController.Instance.gameObject);
+        }
+
+        /// <summary>
+        /// セレクトシーンに移動
+        /// </summary>
+        public void TransitionSelect()
+        {
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("SelectDev"); });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
 }
