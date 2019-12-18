@@ -338,9 +338,11 @@
     <Compile Include="Assets\Scripts\Framework\SingletonObjectPool.cs" />
     <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
+    <Compile Include="Assets\Scripts\Game\ScrollWall.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
+    <Compile Include="Assets\Scripts\NGUI\RenderFrontThanNGUI.cs" />
     <Compile Include="Assets\Scripts\NGUI\SyncTextureColorUtil.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
     <Compile Include="Assets\Scripts\Notes\NoteDecorate.cs" />
@@ -1015,6 +1017,12 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{91690D12-8BF6-776A-000E-E06BFADEF1A2}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
