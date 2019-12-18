@@ -157,7 +157,8 @@ namespace Game
         private void GameEnd()
         {
             //isStart = false;
-            SceneManager.LoadScene("Result");
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ResultDev"); });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
             Destroy(NotesController.Instance.gameObject);
         }
 
