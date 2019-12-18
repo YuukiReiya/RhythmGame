@@ -1,0 +1,2 @@
+MIT
+AsyncAwaitUtil:詳細は"Plugins"以下の"ReadMe"参照
