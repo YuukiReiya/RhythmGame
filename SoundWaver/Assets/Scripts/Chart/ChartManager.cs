@@ -8,7 +8,7 @@ using Yuuki;
 using System.Linq;
 using Game.UI;
 using DG.Tweening;
-
+using System.Threading.Tasks;
 public class ChartManager : SingletonMonoBehaviour<ChartManager>
 {
     //serialize param
@@ -88,13 +88,31 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     [Header("Switching chart panel")]
     [SerializeField] private SwitchingObject switchingObject;
     [SerializeField] private UIButton switchingButton;
-    
+#if UNITY_EDITORl
+    #region BGM
+    [System.Serializable]
+    struct BGMObject
+    {
+        public AudioSource audioSource;
+        public GameObject parent;
+        public Vector3 direction;
+        public UILabel name;
+        public float tweenTime;
+        public float dispTime;
+        public IEnumerator routine;
+    }
+    [Header("BGM")]
+    [SerializeField] BGMObject bgmObj;
+    private IEnumerator dispScoreRoutine;
+    private AudioClip BGMclip;
+    #endregion
+#endif
     //private param
     private uint number;
     private SortType sortType = SortType.Hierarchy;
     private ChartType chartType = ChartType.All;
     private bool isSortAsc = true;//並び順が昇順?
-    private IEnumerator dispScoreRoutine;
+    System.Action onceCallFunction;//一度だけ呼ばれる関数
 
     //public param
     public static Chart Chart { get; set; }
@@ -128,6 +146,48 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         //譜面パネルの初期化
         switchingObject.ImageObj.SetActive(true);
         switchingObject.DetailObj.SetActive(false);
+
+        //一度だけ呼ばれる関数
+        onceCallFunction +=
+            () =>
+            {
+                //イメージの背景画像
+                foreach (var it in chartImageUI.otherImages)
+                {
+                    if (!it.gameObject.activeSelf)
+                    {
+                        it.gameObject.SetActive(true);
+                    }
+                }
+
+                //イメージの効果画像
+                if (!chartImageUI.effectImage.gameObject.activeSelf)
+                {
+                    chartImageUI.effectImage.gameObject.SetActive(true);
+                }
+
+                //アクティブ化⇒非アクティブ化
+                foreach (var it in tapObjects.disableObjects)
+                {
+                    if (it.activeSelf) { it.SetActive(false); }
+                }
+
+                //非アクティブ化⇒アクティブ化
+                foreach (var it in tapObjects.activeObjects)
+                {
+                    if (!it.activeSelf) { it.SetActive(true); }
+                }
+
+                //切り替えボタンON(最初だけ有効)
+                {
+                    if (!switchingButton.isEnabled)
+                    {
+                        switchingButton.isEnabled = true;
+                    }
+                }
+                //スコア出現
+                SetupScoreObject();
+            };
     }
 
     /// <summary>
@@ -234,7 +294,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         switch (chartType)
         {
             //全て
-            case ChartType.All:break;
+            case ChartType.All: break;
             //プリセットのみ
             case ChartType.Preset:
                 {
@@ -329,55 +389,20 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
 
     public void UpdateChartPanel()
     {
-        //イメージの背景画像
-        foreach(var it in chartImageUI.otherImages)
-        {
-            if (!it.gameObject.activeSelf)
-            {
-                it.gameObject.SetActive(true);
-            }
-        }
-
-        //イメージの効果画像
-        if (!chartImageUI.effectImage.gameObject.activeSelf)
-        {
-            chartImageUI.effectImage.gameObject.SetActive(true);
-        }
-
-        //アクティブ化⇒非アクティブ化
-        foreach (var it in tapObjects.disableObjects)
-        {
-            if (it.activeSelf) { it.SetActive(false); }
-        }
-
-        //非アクティブ化⇒アクティブ化
-        foreach (var it in tapObjects.activeObjects)
-        {
-            if (!it.activeSelf) { it.SetActive(true); }
-        }
-
-        //切り替えボタンON(最初だけ有効)
-        {
-            if (!switchingButton.isEnabled) 
-            {
-                switchingButton.isEnabled = true;
-            }
-        }
-
-        //スコア出現
-        SetupScoreObject();
+        //最初の一度だけ呼ばれる関数
+        onceCallFunction?.Invoke();
+        onceCallFunction = null;
 
         //スコア設定
         UpdateScore();
 
         //イメージ画像の表示
         StartCoroutine(LoadChartImageRoutine(Chart.ImageFilePath));
-
     }
 
     public void SetImageEffectColor(Color cr)
     {
-        foreach(var it in chartImageUI.otherImages)
+        foreach (var it in chartImageUI.otherImages)
         {
             var color = it.color;
             color = cr;
@@ -386,6 +411,44 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         }
     }
 
+#if UNITY_EDITOR
+    #region マルチスレッド
+    private async Task LoadChartImageTaskAsync(string path)
+    {
+        Texture2D tex = null;
+        //イメージファイルのロード
+        var request = UnityWebRequestTexture.GetTexture(path);
+        {
+            Debug.Log("load image A:" + System.Threading.Thread.CurrentThread.ManagedThreadId);
+            await request.SendWebRequest();
+
+            Debug.Log("load image B:" + System.Threading.Thread.CurrentThread.ManagedThreadId);
+
+            if (request.isNetworkError || request.isHttpError)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("path:\n" + path);
+                Debug.LogError("Error:" + request.error);
+#endif
+                chartImageUI.chartImage.mainTexture = noImage;
+                ErrorManager.Save();
+                tex = noImage;
+            }
+            else
+            {
+                tex = DownloadHandlerTexture.GetContent(request);
+                //chartImageUI.chartImage.mainTexture = DownloadHandlerTexture.GetContent(request);
+            }
+        }
+        //該当テクスチャ割り当て
+        chartImageUI.chartImage.mainTexture = tex;
+
+        //詳細画面表示時の後ろにも割り当てる
+        //TODO:暇なら直す
+        switchingObject.detailTexture.mainTexture = tex;
+    }
+    #endregion
+#endif
     IEnumerator LoadChartImageRoutine(string path)
     {
         Texture2D tex = null;
@@ -395,8 +458,10 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
+#if UNITY_EDITOR
                 Debug.LogError("path:\n" + path);
                 Debug.LogError("Error:" + www.error);
+#endif
                 chartImageUI.chartImage.mainTexture = noImage;
                 ErrorManager.Save();
                 tex = noImage;
@@ -458,4 +523,94 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         switchingObject.ImageObj.SetActive(!isImageActive);
         switchingObject.DetailObj.SetActive(isImageActive);
     }
+
+#if Coroutine
+#region コルーチン
+    public void PlayBGM()
+    {
+        StartCoroutine(LoadBGMRoutine());
+    }
+    IEnumerator LoadBGMRoutine()
+    {
+        AudioClip clip = null;
+        var path = Chart.MusicFilePath;
+        bgmObj.name.text = "読み込み中";
+        using (var uwr=UnityWebRequestMultimedia.GetAudioClip(path,AudioType.MPEG))
+        {
+            yield return uwr.SendWebRequest();
+            //エラー
+            if (uwr.isNetworkError || uwr.isHttpError)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("path:\n" + path);
+                Debug.LogError("Error:" + uwr.error);
+#endif
+                ErrorManager.Save();
+                clip = null;
+                bgmObj.name.text = "not found music";
+            }
+            //読み込みOK
+            else
+            {
+                clip = DownloadHandlerAudioClip.GetContent(uwr);
+                bgmObj.name.text = Path.GetFileNameWithoutExtension(Chart.MusicFilePath);
+            }
+        }
+        //割り当てと再生
+        bgmObj.audioSource.clip = clip;
+        if (bgmObj.audioSource.clip)
+        {
+            bgmObj.audioSource.Play();
+        }
+        yield break;
+    }
+#endregion
+#endif
+#if MultiThread
+#region マルチスレッド
+
+    public async void PlayBGM()
+    {
+        LoadBGMTaskAsync();
+        await
+            Task.Run(async () =>
+            {
+                 //LoadBGMTaskAsync();
+            });
+    }
+
+    public async Task LoadBGMTaskAsync()
+    {
+        var path = Chart.MusicFilePath;
+        bgmObj.name.text = "読み込み中";
+        Debug.Log("load bgm A:" + System.Threading.Thread.CurrentThread.ManagedThreadId);
+        var request = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG);
+        await request.SendWebRequest();
+        Debug.Log("load bgm B:" + System.Threading.Thread.CurrentThread.ManagedThreadId);
+        //エラー
+        if (request.isNetworkError || request.isHttpError)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("path:\n" + path);
+            Debug.LogError("Error:" + request.error);
+#endif
+            ErrorManager.Save();
+            BGMclip = null;
+            bgmObj.name.text = "not found music";
+        }
+        else
+        {
+            BGMclip = DownloadHandlerAudioClip.GetContent(request);
+            bgmObj.name.text = Path.GetFileNameWithoutExtension(Chart.MusicFilePath);
+        }
+        //割り当てと再生
+        bgmObj.audioSource.clip = BGMclip;
+        if (bgmObj.audioSource.clip)
+        {
+            Debug.Log("ok");
+            bgmObj.audioSource.Play();
+        }
+    }
+#endregion
+#endif
 }

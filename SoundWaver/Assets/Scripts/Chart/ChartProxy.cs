@@ -29,6 +29,10 @@ public class ChartProxy : MonoBehaviour
     public void OnTap()
     {
         ChartManager.Chart = this.chart;
+        //選択した楽曲を再生
+        //※UnityWebRequestはメインスレッドでしか実行できない。
+        //　マルチスレッドでファイルのロードが出来ないと重すぎて使い物にならなくなる。
+        //ChartManager.Instance.PlayBGM();
         //選択した譜面に更新
         ChartManager.Instance.SetImageEffectColor(color);
         ChartManager.Instance.UpdateChartPanel();
