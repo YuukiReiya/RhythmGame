@@ -6,17 +6,46 @@ using Common;
 using Game;
 using Yuuki.FileIO;
 using System.IO;
+using DG.Tweening;
+#if UNITY_EDITOR
+using Yuuki.MethodExpansions;
+#endif
 namespace Scenes
 {
     public class ResultController : MonoBehaviour
     {
         //serialize param
         [SerializeField] private ResultScoreCanvas resultScoreCanvas;
+        [Header("To Result")]
+        [SerializeField] private ToResult resultDispObj;
+        [System.Serializable]
+        struct ToResult
+        {
+            public GameObject dispObj;
+            public float tweenTime;
+            public Vector2 endPos;
+        }
+        [System.Serializable]
+        struct ChartData
+        {
+            public UILabel NameLabel;
+            public UILabel TimeLabel;
+        }
+        [Header("Chart Time")]
+        [SerializeField] ChartData chartData;
+
         // Start is called before the first frame update
         void Start()
         {
-            resultScoreCanvas.Setup();
             SaveClearData();
+            SetupChartData();
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    //フェード終了後にアニメーション
+                    SetupToResultObject();
+                    resultScoreCanvas.Setup();
+                });
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
@@ -74,6 +103,51 @@ namespace Scenes
                 JsonUtility.ToJson(chart),
                 FileIO.FileIODesc.Overwrite
                 );
+        }
+
+        private void SetupToResultObject()
+        {
+            resultDispObj.dispObj.transform.DOLocalMove(resultDispObj.endPos, resultDispObj.tweenTime);
+        }
+
+        private void SetupChartData()
+        {
+            uint time = 0;
+            AudioClip clip = null;
+            uint minute = 0;
+            uint second = 0;
+#if UNITY_EDITOR
+            if (GameMusic.Instance == null)
+            {
+                Debug.LogError("GameMusicのインスタンスが存在しません。");
+                return;
+            }
+            if (!GameMusic.Instance.Clip)
+            {
+                //テストコード
+                var path = Define.c_StreamingAssetsPath + Define.c_Delimiter + "Sounds\\" + Define.c_Delimiter + Path.GetFileNameWithoutExtension(Define.c_PresetFilePath[0].Item1) + Define.c_MP3;
+                this.StartCoroutine(
+                    GameMusic.Instance.LoadToAudioClip(path),
+                    () =>
+                    {
+                        clip = GameMusic.Instance.Clip;
+                        time = (uint)clip.length;
+                        minute = time / 60;
+                        second = time % 60;
+                        chartData.TimeLabel.text = minute + "分" + second + "秒";
+                    }
+                    );
+                return;
+            }
+#endif
+            //譜面名
+            chartData.NameLabel.text = ChartManager.Chart.ResistName;
+            //時間
+            clip = GameMusic.Instance.Clip;
+            time = (uint)clip.length;
+            minute = time / 60;
+            second = time % 60;
+            chartData.TimeLabel.text = minute + "分" + second + "秒";
         }
     }
 }
