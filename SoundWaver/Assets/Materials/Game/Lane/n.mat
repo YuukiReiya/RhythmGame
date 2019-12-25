@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: wall_left
-  m_Shader: {fileID: 4800000, guid: aaf6b102a8ea863488b483cbff3a3b8a, type: 3}
-  m_ShaderKeywords: _ALPHABLEND_ON
+  m_Name: n
+  m_Shader: {fileID: 4800000, guid: 9cc8852ac8310794fbe4c6ef05c3db19, type: 3}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 48e73070414d7134b9ccb890913da3a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 105641c0228aeba4083cdc01fafd8606, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -64,18 +64,15 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _Mode: 2
+    - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 0
-    - _uvDirectionX: -1
-    - _uvDirectionY: 0
-    - _uvScrollSpeedX: 10
-    - _uvScrollSpeedY: 10
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.78431374}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0.8627451}
