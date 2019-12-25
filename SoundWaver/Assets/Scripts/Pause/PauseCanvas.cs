@@ -16,14 +16,18 @@ namespace Game.UI
         //private param
         AudioSource source;
         //public param
+        public System.Action pauseAction;
+        public System.Action unPauseAction;
         //accessor
         public GameObject LaneColliders { get { return laneColliders; } }
         public UIButton PauseButton { get { return pauseButton; } }
-        public void Setup(AudioSource source)
+        public void Setup(AudioSource source,System.Action pauseAction,System.Action unPauseAction)
         {
             this.source = source;
             chartName.text = ChartManager.Chart.ResistName;
             pausePanel.SetActive(false);
+            this.pauseAction = pauseAction;
+            this.unPauseAction = unPauseAction;
         }
 
         /// <summary>
@@ -36,6 +40,9 @@ namespace Game.UI
             //レーンのコライダーを切って、タッチ判定を通らないようにする
             laneColliders.SetActive(false);
             pauseButton.isEnabled = false;
+
+            //コールバック
+            pauseAction?.Invoke();
         }
 
         public void UnPause()
@@ -49,6 +56,9 @@ namespace Game.UI
                     //レーンのコライダーを入れなおす
                     laneColliders.SetActive(true);
                     pauseButton.isEnabled = true;
+
+                    //コールバック
+                    unPauseAction?.Invoke();
                 }
                 );
         }

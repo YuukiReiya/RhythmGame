@@ -16,6 +16,14 @@ namespace Game
         [SerializeField] ScorePanel scorePanel;
         [Header("Pause")]
         [SerializeField] PauseCanvas pauseCanvas;
+        [Header("Lane Material")]
+        [SerializeField]private Material sideLaneMat;
+        [SerializeField]private Material centerLaneMat;
+        [SerializeField] private int laneMatPriority = 2;
+        [Header("Notes Material")]
+        [SerializeField] private Material notesMaterial;
+        [SerializeField] private int notesMatPriority = 10;
+
         //private param
         private bool isStart;
         //public param
@@ -30,6 +38,9 @@ namespace Game
         protected override void Awake()
         {
             base.Awake();
+            MaterialUtil.SetBlendMode(notesMaterial, MaterialUtil.Mode.Transparent, notesMatPriority);
+            MaterialUtil.SetBlendMode(sideLaneMat, MaterialUtil.Mode.Transparent, laneMatPriority);
+            MaterialUtil.SetBlendMode(centerLaneMat, MaterialUtil.Mode.Transparent, laneMatPriority);
         }
         // Start is called before the first frame update
         void Start()
@@ -116,7 +127,18 @@ namespace Game
             //param
             isStart = false;
             scorePanel.Setup();
-            pauseCanvas.Setup(source);//初期化
+            pauseCanvas.Setup(
+                source,                                                                                     //参照するオーディオソース
+#if LaneMaterialSpeed
+                ()=> { SetLaneMatScrollSpeed(0); },                                         //ポーズ時に呼ばれるコールバック
+                () => { SetLaneMatScrollSpeed(GetCalcLaneMatScrollSpeed()); } //アンポーズ時に呼ばれるコールバック
+#else
+                null, null
+#endif
+                );
+#if LaneMaterialSpeed
+            SetLaneMatScrollSpeed(0);//レーンのマテリアルのスクロールを抑制
+#endif
             pauseCanvas.PauseButton.isEnabled = false;//ポーズボタン無効化
             Countdown.Instance.Widget.alpha = 0;
 
@@ -146,6 +168,9 @@ namespace Game
                 {
                     isStart = true;
                     source.Play();
+#if LaneMaterialSpeed
+                    SetLaneMatScrollSpeed(GetCalcLaneMatScrollSpeed());//レーンマテリアルのスクロール速度を設定
+#endif
                     pauseCanvas.PauseButton.isEnabled = true;//ポーズボタン有効化
                 }
                 );
@@ -170,5 +195,48 @@ namespace Game
             FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("SelectDev"); });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
+
+#if LaneMaterialSpeed
+#region     レーンマテリアルのUVスクロール有版処理
+        /// <summary>
+        /// レーンのマテリアルに設定するUVスクロールの速度を計算。
+        /// ※ノーツ速度等から計算もしくは列挙にするため関数を用意
+        /// </summary>
+        /// <returns></returns>
+        private float GetCalcLaneMatScrollSpeed()
+        {
+            float ret = 0;
+
+            ret = 1.9f;
+            centerLaneMat.SetFloat("_Pause", 1);
+            sideLaneMat.SetFloat("_Pause", 1);
+            return ret;
+        }
+
+        private void SetLaneMatScrollSpeed(float value)
+        {
+            const string c_PropertyName = "_uvScrollSpeedY";
+#if UNITY_EDITOR
+            if (!sideLaneMat.HasProperty(c_PropertyName)) {
+                Debug.LogError("sideLaneMat is not found property.");
+                return; 
+            }
+            if (!centerLaneMat.HasProperty(c_PropertyName))
+            {
+                Debug.LogError("centerLaneMat is not found property.");
+                return;
+            }
+            if (value==0)
+            {
+                centerLaneMat.SetFloat("_Pause", 0);
+                sideLaneMat.SetFloat("_Pause", 0);
+            }
+            //centerLaneMat.SetFloat("_Pause", );
+#endif
+            sideLaneMat.SetFloat(c_PropertyName, value);
+            centerLaneMat.SetFloat(c_PropertyName, value);
+        }
+#endregion
+#endif
     }
 }

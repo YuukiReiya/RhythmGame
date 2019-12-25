@@ -14,61 +14,70 @@ namespace Game
         [SerializeField] float resetDistance = 10;
         Vector3 add;
         Vector3 initPosition;
-
+        AudioSource source;
+        float baseSpeed;
         SynchronizationContext context = null;//メインスレッドのコンテキスト保持用
 
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("start func threadNo:" + Thread.CurrentThread.ManagedThreadId);
             add = Vector3.zero;
             initPosition = gameObject.transform.position;
         }
 
-        // Update is called once per frame
-       void Update()
+        public void Setup(AudioSource source)
+        {
+            this.source = source;
+            baseSpeed = NotesController.Instance.NotesSpeed;
+        }
+
+        public void Run()
         {
             context = SynchronizationContext.Current;
-            Work();
+            this.StartCoroutine(MainRoutine());
         }
 
-        private async Task ScrollTaskAsync()
+        private IEnumerator MainRoutine()
         {
-            //Debug.Log("start threadNo:" + Thread.CurrentThread.ManagedThreadId);
-            await Task.Run(
-                () =>
-                {
-                    add += direction * speed * NotesController.Instance.NotesSpeed;// * Time.deltaTime;
-                    //Debug.Log("threadNo:" + Thread.CurrentThread.ManagedThreadId);
-                }
-                );
-
-        }
-
-        async Task Work()
-        {
-            //Debug.Log("work:" + Thread.CurrentThread.ManagedThreadId);
-            await Task.Run(() =>
+            while (true)
             {
-                //Debug.Log("work task:" + Thread.CurrentThread.ManagedThreadId);
-                Execute();
-            });
+                Work();
+                yield return null;
+            }
+        }
+
+        //async Task Work()
+        //{
+        //    await Task.Run(() =>
+        //    {
+        //        Execute();
+        //    });
+        //}
+
+        private void Work()
+        {
+            add += direction.normalized * speed * baseSpeed * source.pitch;
+            gameObject.transform.position += add;
+            if (resetDistance <= Vector3.Distance(gameObject.transform.position, initPosition))
+            {
+                gameObject.transform.position = initPosition;
+            }
+            add = Vector3.zero;
         }
 
         private void Execute()
         {
-            add += direction * speed;// * Time.deltaTime;
-            //Debug.Log("execute:" + Thread.CurrentThread.ManagedThreadId);
+            add += direction * speed * baseSpeed;// * Time.deltaTime
             //メインスレッド側の処理
             context.Post(
                 (state) =>
                 {
+                    add *= source.pitch;
                     gameObject.transform.position += add;
                     if(resetDistance<=Vector3.Distance(gameObject.transform.position,initPosition))
                     {
                         gameObject.transform.position = initPosition;
                     }
-                    //Debug.Log("execute main:" + Thread.CurrentThread.ManagedThreadId);//スレッドは1で実行
                     add = Vector3.zero;
                 }, null);
 
