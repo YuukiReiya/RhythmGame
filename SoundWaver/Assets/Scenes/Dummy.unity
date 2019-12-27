@@ -454,6 +454,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0e29eb0970e494995e8320280bd049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sideLaneMat: {fileID: 2100000, guid: d5ee6683289b5e54d9cac025d442e41a, type: 2}
+  centerLaneMat: {fileID: 2100000, guid: 1493ebc308515d7449498905d5879c20, type: 2}
+  laneMatPriority: 2
+  notesMaterial: {fileID: 2100000, guid: 4b083f0d1ca7e3345a10c6c65ea194f3, type: 2}
+  notesMatPriority: 10
 --- !u!4 &757230821
 Transform:
   m_ObjectHideFlags: 0
