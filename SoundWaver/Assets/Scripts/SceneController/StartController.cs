@@ -22,7 +22,7 @@ namespace Scenes
         }
         public void TransitionChartCreate()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreate"); });
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreateDev"); });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
