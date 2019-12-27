@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
-  prefab: {fileID: 5176470465313054875, guid: 8d50fc19acf03904599d566c0c88009a, type: 3}
+  prefab: {fileID: 5176470465313054875, guid: c6f5ad66b5b4ba440b4a9c5955866cb3, type: 3}
   poolCount: 30
 --- !u!1 &2041574421
 GameObject:
