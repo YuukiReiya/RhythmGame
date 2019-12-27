@@ -391,7 +391,9 @@
     <None Include="Assets\Shaders\LaneScroll.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Shaders\ScrollAlbedoTransparent.shader" />
     <None Include="Assets\Shaders\ChromakeyHue.shader" />
+    <None Include="Assets\Shaders\GaussianBlurTransparent.shader" />
     <None Include="Assets\Shaders\GaussianBlur.shader" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored (TextureClip).shader" />
