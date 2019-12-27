@@ -1616,7 +1616,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: 999
+  mText: 
   mFontSize: 70
   mFontStyle: 1
   mAlignment: 0
@@ -3516,7 +3516,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: 999
+  mText: 
   mFontSize: 70
   mFontStyle: 1
   mAlignment: 0
@@ -3988,7 +3988,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: 999
+  mText: 
   mFontSize: 70
   mFontStyle: 1
   mAlignment: 0
@@ -4416,7 +4416,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: 999
+  mText: 
   mFontSize: 70
   mFontStyle: 1
   mAlignment: 0
@@ -8895,7 +8895,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: 6660a9799a8c5b448942ea5dc9c59438, type: 3}
   mFont: {fileID: 0}
-  mText: 999
+  mText: 
   mFontSize: 70
   mFontStyle: 1
   mAlignment: 0
