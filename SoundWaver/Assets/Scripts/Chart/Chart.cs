@@ -16,6 +16,16 @@ public struct Chart
     public bool isPreset;//プリセットファイルか?
     public float Interval;
     [System.Serializable]
+    public struct Counts
+    {
+        public uint Perfect;
+        public uint Great;
+        public uint Good;
+        public uint Miss;
+    }
+    public Counts ScoreCounts;
+
+    [System.Serializable]
     public struct Note
     {
         public Note(float time, uint lane)
@@ -26,15 +36,5 @@ public struct Chart
         public float Time;
         public uint LaneNumber;
     }
-    public Note[] Notes;
-
-    [System.Serializable]
-    public struct Counts
-    {
-        public uint Perfect;
-        public uint Great;
-        public uint Good;
-        public uint Miss;
-    }
-    public Counts ScoreCounts;
+    public Note[] Notes;//最後に定義しとくと楽
 }
