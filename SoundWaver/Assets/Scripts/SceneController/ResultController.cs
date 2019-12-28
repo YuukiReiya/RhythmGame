@@ -7,6 +7,7 @@ using Game;
 using Yuuki.FileIO;
 using System.IO;
 using DG.Tweening;
+using UnityEngine.Networking;
 #if UNITY_EDITOR
 using Yuuki.MethodExpansions;
 #endif
@@ -28,6 +29,7 @@ namespace Scenes
         [System.Serializable]
         struct ChartData
         {
+            public UITexture image;
             public UILabel NameLabel;
             public UILabel TimeLabel;
         }
@@ -140,6 +142,8 @@ namespace Scenes
                 return;
             }
 #endif
+            //画像
+            StartCoroutine(LoadChartImage());
             //譜面名
             chartData.NameLabel.text = ChartManager.Chart.ResistName;
             //時間
@@ -147,7 +151,21 @@ namespace Scenes
             time = (uint)clip.length;
             minute = time / 60;
             second = time % 60;
-            chartData.TimeLabel.text = minute + "分" + second + "秒";
+            chartData.TimeLabel.text = minute + "分" + string.Format("{0,D2}", second) + "秒";
+        }
+
+        private IEnumerator LoadChartImage()
+        {
+            using(var request = UnityWebRequestTexture.GetTexture(ChartManager.Chart.ImageFilePath))
+            {
+                yield return request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    yield break;
+                }
+                chartData.image.mainTexture = DownloadHandlerTexture.GetContent(request);
+            }
+            yield break;
         }
     }
 }

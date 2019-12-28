@@ -9808,6 +9808,7 @@ MonoBehaviour:
     tweenTime: 0.8
     endPos: {x: -775, y: 475}
   chartData:
+    image: {fileID: 443592811}
     NameLabel: {fileID: 1409494615}
     TimeLabel: {fileID: 778589117}
 --- !u!1 &1661471744

@@ -40,15 +40,18 @@ public class ResultScoreCanvas : MonoBehaviour
     public bool isAnimSkip;
     [SerializeField] ScoreTextures textures;
 
+    //const param
+    const string c_InitialLabelValue = "";
+
     public void Setup()
     {
         //ラベル
-        labels.Perfect.text = "0";
-        labels.Great.text = "0";
-        labels.Good.text = "0";
-        labels.Miss.text = "0";
-        labels.MaxComb.text = "0";
-        labels.TotalScore.text = "0";
+        labels.Perfect.text = c_InitialLabelValue;
+        labels.Great.text = c_InitialLabelValue;
+        labels.Good.text = c_InitialLabelValue;
+        labels.Miss.text = c_InitialLabelValue;
+        labels.MaxComb.text = c_InitialLabelValue;
+        labels.TotalScore.text = c_InitialLabelValue;
         labels.HighScore.text = ChartManager.Chart.Score.ToString();
         //テクスチャ
         {
