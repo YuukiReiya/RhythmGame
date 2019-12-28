@@ -2839,6 +2839,14 @@ MonoBehaviour:
   scrollBar: {fileID: 1239368685}
   scaleParentObj: {fileID: 722095823}
   scaleSec: 0
+  musicFileManager:
+    obj: {fileID: 0}
+    grid: {fileID: 0}
+    scrollBar: {fileID: 0}
+  imageFileManager:
+    obj: {fileID: 0}
+    grid: {fileID: 0}
+    scrollBar: {fileID: 0}
 --- !u!4 &1335744641
 Transform:
   m_ObjectHideFlags: 0
