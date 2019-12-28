@@ -41,7 +41,7 @@ public class ResultScoreCanvas : MonoBehaviour
     [SerializeField] ScoreTextures textures;
 
     //const param
-    const string c_InitialLabelValue = "";
+    const string c_InitialLabelValue = "0";
 
     public void Setup()
     {
@@ -54,96 +54,77 @@ public class ResultScoreCanvas : MonoBehaviour
         labels.TotalScore.text = c_InitialLabelValue;
         labels.HighScore.text = ChartManager.Chart.Score.ToString();
         //テクスチャ
-        {
-            isAnimSkip = false;
-            var perfect = textures.Perfect;
-            var great = textures.Great;
-            var good = textures.Good;
-            var miss = textures.Miss;
-            var maxComb = textures.MaxComb;
-            //alpha
-            perfect.alpha = 0;
-            great.alpha = 0;
-            good.alpha = 0;
-            miss.alpha = 0;
-            maxComb.alpha = 0;
+        isAnimSkip = false;
+        var perfect = textures.Perfect;
+        var great = textures.Great;
+        var good = textures.Good;
+        var miss = textures.Miss;
+        var maxComb = textures.MaxComb;
+        //alpha
+        perfect.alpha = 0;
+        great.alpha = 0;
+        good.alpha = 0;
+        miss.alpha = 0;
+        maxComb.alpha = 0;
+    }
 
-            //offset
-            var offset = textures.MoveDirection.normalized * textures.MovePt;
-            //pos
-            perfect.transform.localPosition += offset;
-            great.transform.localPosition += offset;
-            good.transform.localPosition += offset;
-            miss.transform.localPosition += offset;
-            maxComb.transform.localPosition += offset;
-            //フロートイン処理
-            //    this.StartCoroutine(
-            //        FloatInTexturesRoutine(perfect, perfect.transform.localPosition, perfect.transform.localPosition - offset),
-            //        () =>
-            //        {
-            //            this.StartCoroutine(
-            //                FloatInTexturesRoutine(great, great.transform.localPosition, great.transform.localPosition - offset),
-            //                () =>
-            //                {
-            //                    this.StartCoroutine(
-            //                        FloatInTexturesRoutine(good, good.transform.localPosition, good.transform.localPosition - offset),
-            //                        () =>
-            //                        {
-            //                            this.StartCoroutine(
-            //                                FloatInTexturesRoutine(miss, miss.transform.localPosition, miss.transform.localPosition - offset),
-            //                                () =>
-            //                                {
-            //                                    this.StartCoroutine(FloatInTexturesRoutine(textures.MaxComb, maxComb.transform.localPosition, maxComb.transform.localPosition - offset));
-            //                                }
-            //                                );
-            //                        }
-            //                        );
-            //                }
-            //                );
-            //        }
-            //        );
+    public void Execute()
+    {
+        var perfect = textures.Perfect;
+        var great = textures.Great;
+        var good = textures.Good;
+        var miss = textures.Miss;
+        var maxComb = textures.MaxComb;
 
-            //パーフェクト
-            this.StartCoroutine(
-                AnimationRoutine(perfect, labels.Perfect, offset, Judge.score.Perfect, 1),
-                () =>
-                {
+        //offset
+        var offset = textures.MoveDirection.normalized * textures.MovePt;
+        //pos
+        perfect.transform.localPosition += offset;
+        great.transform.localPosition += offset;
+        good.transform.localPosition += offset;
+        miss.transform.localPosition += offset;
+        maxComb.transform.localPosition += offset;
+
+        //パーフェクト
+        this.StartCoroutine(
+            AnimationRoutine(perfect, labels.Perfect, offset, Judge.score.Perfect, 1),
+            () =>
+            {
                     //グレイト
                     this.StartCoroutine(
-                        AnimationRoutine(great, labels.Great, offset, Judge.score.Great, 1),
-                        () =>
-                        {
+                    AnimationRoutine(great, labels.Great, offset, Judge.score.Great, 1),
+                    () =>
+                    {
                             //グッド
                             this.StartCoroutine(
-                                AnimationRoutine(good, labels.Good, offset, Judge.score.Good, 1),
-                                () =>
-                                {
+                            AnimationRoutine(good, labels.Good, offset, Judge.score.Good, 1),
+                            () =>
+                            {
                                     //ミス
                                     this.StartCoroutine(
-                                        AnimationRoutine(miss, labels.Miss, offset, Judge.score.Miss, 1),
-                                        () =>
-                                        {
+                                    AnimationRoutine(miss, labels.Miss, offset, Judge.score.Miss, 1),
+                                    () =>
+                                    {
                                             //最大コンボ
                                             this.StartCoroutine(
-                                                AnimationRoutine(maxComb, labels.MaxComb, offset, Judge.score.MaxComb, 1),
-                                                () =>
-                                                {
-                                                    isAnimSkip = false;
+                                            AnimationRoutine(maxComb, labels.MaxComb, offset, Judge.score.MaxComb, 1),
+                                            () =>
+                                            {
+                                                isAnimSkip = false;
                                                     //総計スコア
                                                     this.StartCoroutine(
-                                                        SlotCountRoutine(labels.TotalScore, Judge.score.Point, 10),
-                                                        //アニメーション終了時の処理
-                                                        () =>
-                                                        {
+                                                    SlotCountRoutine(labels.TotalScore, Judge.score.Point, 10),
+                                                    //アニメーション終了時の処理
+                                                    () =>
+                                                    {
 
-                                                        }
-                                                        );
-                                                });
-                                        });
-                                });
-                        });
-                });
-        }
+                                                    }
+                                                    );
+                                            });
+                                    });
+                            });
+                    });
+            });
     }
 
     #region OnTap

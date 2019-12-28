@@ -41,12 +41,13 @@ namespace Scenes
         {
             SaveClearData();
             SetupChartData();
+            resultScoreCanvas.Setup();
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
                     //フェード終了後にアニメーション
                     SetupToResultObject();
-                    resultScoreCanvas.Setup();
+                    resultScoreCanvas.Execute();
                 });
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
@@ -151,7 +152,7 @@ namespace Scenes
             time = (uint)clip.length;
             minute = time / 60;
             second = time % 60;
-            chartData.TimeLabel.text = minute + "分" + string.Format("{0,D2}", second) + "秒";
+            chartData.TimeLabel.text = minute + "分" + string.Format("{0:D2}", second) + "秒";
         }
 
         private IEnumerator LoadChartImage()

@@ -182,9 +182,14 @@ namespace Game
         private void GameEnd()
         {
             //isStart = false;
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ResultDev"); });
+            FadeController.Instance.EventQueue.Enqueue(
+                () => 
+                {
+                    Destroy(NotesController.Instance.gameObject);
+                    SceneManager.LoadScene("ResultDev"); 
+                }
+                );
             FadeController.Instance.FadeIn(Define.c_FadeTime);
-            Destroy(NotesController.Instance.gameObject);
         }
 
         /// <summary>
