@@ -22,7 +22,7 @@
 			Cull Off
 			Lighting Off
 			ZWrite Off
-			Offset - 1, -1
+			Offset -1, -1
 			Fog { Mode Off }
 			Blend SrcAlpha OneMinusSrcAlpha
 
