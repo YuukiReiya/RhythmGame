@@ -41,7 +41,7 @@ namespace Game
 
         public void TransitionStart()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("StartDev"); });
             FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
         }
 

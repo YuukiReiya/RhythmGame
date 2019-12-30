@@ -57,7 +57,7 @@ namespace Game.Setup
                 continue;
             }
             //遷移
-            SceneManager.LoadScene("Start");
+            SceneManager.LoadScene("StartDev");
             yield break;
         }
 

@@ -16,7 +16,7 @@ namespace Scenes
 
         public void TransitionStart()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Start"); });
+            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("StartDev"); });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
     }
