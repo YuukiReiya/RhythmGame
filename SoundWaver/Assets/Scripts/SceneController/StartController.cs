@@ -14,10 +14,18 @@ namespace Scenes
         [Header("Tap to Screen")]
         [SerializeField] private UIWidget widget;
         [SerializeField] private AnimationCurve blinkCurve;
+        [Header("Current develop version")]
+        [SerializeField] private UILabel versionLabel;
         //  private param
         private RadioButton menuSwitch;
         private IEnumerator blinkRoutine;
-
+        //  const param
+        private const string c_VersionInfo =
+#if UNITY_EDITOR
+            "D";
+#else
+            "M"
+#endif
         // Start is called before the first frame update
         void Start()
         {
@@ -48,7 +56,8 @@ namespace Scenes
                 }
                 SetupBlink();
             };
-
+            //バージョン情報
+            versionLabel.text = c_VersionInfo + Application.version;
             menuSwitch.CallDisable();
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
