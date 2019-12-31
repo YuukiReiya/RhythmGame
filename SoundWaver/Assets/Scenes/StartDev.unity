@@ -8418,7 +8418,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3018
+  startingRenderQueue: 3008
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -8690,7 +8690,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3008
+  startingRenderQueue: 3013
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -8877,7 +8877,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3013
+  startingRenderQueue: 3018
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -9545,7 +9545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1873103544
 Transform:
   m_ObjectHideFlags: 0
