@@ -24,7 +24,7 @@ namespace Scenes
 #if UNITY_EDITOR
             "D";
 #else
-            "M"
+            "M";
 #endif
         // Start is called before the first frame update
         void Start()

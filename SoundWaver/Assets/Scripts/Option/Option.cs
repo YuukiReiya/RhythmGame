@@ -34,6 +34,10 @@ namespace Game
         //  const param
         private void Awake()
         {
+            if (parent.activeSelf)
+            {
+                parent.SetActive(false);
+            }
         }
 #if UNITY_EDITOR
         private void Start()
