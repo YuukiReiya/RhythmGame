@@ -102,7 +102,6 @@ namespace Yuuki.FileManager
         void Start()
         {
             Setup();
-            //Open();
         }
 
         private void Setup()
@@ -123,7 +122,7 @@ namespace Yuuki.FileManager
         /// </summary>
         public void SetDefaultDirectories()
         {
-            UpdateCurrentDirectories(Application.persistentDataPath);
+            UpdateCurrentDirectories(Define.c_InitialCurrentPath);
             Display();
         }
 
@@ -134,8 +133,14 @@ namespace Yuuki.FileManager
                 () =>
                 {
                     var fileIO = new FileIO.FileIO();
+                    var ini = JsonUtility.FromJson<IniFile>(Define.c_SettingFilePath);
+                    ini.CurrentPath = CurrentDirectory;
                     //カレントディレクトリの情報保存
-                    fileIO.CreateFile(Define.c_SettingFilePath, CurrentDirectory, FileIO.FileIO.FileIODesc.Overwrite);
+                    //fileIO.CreateFile(Define.c_SettingFilePath, CurrentDirectory, FileIO.FileIO.FileIODesc.Overwrite);
+                    fileIO.CreateFile(
+                        Define.c_SettingFilePath,
+                        JsonUtility.ToJson(ini),
+                        FileIO.FileIO.FileIODesc.Overwrite);
                     DialogController.Instance.Open("現在のディレクトリを\n保存しました。");
                 },
                 null
@@ -219,9 +224,7 @@ namespace Yuuki.FileManager
                 var prefab = GetFilePrefab(Path.GetExtension(it));
                 Create(filePrefab, name);
             }
-            //scrollBar.value = 0;
             grid.Reposition();//整列
-            //UpdateCollider();//コライダー再設定
         }
 
         /// <summary>
@@ -270,19 +273,30 @@ namespace Yuuki.FileManager
 
         public void OpenMusic()
         {
-            
             Mode = SelectMode.Music;
             var param = musicFileManager;
+            IniFile ini;
             param.obj.SetActive(true);
             //  .iniファイルに設定されているディレクトリ参照 (.json形式あたりの取得に直す)
             var fileIO = new FileIO.FileIO();
             if (!File.Exists(Define.c_SettingFilePath))
             {
                 //無いので作る
-                fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
+                ini = new IniFile();
+                ini.CurrentPath = Define.c_InitialCurrentPath;
+                ini.BGMVol = Define.c_InitialVol;
+                ini.SEVol = Define.c_InitialVol;
+                ini.NotesSpeed = Define.c_InitialNotesSpeed;
+                //fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
+                fileIO.CreateFile(
+                    Define.c_SettingFilePath,
+                    JsonUtility.ToJson(ini)
+                    );
             }
-            var currentDirectory = fileIO.GetContents(Define.c_SettingFilePath);
-            CurrentDirectory = currentDirectory;
+            //var currentDirectory = fileIO.GetContents(Define.c_SettingFilePath);
+            //CurrentDirectory = currentDirectory;
+            ini = JsonUtility.FromJson<IniFile>(fileIO.GetContents(Define.c_SettingFilePath));
+            CurrentDirectory = ini.CurrentPath;
             UpdateCurrentDirectories(CurrentDirectory);
             Display();
         }
@@ -291,16 +305,25 @@ namespace Yuuki.FileManager
         {
             Mode = SelectMode.Image;
             var param = imageFileManager;
+            IniFile ini;
             param.obj.SetActive(true);
             //  .iniファイルに設定されているディレクトリ参照 (.json形式あたりの取得に直す)
             var fileIO = new FileIO.FileIO();
             if (!File.Exists(Define.c_SettingFilePath))
             {
                 //無いので作る
-                fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
+                ini = new IniFile();
+                ini.CurrentPath = Define.c_InitialCurrentPath;
+                ini.BGMVol = Define.c_InitialVol;
+                ini.SEVol = Define.c_InitialVol;
+                ini.NotesSpeed = Define.c_InitialNotesSpeed;
+                fileIO.CreateFile(
+                    Define.c_SettingFilePath,
+                    JsonUtility.ToJson(ini)
+                    );
             }
-            var currentDirectory = fileIO.GetContents(Define.c_SettingFilePath);
-            CurrentDirectory = currentDirectory;
+            ini = JsonUtility.FromJson<IniFile>(fileIO.GetContents(Define.c_SettingFilePath));
+            CurrentDirectory = ini.CurrentPath;
             UpdateCurrentDirectories(CurrentDirectory);
             Display();
         }
