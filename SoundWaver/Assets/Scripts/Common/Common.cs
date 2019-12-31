@@ -13,6 +13,15 @@ namespace Common
         /// ※1秒に割り当てられる時間はCountdwonスクリプトのインスペクタからどうぞ!
         /// </summary>
         public const uint c_WaitTimeCount = 3;
+
+        public const uint c_MaxVolume = 10;
+        public const uint c_MinVolume = 0;
+        public const uint c_MaxNoteSpeed = 10;
+        public const uint c_MinNoteSpeed = 1;
+        public static readonly string c_InitialCurrentPath = Application.persistentDataPath;
+        public const uint c_InitialVol = 10;
+        public const uint c_InitialNotesSpeed = 6;
+
         /// <summary>
         /// レーン数
         /// </summary>
