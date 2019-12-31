@@ -2148,7 +2148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233110777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -268, y: 279, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1688910342}
@@ -8034,7 +8034,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872041802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -268, y: 279, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2048190791}
@@ -15251,7 +15251,7 @@ PrefabInstance:
     - target: {fileID: 7530269055003494417, guid: 91b90fa037128fc4ab41115d562d8479,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7530269055003494417, guid: 91b90fa037128fc4ab41115d562d8479,
         type: 3}
@@ -16940,7 +16940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: 1
   dragEffect: 1
-  restrictWithinPanel: 1
+  restrictWithinPanel: 0
   constrainOnDrag: 1
   disableDragIfFits: 0
   smoothDragStart: 1
@@ -16971,19 +16971,19 @@ MonoBehaviour:
   leftAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 0
+    absolute: -310
   rightAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: 0
+    absolute: 310
   bottomAnchor:
     target: {fileID: 0}
     relative: 0
-    absolute: 0
+    absolute: -300
   topAnchor:
     target: {fileID: 0}
     relative: 1
-    absolute: 0
+    absolute: 300
   updateAnchors: 1
   showInPanelTool: 1
   generateNormals: 0
