@@ -350,6 +350,8 @@
     <Compile Include="Assets\Scripts\Notes\NotesController.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNote.cs" />
     <Compile Include="Assets\Scripts\Notes\SingleNotesPool.cs" />
+    <Compile Include="Assets\Scripts\Option\IniFile.cs" />
+    <Compile Include="Assets\Scripts\Option\Option.cs" />
     <Compile Include="Assets\Scripts\Pause\PauseCanvas.cs" />
     <Compile Include="Assets\Scripts\RadioButton\RadioButton.cs" />
     <Compile Include="Assets\Scripts\RadioButton\RadioButtonGroop.cs" />
