@@ -49,10 +49,9 @@ namespace Yuuki.FileManager
                 {
                     case SelectMode.None:
                         {
-#if UNITY_EDITOR
                             Debug.LogError("予期せぬエラー\n" +
                                 "FileManager.cs line46 grid {get}");
-#endif
+                            ErrorManager.Save();
                         }
                         break;
                     case SelectMode.Music: return musicFileManager.grid;
@@ -132,12 +131,12 @@ namespace Yuuki.FileManager
                 "現在のディレクトリを\n保存しますか?",
                 () =>
                 {
-                    var fileIO = new FileIO.FileIO();
-                    var ini = JsonUtility.FromJson<IniFile>(Define.c_SettingFilePath);
+                    var io = new FileIO.FileIO();
+                    var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
                     ini.CurrentPath = CurrentDirectory;
                     //カレントディレクトリの情報保存
                     //fileIO.CreateFile(Define.c_SettingFilePath, CurrentDirectory, FileIO.FileIO.FileIODesc.Overwrite);
-                    fileIO.CreateFile(
+                    io.CreateFile(
                         Define.c_SettingFilePath,
                         JsonUtility.ToJson(ini),
                         FileIO.FileIO.FileIODesc.Overwrite);
@@ -169,7 +168,12 @@ namespace Yuuki.FileManager
         /// <param name="currentPath"></param>
         public void UpdateCurrentDirectories(string currentPath)
         {
-            if (!Directory.Exists(currentPath)) { return; }
+            if (!Directory.Exists(currentPath)) {
+                Debug.LogError(
+                    "FileManager.cs line173 this directory is invlid error!\n" + currentPath);
+                ErrorManager.Save();
+                return;
+            }
             this.CurrentDirectory = currentPath;
             var children = grid.GetChildList();
             //子オブジェクト削除
@@ -207,6 +211,9 @@ namespace Yuuki.FileManager
             if (Mode == SelectMode.None)
             {
                 //エラー処理
+                Debug.LogError("Error\n" +
+                    "FileManager.cs line210 mode is None!");
+                ErrorManager.Save();
                 return;
             }
             var filePrefab = Mode == SelectMode.Music ? prefabs.musicFile:prefabs.imageFile;

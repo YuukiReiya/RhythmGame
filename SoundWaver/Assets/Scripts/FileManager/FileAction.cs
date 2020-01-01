@@ -18,7 +18,7 @@ namespace Yuuki.FileManager
 
         public void SetupCurrentDirectory()
         {
-            var currentDirectory = FileManager.Instance.CurrentDirectory + "\\" + fileName.text;
+            var currentDirectory = FileManager.Instance.CurrentDirectory + Define.c_Delimiter + fileName.text;
             FileManager.Instance.UpdateCurrentDirectories(currentDirectory);
             FileManager.Instance.Display();
         }
