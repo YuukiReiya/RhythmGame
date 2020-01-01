@@ -45,7 +45,25 @@ namespace Game
             //ファイルが存在するか判定
             if (File.Exists(Define.c_SettingFilePath))
             {
-                StartCoroutine(ReadSettingFileRoutine());
+                var io = new FileIO();
+                var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+                //データ取得
+                BGMVolValue = ini.BGMVol;
+                SEVolValue = ini.SEVol;
+                notesSpeedValue = ini.NotesSpeed;
+
+                //ウィジェット
+                SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+
+                //ラベルに反映
+                bgmVolLabel.text = BGMVolValue.ToString();
+                seVolLabel.text = SEVolValue.ToString();
+                notesSpeedLabel.text = notesSpeedValue.ToString();
+
+                //ウィンドウのアクティブ化
+                parent.SetActive(true);
             }
             //無いので生成
             else
@@ -56,15 +74,12 @@ namespace Game
                  {
                      var io = new FileIO();
                      //初期データを入れておく
-                     IniFile iniFile = new IniFile();
-                     iniFile.CurrentPath = Define.c_InitialCurrentPath;
-                     iniFile.BGMVol = Define.c_InitialVol;
-                     iniFile.SEVol = Define.c_InitialVol;
-                     iniFile.NotesSpeed = Define.c_InitialNotesSpeed;
+                     IniFile ini = new IniFile();
+                     ini.Setup();
                      //ファイルを上書きモードで生成
                      io.CreateFile(
                       Define.c_SettingFilePath,
-                      JsonUtility.ToJson(iniFile),
+                      JsonUtility.ToJson(ini),
                       FileIO.FileIODesc.Overwrite
                       );
                      BGMVolValue = Define.c_InitialVol;
@@ -82,29 +97,6 @@ namespace Game
                      parent.SetActive(true);
                  });
             }
-        }
-        private IEnumerator ReadSettingFileRoutine()
-        {
-            var io = new FileIO();
-            var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
-            //データ取得
-            BGMVolValue = ini.BGMVol;
-            SEVolValue = ini.SEVol;
-            notesSpeedValue = ini.NotesSpeed;
-
-            //ウィジェット
-            SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
-            SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
-            SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
-
-            //ラベルに反映
-            bgmVolLabel.text = BGMVolValue.ToString();
-            seVolLabel.text = SEVolValue.ToString();
-            notesSpeedLabel.text = notesSpeedValue.ToString();
-
-            //ウィンドウのアクティブ化
-            parent.SetActive(true);
-            yield break;
         }
         public void Close()
         {
