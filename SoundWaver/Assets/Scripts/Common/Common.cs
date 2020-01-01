@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-
+﻿using UnityEngine;
 namespace Common 
 {
     public static class Define
@@ -14,13 +10,37 @@ namespace Common
         /// </summary>
         public const uint c_WaitTimeCount = 3;
 
+        public static readonly string c_InitialCurrentPath = Application.persistentDataPath;
+        public const uint c_InitialVol = 10;
+        public const uint c_InitialNotesSpeed = 6;
+
         public const uint c_MaxVolume = 10;
         public const uint c_MinVolume = 0;
         public const uint c_MaxNoteSpeed = 10;
         public const uint c_MinNoteSpeed = 1;
-        public static readonly string c_InitialCurrentPath = Application.persistentDataPath;
-        public const uint c_InitialVol = 10;
-        public const uint c_InitialNotesSpeed = 6;
+        #region ノーツ速度の対応
+        /// <summary>
+        /// ノーツ速度の対応リスト
+        /// item1:配列の添え字
+        /// item2:GUIの表示
+        /// item3:実際の速度(初期設定値)
+        /// </summary>
+        public static readonly (uint, uint, float)[] c_NotesSpeedList =
+        {
+            //  値の範囲
+            //  c_MinNoteSpeed < uint < c_MaxNoteSpeed
+            (0,c_MinNoteSpeed,1 ),                            // UI:1
+            (1,c_MinNoteSpeed+1,2),                         // UI:2
+            (2,c_MinNoteSpeed+2,2),                         // UI:3
+            (3,c_MinNoteSpeed+3,2),                         // UI:4
+            (4,c_MinNoteSpeed+4,2),                         // UI:5
+            (5,c_MinNoteSpeed+5,10.0f),                   // UI:6
+            (6,c_MinNoteSpeed+6,2),                         // UI:7
+            (7,c_MinNoteSpeed+7,2),                         // UI:8
+            (8,c_MinNoteSpeed+8,2),                         // UI:9
+            (c_MaxNoteSpeed-1,c_MaxNoteSpeed,2),  // UI:10
+        };
+        #endregion
 
         /// <summary>
         /// レーン数

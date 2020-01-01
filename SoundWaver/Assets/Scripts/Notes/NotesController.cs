@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.UI;
-
+using System.IO;
+using Yuuki.FileIO;
+using Common;
+using System.Linq;
 namespace Game
 {
     public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
@@ -58,6 +61,27 @@ namespace Game
                 noteQueue.Enqueue(it);
             }
             foreach (var it in SingleNotesPool.Instance.PoolList) { it.SetActive(false); }
+
+            //ノーツ速度設定
+            var io = new FileIO();
+            IniFile ini;
+            if (!File.Exists(Define.c_SettingFilePath))
+            {
+                //設定ファイルがないので生成
+                ini = new IniFile();
+                ini.Setup();
+                //ファイルを上書きモードで生成
+                io.CreateFile(
+                 Define.c_SettingFilePath,
+                 JsonUtility.ToJson(ini),
+                 FileIO.FileIODesc.Overwrite
+                 );
+            }
+            ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+            //データ取得
+            //TODO:こんな変換するぐらいなら最初から全部定数化しとけば良かった。。。
+            var value = Define.c_NotesSpeedList.First(it => it.Item2 == ini.NotesSpeed);//Commonのリストから配列の添え字を引っ張てくる
+            noteSpeed = ini.NotesSpeedList[value.Item1];//item1に配列番号が入っている
         }
 
         /// <summary>

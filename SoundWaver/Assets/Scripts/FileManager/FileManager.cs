@@ -290,11 +290,7 @@ namespace Yuuki.FileManager
             {
                 //無いので作る
                 ini = new IniFile();
-                ini.CurrentPath = Define.c_InitialCurrentPath;
-                ini.BGMVol = Define.c_InitialVol;
-                ini.SEVol = Define.c_InitialVol;
-                ini.NotesSpeed = Define.c_InitialNotesSpeed;
-                //fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
+                ini.Setup();
                 fileIO.CreateFile(
                     Define.c_SettingFilePath,
                     JsonUtility.ToJson(ini)
@@ -320,10 +316,7 @@ namespace Yuuki.FileManager
             {
                 //無いので作る
                 ini = new IniFile();
-                ini.CurrentPath = Define.c_InitialCurrentPath;
-                ini.BGMVol = Define.c_InitialVol;
-                ini.SEVol = Define.c_InitialVol;
-                ini.NotesSpeed = Define.c_InitialNotesSpeed;
+                ini.Setup();
                 fileIO.CreateFile(
                     Define.c_SettingFilePath,
                     JsonUtility.ToJson(ini)
