@@ -4,13 +4,17 @@ using UnityEngine;
 using API.Util;
 using UnityEngine.SceneManagement;
 using Common;
+using Game.UI;
 namespace Scenes
 {
     public class ChartCreateController : MonoBehaviour
     {
+        //  serialize param
+        [SerializeField] RadioButton dataPanelswitch;
         // Start is called before the first frame update
         void Start()
         {
+            dataPanelswitch.CallDisable();
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
