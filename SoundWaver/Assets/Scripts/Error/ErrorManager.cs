@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Yuuki.FileIO;
+using System.IO;
 using Common;
 public static class ErrorManager
 {
@@ -16,6 +17,16 @@ public static class ErrorManager
 
     public static void Setup()
     {
+#if true
+        //  既存ログデータの削除
+        #region Initializing log data
+        string path = Application.persistentDataPath + Define.c_Delimiter + c_LogFileName + c_Extension;
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+        #endregion
+#endif
         Application.logMessageReceived += HandleLog;
     }
 
