@@ -340,6 +340,7 @@
     <Compile Include="Assets\Scripts\Game\GameController.cs" />
     <Compile Include="Assets\Scripts\Game\GameMusic.cs" />
     <Compile Include="Assets\Scripts\Game\ScrollWall.cs" />
+    <Compile Include="Assets\Scripts\Help\Help.cs" />
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
