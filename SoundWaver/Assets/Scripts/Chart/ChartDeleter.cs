@@ -299,13 +299,11 @@ namespace Game.UI
             //全部アクティブ化する
             if (isActivate)
             {
-                Debug.Log("call1");
                 OnAllActive();
             }
             //全部非アクティブ化する
             else
             {
-                Debug.Log("call2");
                 OnAllDisable();
             }
         }
