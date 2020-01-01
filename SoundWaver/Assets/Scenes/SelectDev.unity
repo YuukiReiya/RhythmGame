@@ -1572,7 +1572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &138053096
 Transform:
   m_ObjectHideFlags: 0
@@ -1584,13 +1584,14 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 774850866}
   - {fileID: 927008073}
   - {fileID: 634312202}
   - {fileID: 428527946}
   - {fileID: 2125875169}
   - {fileID: 223764621}
   m_Father: {fileID: 1709652735}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &138053097
 MonoBehaviour:
@@ -2304,7 +2305,7 @@ Transform:
   - {fileID: 908575877}
   - {fileID: 1170440650}
   m_Father: {fileID: 138053096}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254874184
 GameObject:
@@ -3801,7 +3802,7 @@ Transform:
   - {fileID: 586292161}
   - {fileID: 2137203881}
   m_Father: {fileID: 138053096}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &428527947
 MonoBehaviour:
@@ -5541,7 +5542,7 @@ Transform:
   m_Children:
   - {fileID: 158021018}
   m_Father: {fileID: 138053096}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &634312203
 MonoBehaviour:
@@ -7300,11 +7301,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774850865}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1709652735}
+  m_Father: {fileID: 138053096}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &774850867
@@ -7749,9 +7750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 868179921}
-  - component: {fileID: 868179924}
   - component: {fileID: 868179923}
-  - component: {fileID: 868179922}
   m_Layer: 5
   m_Name: image
   m_TagString: Untagged
@@ -7773,19 +7772,6 @@ Transform:
   m_Father: {fileID: 1375512018}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &868179922
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868179920}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 60, y: 81, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &868179923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7848,40 +7834,6 @@ MonoBehaviour:
   mShader: {fileID: 4800000, guid: e75727d9555d9d14ca51d91908c681bc, type: 3}
   mBorder: {x: 0, y: 0, z: 0, w: 0}
   mFixedAspect: 0
---- !u!114 &868179924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868179920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fdca5042b1d12a4890ec1bd4f04290d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tweenTarget: {fileID: 868179920}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
-  disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  duration: 0.2
-  dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  hoverSprite2D: {fileID: 0}
-  pressedSprite2D: {fileID: 0}
-  disabledSprite2D: {fileID: 0}
-  pixelSnap: 0
-  onClick:
-  - mTarget: {fileID: 886694945}
-    mMethodName: OpenDelete
-    mParameters: []
-    oneShot: 0
-  - mTarget: {fileID: 383814606}
-    mMethodName: LoadToDisplay
-    mParameters: []
-    oneShot: 0
 --- !u!1 &873659571
 GameObject:
   m_ObjectHideFlags: 0
@@ -8739,7 +8691,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 138053096}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &927008074
 MonoBehaviour:
@@ -11568,7 +11520,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3013
+  startingRenderQueue: 3014
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -12749,7 +12701,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3015
+  startingRenderQueue: 3016
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -14020,7 +13972,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3013
+  startingRenderQueue: 3014
   mClipTexture: {fileID: 2800000, guid: 1dfba2d7d5621e341a91ee6f2770f2d7, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -15628,12 +15580,12 @@ GameObject:
   - component: {fileID: 1709652736}
   - component: {fileID: 1709652737}
   m_Layer: 5
-  m_Name: Option
+  m_Name: OptionWidget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1709652735
 Transform:
   m_ObjectHideFlags: 0
@@ -15645,7 +15597,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 774850866}
   - {fileID: 138053096}
   m_Father: {fileID: 486769322}
   m_RootOrder: 4
@@ -15689,7 +15640,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3034
+  startingRenderQueue: 3035
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -15712,7 +15663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cae5f8c8877724296779b776cbcf37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 1709652734}
+  parent: {fileID: 138053095}
   bgmVolLabel: {fileID: 1475112529}
   seVolLabel: {fileID: 1913847887}
   notesSpeedLabel: {fileID: 512109090}
@@ -19763,7 +19714,7 @@ Transform:
   - {fileID: 1939837505}
   - {fileID: 254874185}
   m_Father: {fileID: 138053096}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2125875170
 MonoBehaviour:
