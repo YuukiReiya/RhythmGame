@@ -197,7 +197,16 @@ namespace Game
         /// </summary>
         public void TransitionSelect()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("SelectDev"); });
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    SceneManager.LoadScene("SelectDev");
+                    var notes = SingleNotesPool.Instance.PoolList;
+                    foreach(var it in notes)
+                    {
+                        it.SetActive(false);
+                    }
+                });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
         }
 
