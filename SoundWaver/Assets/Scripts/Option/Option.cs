@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Common;
 using Yuuki.FileIO;
+using System.IO;
 namespace Game
 {
 
@@ -51,46 +52,179 @@ namespace Game
 
         public void Open()
         {
-            #region MyFileIO
-            var io = new FileIO();
-            var content = io.GetContents(Define.c_SettingFilePath);
-            //読み込みに失敗
-            if (content == string.Empty)
+            //ファイルが存在するか判定
+            if (File.Exists(Define.c_SettingFilePath))
             {
-                DialogController.Instance.Open(
-                    "設定ファイルの読み込みに\n失敗しました。\n\nキャッシュをクリアし\n再生成します。",
-                    () =>
-                    {
-                        //初期データを入れておく
-                        IniFile iniFile = new IniFile();
-                        iniFile.CurrentPath = Define.c_InitialCurrentPath;
-                        iniFile.BGMVol = Define.c_InitialVol;
-                        iniFile.SEVol = Define.c_InitialVol;
-                        iniFile.NotesSpeed = Define.c_InitialNotesSpeed;
-                        //ファイルを上書きモードで生成
-                        io.CreateFile(
-                            Define.c_SettingFilePath,
-                            JsonUtility.ToJson(iniFile),
-                            FileIO.FileIODesc.Overwrite
-                            );
-                        BGMVolValue = Define.c_InitialVol;
-                        SEVolValue = Define.c_InitialVol;
-                        notesSpeedValue = Define.c_InitialNotesSpeed;
-                        //ラベルに反映
-                        bgmVolLabel.text = BGMVolValue.ToString();
-                        seVolLabel.text = SEVolValue.ToString();
-                        notesSpeedLabel.text = notesSpeedValue.ToString();
-                        //ウィジェット
-                        SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
-                        SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
-                        SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
-                        //ウィンドウのアクティブ化
-                        parent.SetActive(true);
-                    });
+                StartCoroutine(ReadSettingFileRoutine());
             }
+            //無いので生成
             else
             {
-                var ini = JsonUtility.FromJson<IniFile>(content);
+                DialogController.Instance.Open(
+                 "設定ファイルの読み込みに\n失敗しました。\n\nキャッシュをクリアし\n再生成します。",
+                 () =>
+                 {
+                     var io = new FileIO();
+                     //初期データを入れておく
+                     IniFile iniFile = new IniFile();
+                     iniFile.CurrentPath = Define.c_InitialCurrentPath;
+                     iniFile.BGMVol = Define.c_InitialVol;
+                     iniFile.SEVol = Define.c_InitialVol;
+                     iniFile.NotesSpeed = Define.c_InitialNotesSpeed;
+                     //ファイルを上書きモードで生成
+                     io.CreateFile(
+                      Define.c_SettingFilePath,
+                      JsonUtility.ToJson(iniFile),
+                      FileIO.FileIODesc.Overwrite
+                      );
+                     BGMVolValue = Define.c_InitialVol;
+                     SEVolValue = Define.c_InitialVol;
+                     notesSpeedValue = Define.c_InitialNotesSpeed;
+                     //ラベルに反映
+                     bgmVolLabel.text = BGMVolValue.ToString();
+                     seVolLabel.text = SEVolValue.ToString();
+                     notesSpeedLabel.text = notesSpeedValue.ToString();
+                     //ウィジェット
+                     SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                     SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                     SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+                     //ウィンドウのアクティブ化
+                     parent.SetActive(true);
+                 });
+            }
+            return;
+            //var io = new FileIO();
+            //var content = io.GetContents(Define.c_SettingFilePath);
+            ////読み込みに失敗
+            //if (content == string.Empty)
+            //{
+            //    DialogController.Instance.Open(
+            //        "設定ファイルの読み込みに\n失敗しました。\n\nキャッシュをクリアし\n再生成します。",
+            //        () =>
+            //        {
+            //            //初期データを入れておく
+            //            IniFile iniFile = new IniFile();
+            //            iniFile.CurrentPath = Define.c_InitialCurrentPath;
+            //            iniFile.BGMVol = Define.c_InitialVol;
+            //            iniFile.SEVol = Define.c_InitialVol;
+            //            iniFile.NotesSpeed = Define.c_InitialNotesSpeed;
+            //            //ファイルを上書きモードで生成
+            //            io.CreateFile(
+            //                Define.c_SettingFilePath,
+            //                JsonUtility.ToJson(iniFile),
+            //                FileIO.FileIODesc.Overwrite
+            //                );
+            //            BGMVolValue = Define.c_InitialVol;
+            //            SEVolValue = Define.c_InitialVol;
+            //            notesSpeedValue = Define.c_InitialNotesSpeed;
+            //            //ラベルに反映
+            //            bgmVolLabel.text = BGMVolValue.ToString();
+            //            seVolLabel.text = SEVolValue.ToString();
+            //            notesSpeedLabel.text = notesSpeedValue.ToString();
+            //            //ウィジェット
+            //            SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            //            SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            //            SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+            //            //ウィンドウのアクティブ化
+            //            parent.SetActive(true);
+            //        });
+            //}
+            //else
+            //{
+            //    var ini = JsonUtility.FromJson<IniFile>(content);
+            //    //データ取得
+            //    BGMVolValue = ini.BGMVol;
+            //    SEVolValue = ini.SEVol;
+            //    notesSpeedValue = ini.NotesSpeed;
+
+            //    //ウィジェット
+            //    SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            //    SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            //    SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+
+            //    //ラベルに反映
+            //    bgmVolLabel.text = BGMVolValue.ToString();
+            //    seVolLabel.text = SEVolValue.ToString();
+            //    notesSpeedLabel.text = notesSpeedValue.ToString();
+
+            //    //ウィンドウのアクティブ化
+            //    parent.SetActive(true);
+            //}
+        }
+        private IEnumerator ReadSettingFileRoutine()
+        {
+            var io = new FileIO();
+            var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+            //データ取得
+            BGMVolValue = ini.BGMVol;
+            SEVolValue = ini.SEVol;
+            notesSpeedValue = ini.NotesSpeed;
+
+            //ウィジェット
+            SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+            SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+
+            //ラベルに反映
+            bgmVolLabel.text = BGMVolValue.ToString();
+            seVolLabel.text = SEVolValue.ToString();
+            notesSpeedLabel.text = notesSpeedValue.ToString();
+
+            //ウィンドウのアクティブ化
+            parent.SetActive(true);
+            yield break;
+        }
+#if false
+        private IEnumerator ReadSettingFileRoutine()
+        {
+            using (var request = UnityWebRequest.Get(Define.c_SettingFilePath))
+            {
+                yield return request.SendWebRequest();
+                var io = new FileIO();
+                //読み込み失敗
+                //※Cannot connect to destination host で必ずエラーが出る
+                //無視して読み込みデータを参照する
+#if false
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.LogError("Option.cs line52: UnityWebRequest Error\n" + "file path is \"" + Define.c_SettingFilePath + "\"" + request.error);
+                    ErrorManager.Save();
+                    DialogController.Instance.Open(
+                            "設定ファイルの読み込みに\n失敗しました。\n\nキャッシュをクリアし\n再生成します。",
+                            () =>
+                            {
+                                //初期データを入れておく
+                                IniFile iniFile = new IniFile();
+                                iniFile.CurrentPath = Define.c_InitialCurrentPath;
+                                iniFile.BGMVol = Define.c_InitialVol;
+                                iniFile.SEVol = Define.c_InitialVol;
+                                iniFile.NotesSpeed = Define.c_InitialNotesSpeed;
+                                //ファイルを上書きモードで生成
+                                io.CreateFile(
+                                    Define.c_SettingFilePath,
+                                    JsonUtility.ToJson(iniFile),
+                                    FileIO.FileIODesc.Overwrite
+                                    );
+                                BGMVolValue = Define.c_InitialVol;
+                                SEVolValue = Define.c_InitialVol;
+                                notesSpeedValue = Define.c_InitialNotesSpeed;
+                                //ラベルに反映
+                                bgmVolLabel.text = BGMVolValue.ToString();
+                                seVolLabel.text = SEVolValue.ToString();
+                                notesSpeedLabel.text = notesSpeedValue.ToString();
+                                //ウィジェット
+                                SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                                SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
+                                SetupBothArrow(notesSpeed, notesSpeedValue, Define.c_MinNoteSpeed, Define.c_MaxNoteSpeed);
+                                //ウィンドウのアクティブ化
+                                parent.SetActive(true);
+                            });
+                    yield break;
+                }
+#endif
+                //読み込み成功
+                var ini = JsonUtility.FromJson<IniFile>(request.downloadHandler.text);
+
                 //データ取得
                 BGMVolValue = ini.BGMVol;
                 SEVolValue = ini.SEVol;
@@ -109,50 +243,10 @@ namespace Game
                 //ウィンドウのアクティブ化
                 parent.SetActive(true);
             }
-            #endregion
-        }
-#if false
-        private IEnumerator ReadSettingFileRoutine()
-        {
-            #region UnityWebRequest
-            using (var request = UnityWebRequest.Get(Define.c_SettingFilePath))
-            {
-                yield return request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
-                {
-                    Debug.LogError("Option.cs line52: UnityWebRequest Error\n" + request.error);
-                    ErrorManager.Save();
-                    DialogController.Instance.Open(
-                        "設定ファイルの読み込みに失敗しました。\nキャッシュをクリアし、再生成します。",
-                        () =>
-                        {
-                            //初期データを入れておく
-                            IniFile iniFile = new IniFile();
-                            iniFile.CurrentPath = Application.persistentDataPath;
-                            iniFile.BGMVol = c_InitialVol;
-                            iniFile.SEVol = c_InitialVol;
-                            iniFile.NotesSpeed = c_InitialNotesSpeed;
-                            //ファイルを上書きモードで生成
-                            var io = new FileIO();
-                            io.CreateFile(
-                                Define.c_SettingFilePath,
-                                JsonUtility.ToJson(iniFile),
-                                FileIO.FileIODesc.Overwrite
-                                );
-                            BGMVolValue = c_InitialVol;
-                            SEVolValue = c_InitialVol;
-                            notesSpeedValue = c_InitialNotesSpeed;
-                        });
-                    yield break;
-                }
-                //読み込み
-                JsonUtility.FromJson<IniFile>(request.downloadHandler.text);
-            }
-            #endregion
             yield break;
         }
 #endif
-        public void Close()
+                public void Close()
         {
             var io = new FileIO();
             var content = io.GetContents(Define.c_SettingFilePath);
