@@ -257,29 +257,6 @@ namespace Yuuki.FileManager
             Display();
         }
 
-        #region 古い
-        public void Open()
-        {
-            if (routine != null) { return; }
-            //表示済みなら処理しない
-            //if (scaleParentObj.transform.localScale == Vector3.one) { return; }
-
-            //.iniファイルに設定されているディレクトリを参照
-            var fileIO = new FileIO.FileIO();
-            if (!File.Exists(Define.c_SettingFilePath))
-            {
-                //無いので作る
-                fileIO.CreateFile(Define.c_SettingFilePath, Application.persistentDataPath);
-            }
-            var currentDirectory = fileIO.GetContents(Define.c_SettingFilePath);
-            CurrentDirectory = currentDirectory;
-            UpdateCurrentDirectories(CurrentDirectory);
-            Display();
-            routine = ScalingRoutine(scaleParentObj, Vector3.zero, Vector3.one, scaleSec);
-            this.StartCoroutine(routine, () => { routine = null; });
-        }
-        #endregion
-
         public void OpenMusic()
         {
             Mode = SelectMode.Music;
