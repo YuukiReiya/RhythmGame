@@ -7,6 +7,7 @@ using Common;
 using API.Util;
 using Game.UI;
 using Yuuki.MethodExpansions;
+using UnityEngine.Networking;
 #if DEBUG_MODE
 using System.IO;
 using Yuuki.FileIO;
@@ -117,6 +118,76 @@ namespace Scenes
             }
         }
 
+        public void CacheClear()
+        {
+            DialogController.Instance.Open(
+                "キャッシュをクリアします。\nよろしいですか?",
+                () =>
+                {
+                    this.StartCoroutine(
+                        CreateSystemFileRoutine(),
+                        ()=>
+                        {
+                            DialogController.Instance.Open("キャッシュをクリアしました。");
+                        }
+                        );
+                }, null
+                );
+        }
+
+        private IEnumerator CreateSystemFileRoutine()
+        {
+            FileIO io = new FileIO();
+            IniFile ini;
+            do
+            {
+                //  上書き生成
+                ini = new IniFile();
+                ini.Setup();
+                io.CreateFile(
+                    Define.c_SettingFilePath,
+                    JsonUtility.ToJson(ini),
+                    FileIO.FileIODesc.Overwrite
+                    );
+                yield return null;
+
+                //  値が初期値になっているか判定
+                if (File.Exists(Define.c_SettingFilePath))
+                {
+                    using (var request = UnityWebRequest.Get(Define.c_LocalFilePath + Define.c_SettingFilePath))
+                    {
+                        yield return request.SendWebRequest();
+                        if (request.isNetworkError || request.isHttpError)
+                        {
+                            Debug.LogError("StartController.cs line144 UnityWebRequest\n" + request.error);
+                            ErrorManager.Save();
+                        }
+                        ini = JsonUtility.FromJson<IniFile>(request.downloadHandler.text);
+                        bool ret = false;
+                        if (ini.CurrentPath != Define.c_InitialCurrentPath) { continue; }
+                        if(ini.BGMVol != Define.c_InitialVol) { continue; }
+                        if(ini.SEVol != Define.c_InitialVol) { continue; }
+                        if(ini.NotesSpeed != Define.c_InitialNotesSpeed) { continue; }
+                        if (ini.NotesSpeedList.Length != Define.c_NotesSpeedList.Length) { continue; }
+                        for(int i=0;i<Define.c_NotesSpeedList.Length;++i)
+                        {
+                            if (ini.NotesSpeedList[i] != Define.c_NotesSpeedList[i].Item3) 
+                            {
+                                ret = false;
+                                break;
+                            }
+                            ret = true;
+                        }
+                        //  値が初期値
+                        if (ret) { break; }
+                    }
+                }
+            }
+            while (true);
+            Debug.Log("finish");
+            yield break;
+        }
+
 #if DEBUG_MODE
         public void DebugAction()
         {
@@ -145,37 +216,31 @@ namespace Scenes
             var gui = uint.Parse(guiSpeedLabel.text);
             //if (!Define.c_NotesSpeedList.Select(it=>it.Item2).Contains(gui)) { return; }
             if (gui < Define.c_MinNoteSpeed || Define.c_MaxNoteSpeed < gui) { return; }
-            DialogController.Instance.Open(
-                "設定ファイルの値を書き換えました",
-                () =>
-                {
-                    //realチェック
-                    var real = float.Parse(realSpeedLabel.text);
 
-                    IniFile ini;
-                    var io = new FileIO();
-                    if (!File.Exists(Define.c_SettingFilePath))
-                    {
-                        //作る
-                        ini = new IniFile();
-                        ini.Setup();
-                        //ファイルを上書きモードで生成
-                        io.CreateFile(
-                         Define.c_SettingFilePath,
-                         JsonUtility.ToJson(ini),
-                         FileIO.FileIODesc.Overwrite
-                         );
-                    }
-                    ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
-                    (uint, uint, float) tuple = Define.c_NotesSpeedList[Define.c_InitialNotesSpeed];
-                    foreach(var it in Define.c_NotesSpeedList)
-                    {
-                        if (it.Item2 == ini.NotesSpeed)
-                        {
-                            tuple = it;
-                        }
-                    }
-                    //var index = Define.c_NotesSpeedList.First(it => it.Item2 == gui).Item1;
+            //realチェック
+            var real = float.Parse(realSpeedLabel.text);
+
+            IniFile ini;
+            var io = new FileIO();
+            if (!File.Exists(Define.c_SettingFilePath))
+            {
+                //作る
+                ini = new IniFile();
+                ini.Setup();
+                //ファイルを上書きモードで生成
+                io.CreateFile(
+                 Define.c_SettingFilePath,
+                 JsonUtility.ToJson(ini),
+                 FileIO.FileIODesc.Overwrite
+                 );
+            }
+            ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+            (uint, uint, float) tuple = Define.c_NotesSpeedList[Define.c_InitialNotesSpeed];
+            foreach (var it in Define.c_NotesSpeedList)
+            {
+                if (it.Item2 == gui)
+                {
+                    tuple = it;
                     ini.NotesSpeedList[tuple.Item1] = real;
                     //ファイルを上書きモードで保存
                     io.CreateFile(
@@ -183,8 +248,11 @@ namespace Scenes
                      JsonUtility.ToJson(ini),
                      FileIO.FileIODesc.Overwrite
                      );
+                    DialogController.Instance.Open("設定ファイルの値を書き換えました\nGUI:" + gui + "\nReal:" + real);
+                    return;
                 }
-                );
+            }
+            DialogController.Instance.Open("エラー。\n書き込みに失敗。");
         }
 #endif
     }
