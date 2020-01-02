@@ -3507,6 +3507,7 @@ GameObject:
   - component: {fileID: 573738909}
   - component: {fileID: 573738908}
   - component: {fileID: 573738910}
+  - component: {fileID: 573738911}
   m_Layer: 0
   m_Name: StartController
   m_TagString: Untagged
@@ -3556,6 +3557,7 @@ MonoBehaviour:
   openTapCount: 3
   guiSpeedLabel: {fileID: 725714422}
   realSpeedLabel: {fileID: 568253129}
+  audioClipTable: {fileID: 573738911}
 --- !u!4 &573738909
 Transform:
   m_ObjectHideFlags: 0
@@ -3584,6 +3586,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObj: {fileID: 1873103543}
   diableObj: {fileID: 178712895}
+--- !u!114 &573738911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573738907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ef762e0719a2747b2421029be31f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  table:
+    list:
+    - key: BGM
+      value: {fileID: 8300000, guid: 44e9edb1304e6d44394567cde2bbd810, type: 3}
+    - key: SE
+      value: {fileID: 8300000, guid: 81fd5cb721f2eb849b7eee1c64ec4441, type: 3}
 --- !u!1 &583242778
 GameObject:
   m_ObjectHideFlags: 0
@@ -8081,6 +8101,10 @@ MonoBehaviour:
   onClick:
   - mTarget: {fileID: 573738910}
     mMethodName: CallActive
+    mParameters: []
+    oneShot: 0
+  - mTarget: {fileID: 573738908}
+    mMethodName: OnTapSE
     mParameters: []
     oneShot: 0
 --- !u!1 &1379450102
