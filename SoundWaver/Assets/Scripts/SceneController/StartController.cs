@@ -8,6 +8,7 @@ using API.Util;
 using Game.UI;
 using Yuuki.MethodExpansions;
 using UnityEngine.Networking;
+using Game.Audio;
 #if DEBUG_MODE
 using System.IO;
 using Yuuki.FileIO;
@@ -30,6 +31,8 @@ namespace Scenes
         [SerializeField] private UILabel guiSpeedLabel;
         [SerializeField] private UILabel realSpeedLabel;
 #endif
+        [Header("Sound")]
+        [SerializeField] AudioClipList audioClipTable;
         //  private param
         private RadioButton menuSwitch;
         private IEnumerator blinkRoutine;
@@ -43,6 +46,7 @@ namespace Scenes
 #else
             "M";
 #endif
+
         // Start is called before the first frame update
         void Start()
         {
@@ -81,18 +85,83 @@ namespace Scenes
             //バージョン情報
             versionLabel.text = c_VersionInfo + Application.version;
             menuSwitch.CallDisable();
+
+            //BGM再生
+            AudioManager.Instance.clips = audioClipTable.Table;
+            AudioManager.Instance.Fade(
+                AudioManager.Instance.SourceBGM,
+                Define.c_FadeTime,
+                0,
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
+                );
+            AudioManager.Instance.PlayBGM("BGM");
+            //AudioManager.Instance.
+
+            //FileIO io = new FileIO();
+            //IniFile ini;
+            //if (!File.Exists(Define.c_SettingFilePath))
+            //{
+            //    ini = new IniFile();
+            //    ini.Setup();
+            //    io.CreateFile(Define.c_SettingFilePath, JsonUtility.ToJson(ini), FileIO.FileIODesc.Overwrite);
+            //}
+            //ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+            //float fadeVol = (float)ini.BGMVol / 100.0f;
+            //source.clip = bgmClip;
+            //source.loop = true;
+            //source.Play();
+            //StartCoroutine(SoundFadeRoutine(Define.c_FadeTime, 0, fadeVol));
+
+            //フェード
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
         public void TransitionSelect()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("SelectDev"); });
+            var audio = AudioManager.Instance;
+            FadeController.Instance.EventQueue.Enqueue(
+                () => 
+                {
+                    SceneManager.LoadScene("SelectDev");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
+                });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
+            audio.Fade(
+                audio.SourceBGM,
+                Define.c_FadeTime,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            audio.Fade(
+                audio.SourceSE,
+                Define.c_FadeTime,
+                audio.GetConvertVolume(audio.SEVolume),
+                0
+                );
         }
         public void TransitionChartCreate()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("ChartCreateDev"); });
+            var audio = AudioManager.Instance;
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    SceneManager.LoadScene("ChartCreateDev");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
+                });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
+            audio.Fade(
+                audio.SourceBGM,
+                Define.c_FadeTime,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            audio.Fade(
+                audio.SourceSE,
+                Define.c_FadeTime,
+                audio.GetConvertVolume(audio.SEVolume), 
+                0);
         }
 
         public void Exit()
@@ -128,7 +197,36 @@ namespace Scenes
                         CreateSystemFileRoutine(),
                         ()=>
                         {
-                            DialogController.Instance.Open("キャッシュをクリアしました。");
+                            //ローカル
+                            //TODO:リファイン必須
+                            IEnumerator UpdateVolume()
+                            {
+                                var io = new FileIO();
+                                var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+                                var audio = AudioManager.Instance;
+                                float fadeTime = 1.0f;
+                                audio.BGMVolume = ini.BGMVol;
+                                audio.SEVolume = ini.SEVol;
+                                audio.Fade(
+                                    audio.SourceBGM,
+                                    fadeTime,
+                                    audio.SourceBGM.volume,
+                                    audio.GetConvertVolume(ini.BGMVol)
+                                    );
+                                audio.Fade(
+                                    audio.SourceSE,
+                                    fadeTime,
+                                    audio.SourceSE.volume,
+                                    audio.GetConvertVolume(ini.SEVol)
+                                    );
+                                yield return null;
+                            }
+                            this.StartCoroutine(
+                                UpdateVolume(),
+                                () =>
+                                {
+                                    DialogController.Instance.Open("キャッシュをクリアしました。");
+                                });
                         }
                         );
                 }, null
@@ -255,5 +353,10 @@ namespace Scenes
             DialogController.Instance.Open("エラー。\n書き込みに失敗。");
         }
 #endif
+
+        public void OnTapSE()
+        {
+            AudioManager.Instance.PlaySE("SE");
+        }
     }
 }
