@@ -233,7 +233,7 @@ PrefabInstance:
     - target: {fileID: 7148321568193205659, guid: 905775c47c7d67c4596f0bbb6c830c5f,
         type: 3}
       propertyPath: m_Name
-      value: Dialog Root (1)
+      value: Dialog Root
       objectReference: {fileID: 0}
     - target: {fileID: 7148321568193205671, guid: 905775c47c7d67c4596f0bbb6c830c5f,
         type: 3}

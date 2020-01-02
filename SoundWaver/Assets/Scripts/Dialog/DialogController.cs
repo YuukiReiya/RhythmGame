@@ -71,8 +71,9 @@ namespace Game
         //private param
         //pubic param
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             checkDialog.Parent.gameObject.SetActive(false);
             yesNoDialog.Parent.gameObject.SetActive(false);
         }
