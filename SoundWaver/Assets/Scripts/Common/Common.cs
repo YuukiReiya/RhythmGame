@@ -11,7 +11,7 @@ namespace Common
         public const uint c_WaitTimeCount = 3;
 
         public static readonly string c_InitialCurrentPath = Application.persistentDataPath;
-        public const uint c_InitialVol = 10;
+        public const uint c_InitialVol = 6;
         public const uint c_InitialNotesSpeed = 6;
 
         public const uint c_MaxVolume = 10;
