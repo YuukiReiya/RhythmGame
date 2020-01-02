@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 1
   noteSpeed: 10
-  waitTime: 0.5
+  waitTime: 0.3
   activeTime: 5
   timingLine:
     y: 0.5
