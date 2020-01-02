@@ -30,6 +30,14 @@ namespace Game
         public Vector3 JustTimingPosition { get { return new Vector3(0, timingLine.y, timingLine.z); } }
         public float NotesSpeed { get { return noteSpeed; } }
         public float WaitTime { get { return waitTime; } }
+        public bool IsEndOfNoteSpeedLoading
+        {
+            get
+            {
+                //判定前に noteSpeed を 0 で初期化しているため
+                return noteSpeed > 0;
+            }
+        }
         public List<INote> Notes { get; private set; }
         public Vector3 NotesDirection { get { return notesDirection; } }
         //public Queue<INote> NotesQueue { get; private set; }
@@ -51,7 +59,7 @@ namespace Game
             noteQueue = new Queue<Chart.Note>(ChartManager.Chart.Notes);
         }
 
-        public void SetupNotes()
+        public void SetupNotesData()
         {
             Notes.Clear();
             noteQueue.Clear();
@@ -60,8 +68,13 @@ namespace Game
                 noteQueue.Enqueue(it);
             }
             foreach (var it in SingleNotesPool.Instance.PoolList) { it.SetActive(false); }
+        }
 
+        public void SetupNoteSpeed()
+        {
+            noteSpeed = 0;
             //ノーツ速度設定
+#if false
             var io = new FileIO();
             IniFile ini;
             if (!File.Exists(Define.c_SettingFilePath))
@@ -86,7 +99,35 @@ namespace Game
             //データ取得
             //TODO:モバイル端末でLinq使えないので自前で求める
             (uint, uint, float) tuple = (0, Define.c_MinNoteSpeed, Define.c_NotesSpeedList[Define.c_InitialNotesSpeed].Item3);//適当に初期化
-            foreach(var it in Define.c_NotesSpeedList)
+            foreach (var it in Define.c_NotesSpeedList)
+            {
+                if (ini.NotesSpeed == it.Item2)
+                {
+                    tuple = it;
+                    break;
+                }
+            }
+            noteSpeed = ini.NotesSpeedList[tuple.Item1];//item1に配列番号が入っている
+#endif
+            var io = new FileIO();
+            IniFile ini;
+            if (!File.Exists(Define.c_SettingFilePath))
+            {
+                //設定ファイルがないので生成
+                ini = new IniFile();
+                ini.Setup();
+                //ファイルを上書きモードで生成
+                io.CreateFile(
+                 Define.c_SettingFilePath,
+                 JsonUtility.ToJson(ini),
+                 FileIO.FileIODesc.Overwrite
+                 );
+            }
+            ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+            //データ取得
+            //TODO:モバイル端末でLinq使えないので自前で求める
+            (uint, uint, float) tuple = (0, Define.c_MinNoteSpeed, Define.c_NotesSpeedList[Define.c_InitialNotesSpeed].Item3);//適当に初期化
+            foreach (var it in Define.c_NotesSpeedList)
             {
                 if (ini.NotesSpeed == it.Item2)
                 {
