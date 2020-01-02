@@ -29,16 +29,16 @@ namespace Common
         {
             //  値の範囲
             //  c_MinNoteSpeed < uint < c_MaxNoteSpeed
-            (0,c_MinNoteSpeed,1 ),                            // UI:1
-            (1,c_MinNoteSpeed+1,2),                         // UI:2
-            (2,c_MinNoteSpeed+2,2),                         // UI:3
-            (3,c_MinNoteSpeed+3,2),                         // UI:4
-            (4,c_MinNoteSpeed+4,2),                         // UI:5
+            (0,c_MinNoteSpeed,3 ),                            // UI:1
+            (1,c_MinNoteSpeed+1,4),                         // UI:2
+            (2,c_MinNoteSpeed+2,5),                         // UI:3
+            (3,c_MinNoteSpeed+3,6),                         // UI:4
+            (4,c_MinNoteSpeed+4,8),                         // UI:5
             (5,c_MinNoteSpeed+5,10.0f),                   // UI:6
-            (6,c_MinNoteSpeed+6,2),                         // UI:7
-            (7,c_MinNoteSpeed+7,2),                         // UI:8
-            (8,c_MinNoteSpeed+8,2),                         // UI:9
-            (c_MaxNoteSpeed-1,c_MaxNoteSpeed,2),  // UI:10
+            (6,c_MinNoteSpeed+6,15.0f),                   // UI:7
+            (7,c_MinNoteSpeed+7,20.0f),                   // UI:8
+            (8,c_MinNoteSpeed+8,25.0f),                   // UI:9
+            (c_MaxNoteSpeed-1,c_MaxNoteSpeed,30),// UI:10
         };
         #endregion
 
@@ -48,8 +48,8 @@ namespace Common
         public const uint c_LaneCount = 3;
 
         public const float c_PerfectTime = 0.033f;
-        public const float c_GreatTime = 0.1f;
-        public const float c_GoodTime = 0.2f;
+        public const float c_GreatTime = 0.066f;
+        public const float c_GoodTime = 0.1f;
         /// <summary>
         /// 判定時の加算スコアポイント
         /// </summary>
