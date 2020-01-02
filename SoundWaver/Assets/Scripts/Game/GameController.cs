@@ -80,7 +80,7 @@ namespace Game
                         yield break;
                     }
 
-                    NotesController.Instance.SetupNotes();
+                    NotesController.Instance.SetupNotesData();
                     Setup();
                     #region ノーツの初期表示
                     //※これがないと曲が鳴っていきなり表れてしまう
