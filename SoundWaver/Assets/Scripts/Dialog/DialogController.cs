@@ -71,7 +71,7 @@ namespace Game
         //private param
         //pubic param
 
-        private void Start()
+        private void Awake()
         {
             checkDialog.Parent.gameObject.SetActive(false);
             yesNoDialog.Parent.gameObject.SetActive(false);
