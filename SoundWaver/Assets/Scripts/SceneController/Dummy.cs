@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Common;
 using System.IO;
+using Yuuki.FileIO;
+using System;
 namespace Game.Setup
 {
     public class Dummy : MonoBehaviour
@@ -24,6 +26,34 @@ namespace Game.Setup
         /// <returns></returns>
         IEnumerator MainRoutine()
         {
+            //*.iniがインストール時に勝手に生成される(List情報を除いた状態で)ので簡易チェックして必要があれば作り直す
+            if(File.Exists(Define.c_SettingFilePath))
+            {
+                var io = new FileIO();
+                try
+                {
+                    var ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+                    if (ini.NotesSpeedList.Length != Define.c_NotesSpeedList.Length) 
+                    { 
+                        throw new Exception("System ini file is invlid value."); 
+                    }
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError("Dummy.cs line43 Exception\n" + e.Message);
+                    ErrorManager.Save();
+                    //エラーが発生したので再生成
+                    IniFile ini = new IniFile();
+                    ini.Setup();
+                    io.CreateFile(
+                        Define.c_SettingFilePath,
+                        JsonUtility.ToJson(ini),
+                        FileIO.FileIODesc.Overwrite
+                        );
+                }
+                yield return null;
+            }
+
             //プリセットの譜面ファイルの確認
             foreach(var it in Define.c_PresetFilePath)
             {
@@ -32,7 +62,7 @@ namespace Game.Setup
                 //check
                 if (File.Exists(path))
                 {
-                    using (var www = UnityWebRequest.Get(path))
+                    using (var www = UnityWebRequest.Get(Define.c_LocalFilePath + path))
                     {
                         //通信終了まで待機
                         yield return www.SendWebRequest();
