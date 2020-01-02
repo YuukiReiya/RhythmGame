@@ -38,8 +38,7 @@ namespace Game.Setup
                         yield return www.SendWebRequest();
                         if (www.isNetworkError || www.isHttpError)
                         {
-                            Debug.LogError("ファイルはあったけど中身の読み取りに失敗。。。");
-                            Debug.LogError("エラーコード:" + www.error);
+                            Debug.LogError("Dummy.cs line41 UnityWebRequest isNetworkingError OR isHttpError\n" + www.error);
                             ErrorManager.Save();
                         }
                         else
