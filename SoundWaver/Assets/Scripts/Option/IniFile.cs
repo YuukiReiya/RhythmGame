@@ -1,5 +1,4 @@
-﻿using System.Linq;
-
+﻿using System.Collections.Generic;
 namespace Common
 {
     public struct IniFile
@@ -29,7 +28,10 @@ namespace Common
             this.BGMVol = Define.c_InitialVol;
             this.SEVol = Define.c_InitialVol;
             this.NotesSpeed = Define.c_InitialNotesSpeed;
-            NotesSpeedList = Define.c_NotesSpeedList.Select(it => it.Item3).ToArray();
+            //TODO:モバイル端末でLinqは使えないので、自前で求める
+            Queue<float> queue = new Queue<float>();
+            foreach(var it in Define.c_NotesSpeedList) { queue.Enqueue(it.Item3); }
+            NotesSpeedList = queue.ToArray();
         }
     }
 }

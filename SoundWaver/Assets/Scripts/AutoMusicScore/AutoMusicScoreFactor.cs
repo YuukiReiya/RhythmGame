@@ -162,18 +162,16 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     public void SetupMusic(string fileName)
     {
-        //エラー判定
+        fileName= FileManager.Instance.CurrentDirectory + Define.c_Delimiter + fileName;
         if (!File.Exists(fileName))
         {
-            DialogController.Instance.Open("ファイルが見つかりませんでした。");
+            DialogController.Instance.Open("ファイルが見つかりません。");
+            Debug.LogError("AutoMusicScoreFactor.cs line169 Not found music file.\n" +fileName);
+            ErrorManager.Save();
             return;
         }
-        //else
-        //{
-        //    DialogController.Instance.Open("ok");
-        //}
-        currentFilePath = Define.c_LocalFilePath + FileManager.Instance.CurrentDirectory + Define.c_Delimiter + fileName;
-        musicTitle.text = fileName;
+        currentFilePath = Define.c_LocalFilePath + fileName;
+        musicTitle.text = Path.GetFileName(fileName);
         musicPath.text = currentFilePath;
         execute.isEnabled = true;
     }
@@ -183,16 +181,10 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         //エラー判定
         if (!File.Exists(fileName))
         {
-            DialogController.Instance.Open("ファイルが見つかりませんでした。");
-#if UNITY_EDITOR
-            Debug.LogError("path:" + fileName);
-#endif
+            DialogController.Instance.Open("ファイルが見つかりません。");
+            Debug.LogError("AutoMusicScoreFactor.cs line185 Not found image file.\n" + fileName);
             return;
         }
-        //else
-        //{
-        //    DialogController.Instance.Open("ok");
-        //}
         imagePath.text = Define.c_LocalFilePath + fileName;
         StartCoroutine(LoadImageRoutine(imagePath.text));
     }

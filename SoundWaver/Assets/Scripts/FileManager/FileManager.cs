@@ -42,7 +42,8 @@ namespace Yuuki.FileManager
 
         //private param
         IEnumerator routine;
-        UIGrid grid { 
+        UIGrid grid
+        {
             get
             {
                 switch (Mode)
@@ -55,7 +56,7 @@ namespace Yuuki.FileManager
                         }
                         break;
                     case SelectMode.Music: return musicFileManager.grid;
-                    case SelectMode.Image:return imageFileManager.grid;
+                    case SelectMode.Image: return imageFileManager.grid;
                 }
                 return musicFileManager.grid;
             }
@@ -168,7 +169,8 @@ namespace Yuuki.FileManager
         /// <param name="currentPath"></param>
         public void UpdateCurrentDirectories(string currentPath)
         {
-            if (!Directory.Exists(currentPath)) {
+            if (!Directory.Exists(currentPath))
+            {
                 Debug.LogError(
                     "FileManager.cs line173 this directory is invlid error!\n" + currentPath);
                 ErrorManager.Save();
@@ -216,7 +218,7 @@ namespace Yuuki.FileManager
                 ErrorManager.Save();
                 return;
             }
-            var filePrefab = Mode == SelectMode.Music ? prefabs.musicFile:prefabs.imageFile;
+            var filePrefab = Mode == SelectMode.Music ? prefabs.musicFile : prefabs.imageFile;
 
             //  フォルダ
             foreach (var it in Directory.GetDirectories(CurrentDirectory))
@@ -338,7 +340,7 @@ namespace Yuuki.FileManager
             //
             //this.StartCoroutine(routine, () => { routine = null; });
 
-            if (Mode == SelectMode.None) 
+            if (Mode == SelectMode.None)
             {
 #if UNITY_EDITOR
                 if (musicFileManager.obj.activeSelf)
@@ -350,7 +352,7 @@ namespace Yuuki.FileManager
                     imageFileManager.obj.SetActive(false);
                 }
 #endif
-                return; 
+                return;
             }
             var param = Mode == SelectMode.Music ? musicFileManager : imageFileManager;
             param.obj.SetActive(false);

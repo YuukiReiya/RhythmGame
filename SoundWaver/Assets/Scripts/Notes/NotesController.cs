@@ -5,7 +5,6 @@ using Game.UI;
 using System.IO;
 using Yuuki.FileIO;
 using Common;
-using System.Linq;
 namespace Game
 {
     public class NotesController : Yuuki.SingletonMonoBehaviour<NotesController>
@@ -76,12 +75,26 @@ namespace Game
                  JsonUtility.ToJson(ini),
                  FileIO.FileIODesc.Overwrite
                  );
+
+                //作成した場合は直で代入
+                //※フローさせて読み込ませたら実機で動かんかった。。。
+                noteSpeed = Define.c_NotesSpeedList[Define.c_InitialNotesSpeed - 1].Item3;
+                return;
             }
             ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
+
             //データ取得
-            //TODO:こんな変換するぐらいなら最初から全部定数化しとけば良かった。。。
-            var value = Define.c_NotesSpeedList.First(it => it.Item2 == ini.NotesSpeed);//Commonのリストから配列の添え字を引っ張てくる
-            noteSpeed = ini.NotesSpeedList[value.Item1];//item1に配列番号が入っている
+            //TODO:モバイル端末でLinq使えないので自前で求める
+            (uint, uint, float) tuple = (0, Define.c_MinNoteSpeed, Define.c_NotesSpeedList[Define.c_InitialNotesSpeed].Item3);//適当に初期化
+            foreach(var it in Define.c_NotesSpeedList)
+            {
+                if (ini.NotesSpeed == it.Item2)
+                {
+                    tuple = it;
+                    break;
+                }
+            }
+            noteSpeed = ini.NotesSpeedList[tuple.Item1];//item1に配列番号が入っている
         }
 
         /// <summary>

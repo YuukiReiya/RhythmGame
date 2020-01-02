@@ -8,7 +8,6 @@ using API.Util;
 using Game.UI;
 using Yuuki.MethodExpansions;
 #if DEBUG_MODE
-using System.Linq;
 using System.IO;
 using Yuuki.FileIO;
 using Game;
@@ -144,8 +143,8 @@ namespace Scenes
             }
             //guiチェック
             var gui = uint.Parse(guiSpeedLabel.text);
-            if (!Define.c_NotesSpeedList.Select(it=>it.Item2).Contains(gui)) { return; }
-            //if (gui < Define.c_MinNoteSpeed || Define.c_MaxNoteSpeed < gui) { return; }
+            //if (!Define.c_NotesSpeedList.Select(it=>it.Item2).Contains(gui)) { return; }
+            if (gui < Define.c_MinNoteSpeed || Define.c_MaxNoteSpeed < gui) { return; }
             DialogController.Instance.Open(
                 "設定ファイルの値を書き換えました",
                 () =>
@@ -168,8 +167,16 @@ namespace Scenes
                          );
                     }
                     ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
-                    var index = Define.c_NotesSpeedList.First(it => it.Item2 == gui).Item1;
-                    ini.NotesSpeedList[index] = real;
+                    (uint, uint, float) tuple = Define.c_NotesSpeedList[Define.c_InitialNotesSpeed];
+                    foreach(var it in Define.c_NotesSpeedList)
+                    {
+                        if (it.Item2 == ini.NotesSpeed)
+                        {
+                            tuple = it;
+                        }
+                    }
+                    //var index = Define.c_NotesSpeedList.First(it => it.Item2 == gui).Item1;
+                    ini.NotesSpeedList[tuple.Item1] = real;
                     //ファイルを上書きモードで保存
                     io.CreateFile(
                      Define.c_SettingFilePath,
