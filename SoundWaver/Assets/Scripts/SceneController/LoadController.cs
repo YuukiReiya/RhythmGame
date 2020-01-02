@@ -26,7 +26,12 @@ namespace Game
             #region パラメータの初期化
             //ノーツの初期化
             Judge.Reset();
-            NotesController.Instance.SetupNotes();
+            NotesController.Instance.SetupNotesData();
+            NotesController.Instance.SetupNoteSpeed();
+            //ノーツの速度を設定し終わるまで待機
+            yield return new WaitUntil(
+                () => { return NotesController.Instance.IsEndOfNoteSpeedLoading; }
+                );
             #endregion
 
             //クリップオブジェクトの生成まで待機
