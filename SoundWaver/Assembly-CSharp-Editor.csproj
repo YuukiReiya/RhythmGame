@@ -174,37 +174,37 @@
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\Editor\SceneLoadWithKeyEditor.cs" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -392,6 +392,12 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.LinuxStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -401,44 +407,53 @@
     <Reference Include="UnityEditor.UWP.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Facebook.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/Facebook/UnityEditor.Facebook.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Lumin.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/LuminSupport/UnityEditor.Lumin.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.AppleTV.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.AppleTV.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DemiEditor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween43.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween46.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween50.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenEditor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Assets/ImportAsset/AssetStore/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/yuuki/Documents/Develop/RhythmGame/SoundWaver/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.9f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
