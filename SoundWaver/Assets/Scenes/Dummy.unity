@@ -335,8 +335,110 @@ PrefabInstance:
       propertyPath: mFontSize
       value: 58
       objectReference: {fileID: 0}
+    - target: {fileID: 1471076463375011188, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471076463375011188, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mTarget
+      value: 
+      objectReference: {fileID: 634131711}
+    - target: {fileID: 1471076463375011188, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mMethodName
+      value: PlaySE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471076463552970474, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471076463552970474, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mTarget
+      value: 
+      objectReference: {fileID: 634131710}
+    - target: {fileID: 1471076463552970474, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mMethodName
+      value: PlaySE
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148321568600795482, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148321568600795482, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mTarget
+      value: 
+      objectReference: {fileID: 634131712}
+    - target: {fileID: 7148321568600795482, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+        type: 3}
+      propertyPath: onClick.Array.data[1].mMethodName
+      value: PlaySE
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 905775c47c7d67c4596f0bbb6c830c5f, type: 3}
+--- !u!1 &634131707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1471076463126879343, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+    type: 3}
+  m_PrefabInstance: {fileID: 634131706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &634131708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1471076461979749758, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+    type: 3}
+  m_PrefabInstance: {fileID: 634131706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &634131709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7148321568486612784, guid: 905775c47c7d67c4596f0bbb6c830c5f,
+    type: 3}
+  m_PrefabInstance: {fileID: 634131706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &634131710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634131707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84efe61867104b44298f8ae1a006740a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: No
+--- !u!114 &634131711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634131708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84efe61867104b44298f8ae1a006740a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Yes
+--- !u!114 &634131712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634131709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84efe61867104b44298f8ae1a006740a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: OK
 --- !u!1 &757230819
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +815,14 @@ MonoBehaviour:
   isDefaultDontDestroy: 1
   sourceBGM: {fileID: 1503821807}
   sourceSE: {fileID: 825211082}
+  localAudioClipTable:
+    list:
+    - key: OK
+      value: {fileID: 8300000, guid: d54a310029374954eb958674be28f054, type: 3}
+    - key: Yes
+      value: {fileID: 8300000, guid: d54a310029374954eb958674be28f054, type: 3}
+    - key: No
+      value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
 --- !u!4 &1368146257
 Transform:
   m_ObjectHideFlags: 0

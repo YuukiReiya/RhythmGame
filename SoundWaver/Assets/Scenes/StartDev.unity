@@ -3527,6 +3527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c6b8fb75358bd4ba6bbd82fda49e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tapToScreenButton: {fileID: 573738910}
   widget: {fileID: 797700299}
   blinkCurve:
     serializedVersion: 2
@@ -3602,8 +3603,14 @@ MonoBehaviour:
     list:
     - key: BGM
       value: {fileID: 8300000, guid: 44e9edb1304e6d44394567cde2bbd810, type: 3}
-    - key: SE
-      value: {fileID: 8300000, guid: 81fd5cb721f2eb849b7eee1c64ec4441, type: 3}
+    - key: TapToScreen_Forward
+      value: {fileID: 8300000, guid: 6a37e923c5d2a064ea9cf20f71328dcd, type: 3}
+    - key: TapToScreen_Back
+      value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
+    - key: Transition
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: CacheClear
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
 --- !u!1 &583242778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3875,7 +3882,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3026
+  startingRenderQueue: 3024
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -7829,7 +7836,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 573738908}
+    mMethodName: TransitionCredit
+    mParameters: []
+    oneShot: 0
 --- !u!114 &1355217562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8104,7 +8115,7 @@ MonoBehaviour:
     mParameters: []
     oneShot: 0
   - mTarget: {fileID: 573738908}
-    mMethodName: OnTapSE
+    mMethodName: OnTapToScreenSE
     mParameters: []
     oneShot: 0
 --- !u!1 &1379450102
@@ -8383,6 +8394,10 @@ MonoBehaviour:
   onClick:
   - mTarget: {fileID: 573738910}
     mMethodName: CallDisable
+    mParameters: []
+    oneShot: 0
+  - mTarget: {fileID: 573738908}
+    mMethodName: OnTapToScreenSE
     mParameters: []
     oneShot: 0
 --- !u!114 &1417794853
@@ -9246,7 +9261,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3011
+  startingRenderQueue: 3009
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -9518,7 +9533,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3016
+  startingRenderQueue: 3014
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -9705,7 +9720,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3021
+  startingRenderQueue: 3019
   mClipTexture: {fileID: 2800000, guid: b65ad5d8a78e87549b7566f56c69bee1, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -10373,7 +10388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1873103544
 Transform:
   m_ObjectHideFlags: 0
@@ -10446,7 +10461,7 @@ GameObject:
   - component: {fileID: 1874825291}
   - component: {fileID: 1874825292}
   m_Layer: 5
-  m_Name: CashClear
+  m_Name: CacheClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

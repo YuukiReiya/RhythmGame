@@ -20,6 +20,7 @@ namespace Scenes
     {
         //  serialize param
         [Header("Tap to Screen")]
+        [SerializeField] private RadioButton tapToScreenButton;
         [SerializeField] private UIWidget widget;
         [SerializeField] private AnimationCurve blinkCurve;
         [Header("Current develop version")]
@@ -40,6 +41,7 @@ namespace Scenes
         private int tapCount = 0;
 #endif
         //  const param
+        private const float c_TransitionSoundFadeTime = 1.0f;
         private const string c_VersionInfo =
 #if UNITY_EDITOR
             "D";
@@ -54,6 +56,10 @@ namespace Scenes
             debugObj.SetActive(false);
             tapCount = 0;
 #endif
+            if (tapToScreenButton.IsActive)
+            {
+                tapToScreenButton.CallDisable();
+            }
 
             if(!TryGetComponent(out menuSwitch))
             {
@@ -86,10 +92,16 @@ namespace Scenes
             versionLabel.text = c_VersionInfo + Application.version;
             menuSwitch.CallDisable();
 
+            //SE音量
+            AudioManager.Instance.FadeSE(
+                Define.c_FadeTime,
+                0,
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
+                );
+
             //BGM再生
             AudioManager.Instance.clips = audioClipTable.Table;
-            AudioManager.Instance.Fade(
-                AudioManager.Instance.SourceBGM,
+            AudioManager.Instance.FadeBGM(
                 Define.c_FadeTime,
                 0,
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
@@ -116,9 +128,15 @@ namespace Scenes
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
+        /// <summary>
+        /// セレクトシーンへ遷移
+        /// </summary>
         public void TransitionSelect()
         {
             var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Transition");
+            //フェード
             FadeController.Instance.EventQueue.Enqueue(
                 () => 
                 {
@@ -127,22 +145,29 @@ namespace Scenes
                     audio.SourceSE.Stop();
                 });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
-            audio.Fade(
-                audio.SourceBGM,
-                Define.c_FadeTime,
+            //BGMフェード
+            //MEMO:場合によってはフェードキューの中でもいいかも
+            audio.FadeBGM(
+                c_TransitionSoundFadeTime,
                 audio.GetConvertVolume(audio.BGMVolume),
                 0
                 );
-            audio.Fade(
-                audio.SourceSE,
-                Define.c_FadeTime,
+            //SEフェード
+            audio.FadeSE(
+                c_TransitionSoundFadeTime,
                 audio.GetConvertVolume(audio.SEVolume),
                 0
                 );
         }
+
+        /// <summary>
+        /// 譜面作成シーンへ遷移
+        /// </summary>
         public void TransitionChartCreate()
         {
             var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Transition");
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
@@ -151,21 +176,47 @@ namespace Scenes
                     audio.SourceSE.Stop();
                 });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
-            audio.Fade(
-                audio.SourceBGM,
-                Define.c_FadeTime,
+            audio.FadeBGM(
+                c_TransitionSoundFadeTime,
                 audio.GetConvertVolume(audio.BGMVolume),
                 0
                 );
-            audio.Fade(
-                audio.SourceSE,
-                Define.c_FadeTime,
+            audio.FadeSE(
+                c_TransitionSoundFadeTime,
                 audio.GetConvertVolume(audio.SEVolume), 
+                0);
+        }
+
+        /// <summary>
+        /// クレジット画面へ遷移
+        /// </summary>
+        public void TransitionCredit()
+        {
+            var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Transition");
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    SceneManager.LoadScene("Credit");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
+                });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
+            audio.FadeBGM(
+                c_TransitionSoundFadeTime,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            audio.FadeSE(
+                c_TransitionSoundFadeTime,
+                audio.GetConvertVolume(audio.SEVolume),
                 0);
         }
 
         public void Exit()
         {
+            AudioManager.Instance.PlaySE("Transition");
 #if UNITY_EDITOR
             Debug.LogError("Exit Game.");
             return;
@@ -177,6 +228,7 @@ namespace Scenes
         {
             widget.alpha = blinkCurve.Evaluate(0);
         }
+
         private IEnumerator WidgetBlinkRoutine()
         {
             while (true)
@@ -189,6 +241,7 @@ namespace Scenes
 
         public void CacheClear()
         {
+            AudioManager.Instance.PlaySE("CacheClear");
             DialogController.Instance.Open(
                 "キャッシュをクリアします。\nよろしいですか?",
                 () =>
@@ -207,14 +260,12 @@ namespace Scenes
                                 float fadeTime = 1.0f;
                                 audio.BGMVolume = ini.BGMVol;
                                 audio.SEVolume = ini.SEVol;
-                                audio.Fade(
-                                    audio.SourceBGM,
+                                audio.FadeBGM(
                                     fadeTime,
                                     audio.SourceBGM.volume,
                                     audio.GetConvertVolume(ini.BGMVol)
                                     );
-                                audio.Fade(
-                                    audio.SourceSE,
+                                audio.FadeSE(
                                     fadeTime,
                                     audio.SourceSE.volume,
                                     audio.GetConvertVolume(ini.SEVol)
@@ -282,7 +333,6 @@ namespace Scenes
                 }
             }
             while (true);
-            Debug.Log("finish");
             yield break;
         }
 
@@ -354,9 +404,24 @@ namespace Scenes
         }
 #endif
 
-        public void OnTapSE()
+        public void OnTapToScreenSE()
         {
-            AudioManager.Instance.PlaySE("SE");
+            string key = "TapToScreen_Forward";
+            if(!tapToScreenButton.IsActive)
+            {
+                //初期画面(ボタンが押されていない状態)の時はキーの上書き
+                key = "TapToScreen_Back";
+            }
+            AudioManager.Instance.PlaySE(key);
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Reset audio clip list")]
+        private void ResetAudioClipTable()
+        {
+            //audioClipTable.Table.
+            AudioManager.Instance.clips = audioClipTable.Table;
+        }
+#endif
     }
 }
