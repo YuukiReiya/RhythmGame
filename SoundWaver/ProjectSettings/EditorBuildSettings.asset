@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Singleton.unity
     guid: 630f6da1d236dfb45bc59c2961e37bf4
+  - enabled: 1
+    path: Assets/Scenes/Credit.unity
+    guid: b9acb4b776c0d144a9655727e0b0a4a7
   m_configObjects: {}

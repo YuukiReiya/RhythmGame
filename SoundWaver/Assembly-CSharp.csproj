@@ -360,6 +360,7 @@
     <Compile Include="Assets\Scripts\RadioButton\RadioButtonGroop.cs" />
     <Compile Include="Assets\Scripts\Result\ResultScoreCanvas.cs" />
     <Compile Include="Assets\Scripts\SceneController\ChartCreateController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\CreditController.cs" />
     <Compile Include="Assets\Scripts\SceneController\Dummy.cs" />
     <Compile Include="Assets\Scripts\SceneController\LoadController.cs" />
     <Compile Include="Assets\Scripts\SceneController\ResultController.cs" />
@@ -368,6 +369,7 @@
     <Compile Include="Assets\Scripts\Score\ScoreEffectCanvas.cs" />
     <Compile Include="Assets\Scripts\Score\ScorePanel.cs" />
     <Compile Include="Assets\Scripts\TapLights\LaneTapEffect.cs" />
+    <Compile Include="Assets\Scripts\Util\AudioManagerUtil.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
