@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using API.Util;
 using Common;
 using Game.UI;
+using Game.Audio;
 namespace Game
 {
     public class SelectController : MonoBehaviour
@@ -12,56 +13,114 @@ namespace Game
         //serialize param
         [SerializeField] private GameObject refinePanel;
         [SerializeField] private ChartDeleter deletePanel;
+        [Header("Sound")]
+        [SerializeField] AudioClipList audioClipTable;
         //privtae param
 
         //public param
-
+        //const param
+        const float c_TransitionStartSoundFade = 1.0f;
+        const float c_TransitionGameSoundFade = 1.0f;
         // Start is called before the first frame update
         void Start()
         {
+            //サウンドテーブル更新
+            AudioManager.Instance.clips = audioClipTable.Table;
+
             //初期化
             ChartManager.Instance.Setup();
 
-            //絞り込みパネルの非表示
-            CloseRefine();
+#if UNITY_EDITOR
+            //MEMO:SEの再生を行うのでフェード中に音が聞こえてしまう。
+            //回避するために関数を使用せずにアクティブの切り替えを行うか、最初から切っとかないといけない
 
-            //削除パネルの非表示
-            CloseDelete();
+            if (refinePanel.activeSelf)
+            {
+                Debug.LogError("SelectController.cs line39 実行ファイル書き出し前にインスペクター上でアクティブの制御を行う必要あり");
+
+                //絞り込みパネルの非表示
+                CloseRefine();
+            }
+            if (deletePanel.gameObject.activeSelf)
+            {
+                Debug.LogError("SelectController.cs line46 実行ファイル書き出し前にインスペクター上でアクティブの制御を行う必要あり");
+
+                //削除パネルの非表示
+                CloseDelete();
+            }
+#endif
 
             //楽曲リストの表示
-            FadeController.Instance.FadeOut(Common.Define.c_FadeTime);
             ChartManager.Instance.LoadToDisplay();
-        }
 
-        public void TransitionGame()
-        {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("Load"); });
-            FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+            //SE音量
+            AudioManager.Instance.FadeSE(
+                Define.c_FadeTime,
+                0,
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
+                );
+
+            //BGM再生
+            AudioManager.Instance.FadeBGM(
+                Define.c_FadeTime,
+                0,
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
+                );
+            //AudioManager.Instance.PlayBGM("BGM");
+
+
+            FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
 
         public void TransitionStart()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { SceneManager.LoadScene("StartDev"); });
-            FadeController.Instance.FadeIn(Common.Define.c_FadeTime);
+            var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Return");
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    SceneManager.LoadScene("StartDev");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
+                });
+            FadeController.Instance.FadeIn(Define.c_FadeTime);
+            //BGMフェード
+            //MEMO:場合によってはフェードキューの中でもいいかも
+            audio.FadeBGM(
+                c_TransitionStartSoundFade,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            //SEフェード
+            audio.FadeSE(
+                c_TransitionStartSoundFade,
+                audio.GetConvertVolume(audio.SEVolume),
+                0
+                );
         }
 
         public void OpenRefine()
         {
+            AudioManager.Instance.PlaySE("Open");
             refinePanel.SetActive(true);
         }
 
         public void CloseRefine()
         {
+            AudioManager.Instance.PlaySE("Close");
             refinePanel.SetActive(false);
         }
 
         public void OpenDelete()
         {
+            AudioManager.Instance.PlaySE("Open");
             deletePanel.gameObject.SetActive(true);
         }
 
         public void CloseDelete()
         {
+            AudioManager.Instance.PlaySE("Close");
             deletePanel.gameObject.SetActive(false);
             deletePanel.DestroyScrollChildren();
         }
@@ -71,16 +130,34 @@ namespace Game
         /// </summary>
         public void Play()
         {
+            var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Submit");
+            //フェード
             FadeController.Instance.EventQueue.Enqueue(
-             () =>
+                () =>
                 {
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
                     SceneManager.LoadScene("Load");
                     //MEMO:シーン遷移間にコルーチンを回すので、DontDestroyObjectでStartCoroutineをする必要がある
                     var chart = ChartManager.Chart;
                     GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.MusicFilePath));
-                }
-            );
+                });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
+            //BGMフェード
+            //MEMO:場合によってはフェードキューの中でもいいかも
+            audio.FadeBGM(
+                c_TransitionGameSoundFade,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            //SEフェード
+            audio.FadeSE(
+                c_TransitionGameSoundFade,
+                audio.GetConvertVolume(audio.SEVolume),
+                0
+                );
         }
     }
 }

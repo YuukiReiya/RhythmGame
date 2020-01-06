@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using Common;
 using Yuuki.FileIO;
 using System.IO;
+using Game.Audio;
 namespace Game
 {
 
@@ -33,6 +34,8 @@ namespace Game
         private uint SEVolValue;
         private uint notesSpeedValue;
         //  const param
+        private const float c_SoundFadeTime = 0.25f;
+
         private void Awake()
         {
             if (parent.activeSelf)
@@ -100,6 +103,7 @@ namespace Game
         }
         public void Close()
         {
+            var audio = AudioManager.Instance;
             var io = new FileIO();
             var content = io.GetContents(Define.c_SettingFilePath);
             if (content == string.Empty)
@@ -122,11 +126,25 @@ namespace Game
                 ini.BGMVol = BGMVolValue;
                 ini.SEVol = SEVolValue;
                 ini.NotesSpeed = notesSpeedValue;
+                audio.BGMVolume = BGMVolValue;
+                audio.SEVolume = SEVolValue;
                 //上書き保存
                 io.CreateFile(
                     Define.c_SettingFilePath,
                     JsonUtility.ToJson(ini),
                     FileIO.FileIODesc.Overwrite
+                    );
+
+                //音量の反映
+                audio.FadeBGM(
+                    c_SoundFadeTime,
+                    audio.SourceBGM.volume,
+                    audio.GetConvertVolume(audio.BGMVolume)
+                    );
+                audio.FadeSE(
+                    c_SoundFadeTime,
+                    audio.SourceSE.volume,
+                    audio.GetConvertVolume(audio.SEVolume)
                     );
             }
             parent.SetActive(false);
@@ -143,6 +161,8 @@ namespace Game
             BGMVolValue += BGMVolValue >= Define.c_MaxVolume ? (uint)0 : (uint)1;
             SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
             bgmVolLabel.text = BGMVolValue.ToString();
+            //反映
+            AudioManager.Instance.SourceBGM.volume = AudioManager.Instance.GetConvertVolume(BGMVolValue);
         }
 
         public void SubBGMVol()
@@ -150,6 +170,8 @@ namespace Game
             BGMVolValue -= BGMVolValue <= Define.c_MinVolume ? (uint)0 : (uint)1;
             SetupBothArrow(BGM, BGMVolValue, Define.c_MinVolume, Define.c_MaxVolume);
             bgmVolLabel.text = BGMVolValue.ToString();
+            //反映
+            AudioManager.Instance.SourceBGM.volume = AudioManager.Instance.GetConvertVolume(BGMVolValue);
         }
 
         public void AddSEVol()
@@ -157,6 +179,8 @@ namespace Game
             SEVolValue += SEVolValue >= Define.c_MaxVolume ? (uint)0 : (uint)1;
             SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
             seVolLabel.text = SEVolValue.ToString();
+            //反映
+            AudioManager.Instance.SourceSE.volume = AudioManager.Instance.GetConvertVolume(SEVolValue);
         }
 
         public void SubSEVol()
@@ -164,6 +188,8 @@ namespace Game
             SEVolValue -= SEVolValue <= Define.c_MinVolume ? (uint)0 : (uint)1;
             SetupBothArrow(SE, SEVolValue, Define.c_MinVolume, Define.c_MaxVolume);
             seVolLabel.text = SEVolValue.ToString();
+            //反映
+            AudioManager.Instance.SourceSE.volume = AudioManager.Instance.GetConvertVolume(SEVolValue);
         }
 
         public void AddNoteSpeed()

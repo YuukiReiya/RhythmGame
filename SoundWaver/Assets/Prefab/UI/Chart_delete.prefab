@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 2495827661583254982}
   - component: {fileID: 2218648836698398899}
   - component: {fileID: 6353329065603505531}
+  - component: {fileID: 6550288026404652874}
   m_Layer: 5
   m_Name: Chart_delete
   m_TagString: Untagged
@@ -407,6 +408,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 2495827661389228328}
   number: {fileID: 6545299814550962763}
+--- !u!114 &6550288026404652874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2495827661583254983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84efe61867104b44298f8ae1a006740a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Check
 --- !u!1 &5698460323708113674
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +652,10 @@ MonoBehaviour:
   onClick:
   - mTarget: {fileID: 1012248488706098868}
     mMethodName: CallSwitch
+    mParameters: []
+    oneShot: 0
+  - mTarget: {fileID: 6550288026404652874}
+    mMethodName: PlaySE
     mParameters: []
     oneShot: 0
 --- !u!65 &3588350395075871114
