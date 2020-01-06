@@ -92,6 +92,9 @@ namespace Scenes
             versionLabel.text = c_VersionInfo + Application.version;
             menuSwitch.CallDisable();
 
+            //サウンドテーブル更新
+
+            AudioManager.Instance.clips = audioClipTable.Table;
             //SE音量
             AudioManager.Instance.FadeSE(
                 Define.c_FadeTime,
@@ -100,7 +103,6 @@ namespace Scenes
                 );
 
             //BGM再生
-            AudioManager.Instance.clips = audioClipTable.Table;
             AudioManager.Instance.FadeBGM(
                 Define.c_FadeTime,
                 0,
