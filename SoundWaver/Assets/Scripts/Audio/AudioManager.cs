@@ -16,10 +16,14 @@ namespace Game.Audio
         [SerializeField] private AudioSource sourceSE;
 
         //  private param
+        [Header("Local Audio Clip")]
+        [SerializeField, Tooltip("ダイアログのような一部の常にアクセスされる可能性のあるAudioClipのリスト")] private AudioClipTable localAudioClipTable;
+        private IEnumerator fadeRoutineBGM;
+        private IEnumerator fadeRoutineSE;
         //  public param
-        [System.NonSerialized] public uint SEVolume;
-        [System.NonSerialized] public uint BGMVolume;
-        [System.NonSerialized] public AudioClipTable clips;
+        [NonSerialized] public uint SEVolume;
+        [NonSerialized] public uint BGMVolume;
+        [NonSerialized] public AudioClipTable clips;
         //accessor
         public AudioSource SourceBGM { get { return sourceBGM; } }
         public AudioSource SourceSE { get { return sourceSE; } }
@@ -28,10 +32,10 @@ namespace Game.Audio
         {
             base.Awake();
         }
-         public float GetConvertVolume(uint vol)
+        public float GetConvertVolume(uint vol)
         {
 #if UNITY_EDITOR
-            if(vol<Define.c_MinVolume||Define.c_MaxVolume<vol)
+            if (vol < Define.c_MinVolume || Define.c_MaxVolume < vol)
             {
                 Debug.LogError("AudioManager.cs line 33 GetConvertVolume value is invlid.");
                 return 0.0f;
@@ -50,6 +54,14 @@ namespace Game.Audio
         {
             if (!HasTableClipsKey(key))
             {
+                if (HasLocalClipsKey(key))
+                {
+                    //TODO:リファイン必須
+                    sourceBGM.clip = localAudioClipTable.Table[key];
+                    sourceBGM.loop = isLoop;
+                    sourceBGM.Play();
+                    return;
+                }
                 Debug.LogError("AudioManager.cs line50 PlayBGM not found sound key.\n" + key);
                 ErrorManager.Save();
                 return;
@@ -66,6 +78,14 @@ namespace Game.Audio
         {
             if (!HasTableClipsKey(key))
             {
+                if (HasLocalClipsKey(key))
+                {
+                    //TODO:リファイン必須
+                    sourceSE.clip = localAudioClipTable.Table[key];
+                    sourceSE.loop = isLoop;
+                    sourceSE.Play();
+                    return;
+                }
                 Debug.LogError("AudioManager.cs line66 PlaySE not found sound key.\n" + key);
                 ErrorManager.Save();
                 return;
@@ -80,9 +100,24 @@ namespace Game.Audio
             return clips.Table.Keys.Contains(key);
         }
 
-        public void Fade(AudioSource source, float time, float from, float to,  CoroutineExpansion.CoroutineFinishedFunc func = null)
+        private bool HasLocalClipsKey(string key)
         {
-            this.StartCoroutine(FadeRoutine(source, time, from, to), func);
+            return localAudioClipTable.Table.Keys.Contains(key);
+        }
+
+        public void FadeBGM(float time, float from, float to, CoroutineExpansion.CoroutineFinishedFunc func = null)
+        {
+            if (fadeRoutineBGM != null) { StopCoroutine(fadeRoutineBGM); }
+            fadeRoutineBGM = FadeRoutine(sourceBGM, time, from, to);
+            func += () => { fadeRoutineBGM = null; };
+            this.StartCoroutine(fadeRoutineBGM, func);
+        }
+        public void FadeSE(float time, float from, float to, CoroutineExpansion.CoroutineFinishedFunc func = null)
+        {
+            if (fadeRoutineSE != null) { StopCoroutine(fadeRoutineSE); }
+            fadeRoutineSE = FadeRoutine(sourceSE, time, from, to);
+            func += () => { fadeRoutineSE = null; };
+            this.StartCoroutine(fadeRoutineSE, func);
         }
 
         private IEnumerator FadeRoutine(AudioSource source, float time, float from, float to)
