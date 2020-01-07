@@ -120,6 +120,20 @@ namespace Game.Audio
             this.StartCoroutine(fadeRoutineSE, func);
         }
 
+        /// <summary>
+        /// ゲームシーンのAudioSourceはMusicEngineのものを使用するため急遽任意のインスタンスのフェードができる関数を用意
+        /// ※BGM,SEのフェードはこちらでは出来ない(コルーチンの都合上？):左記回避策としてラッピングした専用の関数を用意している。
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="time"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="func"></param>
+        public void Fade(AudioSource source, float time, float from, float to, CoroutineExpansion.CoroutineFinishedFunc func = null)
+        {
+            this.StartCoroutine(FadeRoutine(source, time, from, to), func);
+        }
+
         private IEnumerator FadeRoutine(AudioSource source, float time, float from, float to)
         {
             var st = Time.time;

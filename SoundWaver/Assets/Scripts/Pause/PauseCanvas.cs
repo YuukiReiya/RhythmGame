@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Game.Audio;
 
 namespace Game.UI
 {
@@ -35,6 +36,7 @@ namespace Game.UI
         /// </summary>
         public void Pause()
         {
+            AudioManager.Instance.PlaySE("Pause_Open");
             pausePanel.SetActive(true);
             source.pitch = 0;
             //レーンのコライダーを切って、タッチ判定を通らないようにする
@@ -47,6 +49,7 @@ namespace Game.UI
 
         public void UnPause()
         {
+            AudioManager.Instance.PlaySE("Pause_Close");
             pausePanel.SetActive(false);
             Countdown.Instance.Execute(
                 Define.c_WaitTimeCount,

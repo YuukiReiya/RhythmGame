@@ -6,6 +6,7 @@ using API.Util;
 using Common;
 using Game.UI;
 using Game.Audio;
+using Yuuki.MethodExpansions;
 namespace Game
 {
     public class SelectController : MonoBehaviour
@@ -16,11 +17,12 @@ namespace Game
         [Header("Sound")]
         [SerializeField] AudioClipList audioClipTable;
         //privtae param
-
+        private bool wasTransition = false;
         //public param
         //const param
-        const float c_TransitionStartSoundFade = 1.0f;
+        const float c_TransitionStartSoundFade = 1.2f;
         const float c_TransitionGameSoundFade = 1.0f;
+        const float c_WaitTime = 0.5f;
         // Start is called before the first frame update
         void Start()
         {
@@ -66,7 +68,7 @@ namespace Game
                 0,
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
                 );
-            //AudioManager.Instance.PlayBGM("BGM");
+            AudioManager.Instance.PlayBGM("BGM");
 
 
             FadeController.Instance.FadeOut(Define.c_FadeTime);
@@ -74,6 +76,7 @@ namespace Game
 
         public void TransitionStart()
         {
+            if (wasTransition) { return; }
             var audio = AudioManager.Instance;
             //SE
             audio.PlaySE("Return");
@@ -84,7 +87,13 @@ namespace Game
                     audio.SourceBGM.Stop();
                     audio.SourceSE.Stop();
                 });
-            FadeController.Instance.FadeIn(Define.c_FadeTime);
+            //遅延実行
+            this.DelayMethod(
+                () =>
+                {
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                }, Application.targetFrameRate * c_WaitTime);
+            
             //BGMフェード
             //MEMO:場合によってはフェードキューの中でもいいかも
             audio.FadeBGM(
@@ -98,6 +107,7 @@ namespace Game
                 audio.GetConvertVolume(audio.SEVolume),
                 0
                 );
+            wasTransition = true;
         }
 
         public void OpenRefine()
@@ -130,6 +140,7 @@ namespace Game
         /// </summary>
         public void Play()
         {
+            if (wasTransition) { return; }
             var audio = AudioManager.Instance;
             //SE
             audio.PlaySE("Submit");
@@ -144,7 +155,6 @@ namespace Game
                     var chart = ChartManager.Chart;
                     GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.MusicFilePath));
                 });
-            FadeController.Instance.FadeIn(Define.c_FadeTime);
             //BGMフェード
             //MEMO:場合によってはフェードキューの中でもいいかも
             audio.FadeBGM(
@@ -156,8 +166,13 @@ namespace Game
             audio.FadeSE(
                 c_TransitionGameSoundFade,
                 audio.GetConvertVolume(audio.SEVolume),
-                0
+                0,
+                () =>
+                {
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                }
                 );
+            wasTransition = true;
         }
     }
 }

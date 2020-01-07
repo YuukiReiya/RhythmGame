@@ -4,6 +4,7 @@ using System.Collections;
 using API.Util;
 using Common;
 using Game.UI;
+using Game.Audio;
 namespace Game
 {
     public class GameController : Yuuki.SingletonMonoBehaviour<GameController>
@@ -23,13 +24,15 @@ namespace Game
         [Header("Notes Material")]
         [SerializeField] private Material notesMaterial;
         [SerializeField] private int notesMatPriority = 10;
-
+        [Header("Sound")]
+        [SerializeField] private AudioClipList audioClipTable;
         //private param
         private bool isStart;
         //public param
+        //const param
+        private const float c_TransitionSoundFadeTime = 1.0f;
         //accessor
         public float ElapsedTime { get; private set; }
-        //public uint Comb { get; set; }
 
 #if UNITY_EDITOR
         public bool isTest; 
@@ -45,6 +48,8 @@ namespace Game
         // Start is called before the first frame update
         void Start()
         {
+            //サウンドテーブル更新
+            AudioManager.Instance.clips = audioClipTable.Table;
 #if UNITY_EDITOR
             //ゲームシーンのテスト
             if (isTest)
@@ -141,7 +146,21 @@ namespace Game
 #endif
             pauseCanvas.PauseButton.isEnabled = false;//ポーズボタン無効化
             Countdown.Instance.Widget.alpha = 0;
-
+            //サウンド関連
+            var audio = AudioManager.Instance;
+            //SE
+            audio.FadeSE(
+                Define.c_FadeTime,
+                0,
+                audio.GetConvertVolume(audio.SEVolume)
+                );
+            //BGM
+            audio.Fade(
+                source,
+                Define.c_FadeTime,
+                0,
+                audio.GetConvertVolume(audio.BGMVolume)
+                );
             //楽曲データロード済み
             if (GameMusic.Instance.Clip)
             {
@@ -197,17 +216,27 @@ namespace Game
         /// </summary>
         public void TransitionSelect()
         {
+            var audio = AudioManager.Instance;
+            //SE
+            audio.PlaySE("Pause_Select");
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
                     SceneManager.LoadScene("SelectDev");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
                     var notes = SingleNotesPool.Instance.PoolList;
-                    foreach(var it in notes)
+                    foreach (var it in notes)
                     {
                         it.SetActive(false);
                     }
                 });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
+            //BGMの方は使ってないから不要？
+            audio.FadeSE(
+                c_TransitionSoundFadeTime,
+                audio.GetConvertVolume(audio.SEVolume),
+                0);
         }
 
 #if LaneMaterialSpeed

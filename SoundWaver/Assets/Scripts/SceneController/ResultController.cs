@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+#define VOL_MAX
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using API.Util;
@@ -8,6 +11,7 @@ using Yuuki.FileIO;
 using System.IO;
 using DG.Tweening;
 using UnityEngine.Networking;
+using Game.Audio;
 #if UNITY_EDITOR
 using Yuuki.MethodExpansions;
 #endif
@@ -35,13 +39,44 @@ namespace Scenes
         }
         [Header("Chart Time")]
         [SerializeField] ChartData chartData;
+        [Header("Sound")]
+        [SerializeField] private AudioClipList audioClipTable;
+        //const param
+        private const float c_TransitionSoundFadeTime = 1.0f;
 
         // Start is called before the first frame update
         void Start()
         {
+            //サウンドテーブル更新
+            AudioManager.Instance.clips = audioClipTable.Table;
+
             SaveClearData();
             SetupChartData();
             resultScoreCanvas.Setup();
+
+            //SE音量
+            AudioManager.Instance.FadeSE(
+                Define.c_FadeTime,
+                0,
+#if VOL_MAX
+                1
+#else
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
+#endif
+                );
+
+            //BGM音量
+            AudioManager.Instance.FadeBGM(
+                Define.c_FadeTime,
+                0,
+#if VOL_MAX
+                1
+#else
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
+#endif
+                );
+            AudioManager.Instance.PlayBGM("BGM");
+
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
@@ -54,8 +89,28 @@ namespace Scenes
 
         public void TransitionSelect()
         {
-            FadeController.Instance.EventQueue.Enqueue(() => { UnityEngine.SceneManagement.SceneManager.LoadScene("SelectDev"); });
+            var audio = AudioManager.Instance;
+            audio.PlaySE("Transition");
+            FadeController.Instance.EventQueue.Enqueue(
+                () =>
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("SelectDev");
+                    audio.SourceBGM.Stop();
+                    audio.SourceSE.Stop();
+                });
             FadeController.Instance.FadeIn(Define.c_FadeTime);
+            //BGMフェード
+            audio.FadeBGM(
+                c_TransitionSoundFadeTime,
+                audio.GetConvertVolume(audio.BGMVolume),
+                0
+                );
+            //SEフェード
+            audio.FadeSE(
+                c_TransitionSoundFadeTime,
+                audio.GetConvertVolume(audio.SEVolume),
+                0
+                );
         }
 
         private void SaveClearData()

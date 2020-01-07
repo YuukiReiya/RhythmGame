@@ -4,6 +4,7 @@ using UnityEngine;
 using Common;
 using System;
 using Game.UI;
+using Game.Audio;
 using count =System.UInt32;
 
 namespace Game
@@ -88,9 +89,62 @@ namespace Game
             //最大コンボ
             score.MaxComb = score.Comb > score.MaxComb ? score.Comb : score.MaxComb;
 
+            //音再生
+            PlaySE(ret);
+
             //判定エフェクト
             ScoreEffectCanvas.Instance.StartScoreEffect(ret);
         }
+        /// <summary>
+        /// タップ時の音無し
+        /// TODO:押されていないでMiss判定したノーツは音ならしたくなかったので関数の追加
+        /// 設計。。。
+        /// </summary>
+        public static void ExecuteNoSound(float time)
+        {
+            var absTime = Mathf.Abs(time);
+            //決定表のどれにも当てはまらなければ"MISS"にするための初期化
+            ScoreEffectCanvas.Judge ret = ScoreEffectCanvas.Judge.MISS;
+            //C#版 自作決定表
+            foreach (var it in c_Pair)
+            {
+                if (absTime <= it.Value)
+                {
+                    ret = it.Key;
+                    break;
+                }
+            }
+
+            //カウント
+            CountUp(ret);
+
+            //コンボ
+            switch (ret)
+            {
+                //"PERFECT"と"GREAT"なら加算
+                case ScoreEffectCanvas.Judge.PERFECT:
+                case ScoreEffectCanvas.Judge.GREAT:
+                    score.Comb++;
+                    CombEffectCanvas.Instance.Execute(score.Comb);
+                    break;
+                //"GOOD"又は"MISS"ならリセット
+                case ScoreEffectCanvas.Judge.GOOD:
+                case ScoreEffectCanvas.Judge.MISS:
+                    score.Comb = 0;
+                    CombEffectCanvas.Instance.Stop();
+                    break;
+            }
+
+            //スコア
+            GetScore(ret);
+
+            //最大コンボ
+            score.MaxComb = score.Comb > score.MaxComb ? score.Comb : score.MaxComb;
+
+            //判定エフェクト
+            ScoreEffectCanvas.Instance.StartScoreEffect(ret);
+        }
+
         private static void CountUp(ScoreEffectCanvas.Judge judge)
         {
             switch (judge)
@@ -112,6 +166,29 @@ namespace Game
                 case ScoreEffectCanvas.Judge.MISS: score.Point += Define.c_MissAddPoint; break;
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 判定に応じたSEの再生
+        /// </summary>
+        private static void PlaySE(ScoreEffectCanvas.Judge judge)
+        {
+            AudioManager.Instance.SourceSE.Stop();
+            switch (judge)
+            {
+                case ScoreEffectCanvas.Judge.PERFECT:
+                    AudioManager.Instance.PlaySE("Perfect");
+                    return;
+                case ScoreEffectCanvas.Judge.GREAT:
+                    AudioManager.Instance.PlaySE("Great");
+                    return;
+                case ScoreEffectCanvas.Judge.GOOD:
+                    AudioManager.Instance.PlaySE("Good");
+                    return;
+                case ScoreEffectCanvas.Judge.MISS:
+                    AudioManager.Instance.PlaySE("Miss");
+                    return;
             }
         }
     }

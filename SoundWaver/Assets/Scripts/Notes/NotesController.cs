@@ -188,10 +188,10 @@ namespace Game
             {
                 var time = (it.DownTime - GameController.Instance.ElapsedTime);
                 //押されるべき時間 - 実際の時間 > -(Good判定時間)
-                if (time < -Common.Define.c_GoodTime)
+                if (time < -Define.c_GoodTime)
                 {
                     //ミス判定処理
-                    Judge.Execute(time);
+                    Judge.ExecuteNoSound(time);
 
                     //ノーツの登録解除
                     it.Unregister();
