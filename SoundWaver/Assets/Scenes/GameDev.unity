@@ -3314,7 +3314,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: NaN, y: 0, z: 0, w: 8.1e-44}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -0.0000012137898}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6765,9 +6765,9 @@ MonoBehaviour:
     - key: Pause_Select
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
     - key: Perfect
-      value: {fileID: 8300000, guid: e3ce91b0f79279e43bbb2be81e1b6c51, type: 3}
+      value: {fileID: 8300000, guid: a669418f4a57e57428af880bf299c2b5, type: 3}
     - key: Great
-      value: {fileID: 8300000, guid: 842d338780a98cf4d91a269ce0e0c568, type: 3}
+      value: {fileID: 8300000, guid: e3ce91b0f79279e43bbb2be81e1b6c51, type: 3}
     - key: Good
       value: {fileID: 8300000, guid: 0222ea3e8c50954489c88aef5bfa65e0, type: 3}
     - key: Miss
