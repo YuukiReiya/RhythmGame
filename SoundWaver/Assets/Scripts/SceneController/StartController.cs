@@ -33,7 +33,7 @@ namespace Scenes
         [SerializeField] private UILabel realSpeedLabel;
 #endif
         [Header("Sound")]
-        [SerializeField] AudioClipList audioClipTable;
+        [SerializeField] private AudioClipList audioClipTable;
         //  private param
         private RadioButton menuSwitch;
         private IEnumerator blinkRoutine;
@@ -109,22 +109,6 @@ namespace Scenes
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
                 );
             AudioManager.Instance.PlayBGM("BGM");
-            //AudioManager.Instance.
-
-            //FileIO io = new FileIO();
-            //IniFile ini;
-            //if (!File.Exists(Define.c_SettingFilePath))
-            //{
-            //    ini = new IniFile();
-            //    ini.Setup();
-            //    io.CreateFile(Define.c_SettingFilePath, JsonUtility.ToJson(ini), FileIO.FileIODesc.Overwrite);
-            //}
-            //ini = JsonUtility.FromJson<IniFile>(io.GetContents(Define.c_SettingFilePath));
-            //float fadeVol = (float)ini.BGMVol / 100.0f;
-            //source.clip = bgmClip;
-            //source.loop = true;
-            //source.Play();
-            //StartCoroutine(SoundFadeRoutine(Define.c_FadeTime, 0, fadeVol));
 
             //フェード
             FadeController.Instance.FadeOut(Define.c_FadeTime);

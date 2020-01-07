@@ -15,12 +15,6 @@ namespace Game
         float dt;
         public float DownTime { get { return this.dt; } }
 
-        // Start is called before the first frame update
-        void Start() { }
-
-        // Update is called once per frame
-        void Update() { }
-
         public void Move()
         {
             var x = this.transform.position.x;
