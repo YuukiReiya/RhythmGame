@@ -217,17 +217,25 @@ namespace Game.UI
         /// </summary>
         public void CheckDeleteCharts()
         {
-            DialogController.Instance.Open(
-                "選択した譜面を削除します。\nよろしいですか?",
-                () => 
-                {
-                    this.StartCoroutine(
-                        DeleteExecuteRoutine(),
-                        ()=> { LoadToDisplay(); }
-                        );
-                },
-                null
-                );
+            var deleteCharts = list.Where(it => it.checkBox.IsActive);
+            if (deleteCharts.Count() > 0)
+            {
+                DialogController.Instance.Open(
+                    "選択した譜面を削除します。\nよろしいですか?",
+                    () =>
+                    {
+                        this.StartCoroutine(
+                            DeleteExecuteRoutine(),
+                            () => { LoadToDisplay(); }
+                            );
+                    },
+                    null
+                    );
+            }
+            else
+            {
+                DialogController.Instance.Open("譜面が選択されていません。");
+            }
         }
         IEnumerator DeleteExecuteRoutine()
         {
