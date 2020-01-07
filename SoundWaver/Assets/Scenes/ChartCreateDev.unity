@@ -1520,7 +1520,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3000
+  startingRenderQueue: 3002
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -10781,12 +10781,18 @@ MonoBehaviour:
     - key: Save_FileManager
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
     - key: Close_FileManager
-      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+      value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
     - key: Cancel
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
     - key: Create
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
     - key: Mute
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: File_OK
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: File_Error
+      value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
+    - key: Folder_FileManager
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
 --- !u!1 &990973477
 GameObject:
