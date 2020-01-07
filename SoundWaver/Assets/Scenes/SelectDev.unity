@@ -8297,6 +8297,8 @@ MonoBehaviour:
       value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
     - key: Select
       value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
+    - key: BGM
+      value: {fileID: 8300000, guid: ac127be983609274aa52e67096aacc39, type: 3}
 --- !u!1 &908575876
 GameObject:
   m_ObjectHideFlags: 0
@@ -11562,7 +11564,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3013
+  startingRenderQueue: 3014
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -12642,7 +12644,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3015
+  startingRenderQueue: 3016
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -13829,7 +13831,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3013
+  startingRenderQueue: 3014
   mClipTexture: {fileID: 2800000, guid: 1dfba2d7d5621e341a91ee6f2770f2d7, type: 3}
   mAlpha: 1
   mClipping: 1
@@ -15529,7 +15531,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3034
+  startingRenderQueue: 3035
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0

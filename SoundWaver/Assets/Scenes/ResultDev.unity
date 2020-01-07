@@ -9769,6 +9769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646878894}
   - component: {fileID: 1646878895}
+  - component: {fileID: 1646878896}
   m_Layer: 0
   m_Name: ResultController
   m_TagString: Untagged
@@ -9811,6 +9812,25 @@ MonoBehaviour:
     image: {fileID: 443592811}
     NameLabel: {fileID: 1409494615}
     TimeLabel: {fileID: 778589117}
+  audioClipTable: {fileID: 1646878896}
+--- !u!114 &1646878896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646878893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ef762e0719a2747b2421029be31f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  table:
+    list:
+    - key: BGM
+      value: {fileID: 8300000, guid: 44e9edb1304e6d44394567cde2bbd810, type: 3}
+    - key: Transition
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
 --- !u!1 &1661471744
 GameObject:
   m_ObjectHideFlags: 0

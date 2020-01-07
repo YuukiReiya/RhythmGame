@@ -3314,7 +3314,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0.0000039453407, z: 8.4e-43, w: 1.047e-42}
+  m_BoundingSphereOverride: {x: NaN, y: 0, z: 0, w: 8.1e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6698,6 +6698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1374449066}
   - component: {fileID: 1374449065}
+  - component: {fileID: 1374449067}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -6727,7 +6728,8 @@ MonoBehaviour:
   laneMatPriority: 2
   notesMaterial: {fileID: 2100000, guid: 4b083f0d1ca7e3345a10c6c65ea194f3, type: 2}
   notesMatPriority: 10
-  isTest: 0
+  audioClipTable: {fileID: 1374449067}
+  isTest: 1
 --- !u!4 &1374449066
 Transform:
   m_ObjectHideFlags: 0
@@ -6742,6 +6744,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1374449067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374449064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ef762e0719a2747b2421029be31f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  table:
+    list:
+    - key: Pause_Open
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: Pause_Close
+      value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
+    - key: Pause_Select
+      value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: Perfect
+      value: {fileID: 8300000, guid: e3ce91b0f79279e43bbb2be81e1b6c51, type: 3}
+    - key: Great
+      value: {fileID: 8300000, guid: 842d338780a98cf4d91a269ce0e0c568, type: 3}
+    - key: Good
+      value: {fileID: 8300000, guid: 0222ea3e8c50954489c88aef5bfa65e0, type: 3}
+    - key: Miss
+      value: {fileID: 8300000, guid: f09f03a90dc230b4181561784530466c, type: 3}
 --- !u!1 &1405356645
 GameObject:
   m_ObjectHideFlags: 0
