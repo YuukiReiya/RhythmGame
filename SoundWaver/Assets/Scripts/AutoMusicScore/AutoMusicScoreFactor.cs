@@ -87,7 +87,6 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
             //終了タイミング
             if (audioSource.time == 0.0f && !audioSource.isPlaying)
             {
-                Debug.Log("再生終了");
                 isExecute = false;
                 execute.isEnabled = true;
                 cancel.isEnabled = false;
@@ -288,10 +287,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
         chart.BPM = BPM;//BPM
         chart.ResistName = registNameLabel.text;//譜面の名前
         chart.ImageFilePath = imagePath.text;//画像パス
-        Debug.Log("ret.ToArray Size = " + ret.ToArray().Count());
         chart.Notes = ret.ToArray();
-        Debug.Log("chart.Notes:" + chart.Notes);
-        Debug.Log("chart.Notes.ToArray Size = " + chart.Notes.ToArray().Count());
         chart.Interval = float.Parse(intervalLabel.text);
         fileIO.CreateFile(
             Define.c_ChartSaveDirectory + Define.c_Delimiter + registNameLabel.text + Define.c_JSON,

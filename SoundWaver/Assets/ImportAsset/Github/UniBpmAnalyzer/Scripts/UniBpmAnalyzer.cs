@@ -5,6 +5,9 @@ This software is released under the MIT License.
 http://opensource.org/licenses/mit-license.php
 */
 
+/// 制作作品にDebug.Log機能を表示したくなかったのでマクロでくくる
+//#define DEBUG_LOG_DISPLAY
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,14 +53,17 @@ public class UniBpmAnalyzer
         {
             return -1;
         }
+#if DEBUG_LOG_DISPLAY
         Debug.Log("AnalyzeBpm audioClipName : " + clip.name);
-
+#endif
         int frequency = clip.frequency;
+#if DEBUG_LOG_DISPLAY
         Debug.Log("Frequency : " + frequency);
-
+#endif
         int channels = clip.channels;
+#if DEBUG_LOG_DISPLAY
         Debug.Log("Channels : " + channels);
-
+#endif
         int splitFrameSize = Mathf.FloorToInt(((float)frequency / (float)BASE_FREQUENCY) * ((float)channels / (float)BASE_CHANNELS) * (float)BASE_SPLIT_SAMPLE_SIZE);
 
         // Get all sample data from audioclip
@@ -69,15 +75,17 @@ public class UniBpmAnalyzer
 
         // Search bpm from volume array
         int bpm = SearchBpm(volumeArr, frequency, splitFrameSize);
+#if DEBUG_LOG_DISPLAY
         Debug.Log("Matched BPM : " + bpm);
-
+#endif
         var strBuilder = new StringBuilder("BPM Match Data List\n");
         for (int i = 0; i < bpmMatchDatas.Length; i++)
         {
             strBuilder.Append("bpm : " + bpmMatchDatas[i].bpm + ", match : " + Mathf.FloorToInt(bpmMatchDatas[i].match * 10000f) + "\n");
         }
+#if DEBUG_LOG_DISPLAY
         Debug.Log(strBuilder.ToString());
-
+#endif
         return bpm;
     }
 

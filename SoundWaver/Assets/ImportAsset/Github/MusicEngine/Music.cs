@@ -505,9 +505,8 @@ public class Music : MonoBehaviour
         Current_.musicSource_ = Current_.gameObject.GetComponent<AudioSource>();
         if (Current_ == null || Current_.musicSource_.playOnAwake)
         {
-            Debug.Log("current:" + Current_);
-            Debug.Log("current == null");
-            //Current_ = this;
+            Debug.LogError("Music.cs line508 current:" + Current_);
+            Debug.LogError("Music.cs line509 current == null");
         }
         Current_.samplingRate_ = Current_.musicSource_.clip.frequency;
         if (Current_.musicSource_.loop)
