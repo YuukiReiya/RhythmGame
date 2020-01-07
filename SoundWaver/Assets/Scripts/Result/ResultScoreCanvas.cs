@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game;
 using Yuuki.MethodExpansions;
+using Game.Audio;
 public class ResultScoreCanvas : MonoBehaviour
 {
     [System.Serializable]
@@ -175,7 +176,9 @@ public class ResultScoreCanvas : MonoBehaviour
     private IEnumerator SlotCountRoutine(UILabel label,uint retCount,uint addVal)
     {
         uint val = uint.Parse(label.text);
-        while(true)
+        //カウントアップ音再生
+        AudioManager.Instance.PlaySE("Countup", true);
+        while (true)
         {
             yield return new WaitForSeconds(slotParam.SecondPerTime);
             if (val >= retCount) { break; }
@@ -183,8 +186,14 @@ public class ResultScoreCanvas : MonoBehaviour
             val+=addVal;
             label.text = val.ToString();
         }
+        //  表示確定音再生
+        AudioManager.Instance.PlaySE("Score_Display");
         val = retCount;
         label.text = val.ToString();
+
+        //  SE再生終了まで待機
+        //  無いとすぐに再生され、聞こえない
+        yield return new WaitWhile(() => { return AudioManager.Instance.SourceSE.isPlaying; });
         yield break;
     }
 

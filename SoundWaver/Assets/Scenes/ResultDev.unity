@@ -9828,9 +9828,15 @@ MonoBehaviour:
   table:
     list:
     - key: BGM
-      value: {fileID: 8300000, guid: 44e9edb1304e6d44394567cde2bbd810, type: 3}
+      value: {fileID: 8300000, guid: ac127be983609274aa52e67096aacc39, type: 3}
     - key: Transition
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: Countup
+      value: {fileID: 8300000, guid: 189b754ab55244d4dabaf0c173f0fd4d, type: 3}
+    - key: Score_Display
+      value: {fileID: 8300000, guid: 7f2c9c36041d34949931dc0ab45622a7, type: 3}
+    - key: Result_Slide
+      value: {fileID: 8300000, guid: fed02c258ccb089478b09108cbd29291, type: 3}
 --- !u!1 &1661471744
 GameObject:
   m_ObjectHideFlags: 0

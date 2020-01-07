@@ -82,7 +82,14 @@ namespace Scenes
                 {
                     //フェード終了後にアニメーション
                     SetupToResultObject();
-                    resultScoreCanvas.Execute();
+                    //TODO:ローカルで作ったけど汚いからね？
+                    IEnumerator routine()
+                    {
+                        AudioManager.Instance.PlaySE("Result_Slide");
+                        yield return new WaitWhile(() => { return AudioManager.Instance.SourceSE.isPlaying; });
+                        resultScoreCanvas.Execute();
+                    }
+                    StartCoroutine(routine());
                 });
             FadeController.Instance.FadeOut(Define.c_FadeTime);
         }
@@ -90,6 +97,7 @@ namespace Scenes
         public void TransitionSelect()
         {
             var audio = AudioManager.Instance;
+            audio.SourceSE.Stop();
             audio.PlaySE("Transition");
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
