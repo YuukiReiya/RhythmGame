@@ -3314,7 +3314,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -0.0000012137898}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 3.5e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -6729,7 +6729,7 @@ MonoBehaviour:
   notesMaterial: {fileID: 2100000, guid: 4b083f0d1ca7e3345a10c6c65ea194f3, type: 2}
   notesMatPriority: 10
   audioClipTable: {fileID: 1374449067}
-  isTest: 1
+  isTest: 0
 --- !u!4 &1374449066
 Transform:
   m_ObjectHideFlags: 0
