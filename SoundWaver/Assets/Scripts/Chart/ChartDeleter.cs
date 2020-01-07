@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿#define USE_LINQ
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Common;
 using System.IO;
+#if USE_LINQ
 using System.Linq;
+#endif
 using DG.Tweening;
 using UnityEngine.Networking;
 using Yuuki.MethodExpansions;
@@ -158,11 +161,17 @@ namespace Game.UI
             //全取得
             charts = Directory.GetFiles(Define.c_ChartSaveDirectory, "*" + Define.c_JSON);
 
+#if USE_LINQ
             //プリセットファイルの譜面名(拡張子を除く)を取得
             var presetChartsName = Define.c_PresetFilePath.Select(it => Path.GetFileNameWithoutExtension(it.Item2));
             
             //取得した譜面名のなかからプリセットでないものを取得
             charts = charts.Where(it => !presetChartsName.Contains(Path.GetFileNameWithoutExtension(it))).ToArray();
+#else
+            //プリセットファイルの取得
+            var presetChartsName = Define.c_PresetFilePath.Select(it => Path.GetFileNameWithoutExtension(it.Item2));
+
+#endif
 
             //譜面を選択している場合
             if (ChartManager.Chart.ResistName != string.Empty)
@@ -226,11 +235,13 @@ namespace Game.UI
             var deleteCharts = list.Where(it => it.checkBox.IsActive);
             foreach (var it in deleteCharts)
             {
-                using (var uwr = UnityWebRequest.Get(it.filePath))
+                using (var uwr = UnityWebRequest.Get(Define.c_LocalFilePath + it.filePath))
                 {
                     yield return uwr.SendWebRequest();
-                    if(uwr.isNetworkError||uwr.isHttpError)
+                    if (uwr.isNetworkError || uwr.isHttpError)
                     {
+                        Debug.LogError("ChartDeleter.cs line248 UnityWebRequest");
+                        ErrorManager.Save();
                         continue;
                     }
                     File.Delete(it.filePath);
