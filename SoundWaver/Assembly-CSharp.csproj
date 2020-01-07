@@ -328,6 +328,7 @@
     <Compile Include="Assets\Scripts\CountDown\Countdown.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
     <Compile Include="Assets\Scripts\Error\ErrorManager.cs" />
+    <Compile Include="Assets\Scripts\Error\Logger.cs" />
     <Compile Include="Assets\Scripts\Fade\FadeController.cs" />
     <Compile Include="Assets\Scripts\FileIO\FileIO.cs" />
     <Compile Include="Assets\Scripts\FileManager\FileAction.cs" />
