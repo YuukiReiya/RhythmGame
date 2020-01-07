@@ -389,6 +389,8 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
             difference = float.Parse(thresholdLabel.text);
             interval = float.Parse(intervalLabel.text);
             executeFilePath = currentFilePath;
+            prevMax = 0;
+            elapsedTime = 0;
         }
    );
 
