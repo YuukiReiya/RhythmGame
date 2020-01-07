@@ -64,7 +64,7 @@ namespace Common
         /// item2:譜面パス
         /// item3:イメージパス
         /// </summary>
-        public static readonly (string, string,string)[] c_PresetFilePath = 
+        public static readonly (string, string, string)[] c_PresetFilePath =
             { 
                 //ハルジオン
                 (
@@ -78,6 +78,12 @@ namespace Common
                     Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "ShiningStar"+c_JSON,
                     Application.streamingAssetsPath+c_Delimiter+"Image"+c_Delimiter+"ShiningStar"+c_PNG
                 ),
+                //ベガロスト 
+            (
+                    Application.streamingAssetsPath+c_Delimiter+ "Sounds"+c_Delimiter + "short_song_kei_vegalost"+c_MP3,
+                    Application.streamingAssetsPath+c_Delimiter+ "PresetCharts"+c_Delimiter + "Vegalost"+c_JSON,
+                    ""
+                )
         };
         #endregion
 
