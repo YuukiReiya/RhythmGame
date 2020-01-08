@@ -3,6 +3,12 @@ namespace Common
 {
     public static class Define
     {
+        /// <summary>
+        /// 固定解像度の定義
+        /// </summary>
+        public const float c_FixedResolutionWidth = 2160;
+        public const float c_FixedResolutionHeight = 1080;
+
         public const float c_FadeTime = 0.25f;
         /// <summary>
         /// ゲーム開始時とアンポーズ時の待機時間(整数で)
