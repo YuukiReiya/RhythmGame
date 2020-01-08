@@ -311,7 +311,6 @@
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\SingletonBehaviour.cs" />
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\XDebug.cs" />
     <Compile Include="Assets\ImportAsset\GoogleDrive\FantomLib\Scripts\System\XPlayerPrefs.cs" />
-    <Compile Include="Assets\Scripts\Aspect\FixedAspecter.cs" />
     <Compile Include="Assets\Scripts\Aspect\FixedAspectRatio.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioClipList.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
