@@ -9813,6 +9813,7 @@ MonoBehaviour:
     NameLabel: {fileID: 1409494615}
     TimeLabel: {fileID: 778589117}
   audioClipTable: {fileID: 1646878896}
+  camera2D: {fileID: 194755402}
 --- !u!114 &1646878896
 MonoBehaviour:
   m_ObjectHideFlags: 0

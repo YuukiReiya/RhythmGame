@@ -15,7 +15,9 @@ namespace Game
         [SerializeField] private GameObject refinePanel;
         [SerializeField] private ChartDeleter deletePanel;
         [Header("Sound")]
-        [SerializeField] AudioClipList audioClipTable;
+        [SerializeField] private AudioClipList audioClipTable;
+        [Header("Camera")]
+        [SerializeField] private Camera camera2D;
         //privtae param
         private bool wasTransition = false;
         //public param
@@ -26,6 +28,12 @@ namespace Game
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#endif
+           //アスペクト比変更
+            FixedAspectRatio.FitToWidth2D(camera2D);
+
             //サウンドテーブル更新
             AudioManager.Instance.clips = audioClipTable.Table;
 

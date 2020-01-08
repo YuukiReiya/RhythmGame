@@ -11,11 +11,19 @@ namespace Game
     public class LoadController : SingletonMonoBehaviour<LoadController>
     {
         //serialize param
+        [SerializeField] private Camera camera2D;
+
         private float startTime;
 
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#endif
+            //アスペクト比変更
+            FixedAspectRatio.FitToWidth2D(camera2D);
+
             startTime = Time.time;
             FadeController.Instance.FadeOut(Define.c_FadeTime);
             StartCoroutine(MainRoutine());

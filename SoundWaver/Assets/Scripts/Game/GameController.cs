@@ -26,6 +26,9 @@ namespace Game
         [SerializeField] private int notesMatPriority = 10;
         [Header("Sound")]
         [SerializeField] private AudioClipList audioClipTable;
+        [Header("Camera")]
+        [SerializeField] private Camera camera3D;
+        [SerializeField] private Camera camera2D;
         //private param
         private bool isStart;
         //public param
@@ -44,6 +47,11 @@ namespace Game
             MaterialUtil.SetBlendMode(notesMaterial, MaterialUtil.Mode.Transparent, notesMatPriority);
             MaterialUtil.SetBlendMode(sideLaneMat, MaterialUtil.Mode.Transparent, laneMatPriority);
             MaterialUtil.SetBlendMode(centerLaneMat, MaterialUtil.Mode.Transparent, laneMatPriority);
+#if UNITY_EDITOR
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#endif
+            FixedAspectRatio.FitToWidth2D(camera2D);
+            FixedAspectRatio.FitToWidth3D(camera3D);
         }
         // Start is called before the first frame update
         void Start()

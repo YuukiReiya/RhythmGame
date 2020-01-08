@@ -41,12 +41,20 @@ namespace Scenes
         [SerializeField] ChartData chartData;
         [Header("Sound")]
         [SerializeField] private AudioClipList audioClipTable;
+        [Header("Camera")]
+        [SerializeField] private Camera camera2D;
         //const param
         private const float c_TransitionSoundFadeTime = 1.0f;
 
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#endif
+            //アスペクト比変更
+            FixedAspectRatio.FitToWidth2D(camera2D);
+
             //サウンドテーブル更新
             AudioManager.Instance.clips = audioClipTable.Table;
 

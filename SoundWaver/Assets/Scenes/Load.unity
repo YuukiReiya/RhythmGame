@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDefaultDontDestroy: 0
+  camera2D: {fileID: 8274919918737997687}
 --- !u!4 &657157165
 Transform:
   m_ObjectHideFlags: 0
@@ -541,7 +542,7 @@ PrefabInstance:
     - target: {fileID: 8274919917379835127, guid: 6827e2cbd7e7ab144b489fa4b1a1a480,
         type: 3}
       propertyPath: m_Name
-      value: BackGrounf Root
+      value: Ground RootRoot
       objectReference: {fileID: 0}
     - target: {fileID: 8274919917379835125, guid: 6827e2cbd7e7ab144b489fa4b1a1a480,
         type: 3}
@@ -600,3 +601,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6827e2cbd7e7ab144b489fa4b1a1a480, type: 3}
+--- !u!20 &8274919918737997687 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8274919918170100141, guid: 6827e2cbd7e7ab144b489fa4b1a1a480,
+    type: 3}
+  m_PrefabInstance: {fileID: 8274919918737997686}
+  m_PrefabAsset: {fileID: 0}

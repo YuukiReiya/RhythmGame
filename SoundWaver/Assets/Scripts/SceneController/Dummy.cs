@@ -15,6 +15,7 @@ namespace Game.Setup
     {
         private void Awake()
         {
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
             ErrorManager.Setup();
         }
         // Start is called before the first frame update

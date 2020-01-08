@@ -34,6 +34,8 @@ namespace Scenes
 #endif
         [Header("Sound")]
         [SerializeField] private AudioClipList audioClipTable;
+        [Header("Camera")]
+        [SerializeField] private Camera camera2D;
         //  private param
         private RadioButton menuSwitch;
         private IEnumerator blinkRoutine;
@@ -52,6 +54,10 @@ namespace Scenes
         // Start is called before the first frame update
         void Start()
         {
+#if UNITY_EDITOR
+            FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#endif
+            FixedAspectRatio.FitToWidth2D(camera2D);
 #if DEBUG_MODE
             debugObj.SetActive(false);
             tapCount = 0;
