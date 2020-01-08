@@ -41,7 +41,6 @@ namespace Game.Audio
                 return 0.0f;
             }
 #endif
-            var A = 1.0f / Define.c_MaxVolume;
             return (1.0f / Define.c_MaxVolume) * vol;
         }
 
