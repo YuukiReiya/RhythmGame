@@ -372,6 +372,7 @@
     <Compile Include="Assets\Scripts\Util\AudioManagerUtil.cs" />
     <Compile Include="Assets\Scripts\Util\ColliderUtilSetter.cs" />
     <Compile Include="Assets\Scripts\Util\GameObjectUtilSetter.cs" />
+    <Compile Include="Assets\Scripts\Util\OpenURLUtil.cs" />
     <Compile Include="Assets\Scripts\Util\TextMeshConvertTMP.cs" />
     <Compile Include="Assets\Tool\FPSmeter\Scripts\FPSmeter.cs" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
