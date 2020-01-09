@@ -68,10 +68,10 @@
             fixed4 frag (v2f i) : SV_Target
             {
 				// Softness factor
-				float2 factor = (float2(1.0, 1.0) - abs(IN.worldPos)) * _ClipArgs0;
+				float2 factor = (float2(1.0, 1.0) - abs(i.worldPos)) * _ClipArgs0;
 
 				// Sample the texture
-				half4 col = tex2D(_MainTex, IN.texcoord) * IN.color;
+				half4 col = tex2D(_MainTex, i.texcoord) * i.color;
 				col.a *= clamp(min(factor.x, factor.y), 0.0, 1.0);
 				return col;
 			}
