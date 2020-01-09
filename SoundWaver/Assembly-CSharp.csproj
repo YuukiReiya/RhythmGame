@@ -381,6 +381,7 @@
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTweenPro\readme.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Masked 2.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Models\Orc\Orc Skin.shader" />
+    <None Include="Assets\Shaders\ClipScrollMaskNGUI (Packed) (TextureClip).shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
     <None Include="Assets\ImportAsset\GoogleDrive\Plugins\Android\ZXing_LICENSE.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
@@ -389,12 +390,14 @@
     <None Include="Assets\ImportAsset\AssetStore\FantomPlugin\Images\fantomPlugin_Icon_Image_Readme.txt" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
+    <None Include="Assets\Shaders\ClipScrollMaskNGUI.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (TextureClip).shader" />
     <None Include="Assets\Shaders\SelectBackScroll.shader" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
+    <None Include="Assets\Shaders\ClipScrollMaskNGUI 1.shader" />
     <None Include="Assets\Shaders\LaneScroll.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
     <None Include="Assets\ImportAsset\AssetStore\Demigiant\DOTween\DOTween50.xml" />
@@ -464,6 +467,7 @@
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\ImportAsset\AssetStore\NGUI\Examples\Resources\Localization.txt" />
+    <None Include="Assets\Shaders\ClipScrollMaskNGUI (TextureClip).shader" />
     <None Include="Assets\ImportAsset\Standard\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/yuuki/Documents/Develop/Arbeit/RhythmGame/SoundWaver/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
