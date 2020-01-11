@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+#define VOL_MAX
+#endif
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,31 +17,46 @@ namespace Scenes
         [SerializeField] AudioClipList audioClipTable;
         [Header("Camera")]
         [SerializeField] Camera camera2D;
-
+        //private param
+        private bool wasTransition;
         //const param
-        private const float c_TransitionSoundFadeTime = 1.0f;
         // Start is called before the first frame update
         void Start()
         {
 #if UNITY_EDITOR
             FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#if VOL_MAX
+            AudioManager.Instance.SEVolume = Define.c_MaxVolume;
+            AudioManager.Instance.BGMVolume = Define.c_MaxVolume;
+#endif
 #endif
             FixedAspectRatio.FitToWidth2D(camera2D);
             //サウンドテーブル更新
             AudioManager.Instance.clips = audioClipTable.Table;
 
+            //初期化
+            wasTransition = false;
+
             //SE音量
             AudioManager.Instance.FadeSE(
                 Define.c_FadeTime,
                 0,
+#if VOL_MAX
+                1
+#else
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
+#endif
                 );
 
             //BGM再生
             AudioManager.Instance.FadeBGM(
                 Define.c_FadeTime,
                 0,
-                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
+#if VOL_MAX
+                1
+#else
+                AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
+#endif
                 );
             AudioManager.Instance.PlayBGM("BGM");
 
@@ -51,31 +69,35 @@ namespace Scenes
         /// </summary>
         public void TransitionStart()
         {
+            if (wasTransition) { return; }
+            wasTransition = true;
             var audio = AudioManager.Instance;
             //SE
-            audio.PlaySE("Transition");
+            audio.PlaySEEx(
+                "Transition",
+                false,
+                () =>
+                {
+                    //BGMフェード
+                    audio.FadeBGM(
+                        Define.c_FadeTime,
+                        audio.GetConvertVolume(audio.BGMVolume),
+                        0
+                        );
+                    //SEフェード
+                    audio.FadeSE(
+                        Define.c_FadeTime,
+                        audio.GetConvertVolume(audio.SEVolume),
+                        0
+                        );
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                });
             //フェード
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
                     SceneManager.LoadScene("StartDev");
-                    audio.SourceBGM.Stop();
-                    audio.SourceSE.Stop();
                 });
-            FadeController.Instance.FadeIn(Define.c_FadeTime);
-            //BGMフェード
-            //MEMO:場合によってはフェードキューの中でもいいかも
-            audio.FadeBGM(
-                c_TransitionSoundFadeTime,
-                audio.GetConvertVolume(audio.BGMVolume),
-                0
-                );
-            //SEフェード
-            audio.FadeSE(
-                c_TransitionSoundFadeTime,
-                audio.GetConvertVolume(audio.SEVolume),
-                0
-                );
         }
     }
 }
