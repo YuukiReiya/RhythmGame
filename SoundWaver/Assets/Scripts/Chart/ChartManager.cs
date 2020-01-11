@@ -397,21 +397,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         UpdateScore();
 
         //イメージ画像の表示
-        //Android上での画像表示時にも問題がないか確認すること！
-        var path = Chart.ImageFilePath.Replace(Define.c_LocalFilePath, "");
-        if (File.Exists(path))
-        {
-            StartCoroutine(LoadChartImageRoutine(Chart.ImageFilePath));
-        }
-        else
-        {
-            //該当テクスチャ割り当て
-            chartImageUI.chartImage.mainTexture = noImage;
-
-            //詳細画面表示時の後ろにも割り当てる
-            //TODO:暇なら直す
-            switchingObject.detailTexture.mainTexture = noImage;
-        }
+        StartCoroutine(LoadChartImageRoutine(Chart.ImageFilePath));
     }
 
     public void SetImageEffectColor(Color cr)
@@ -426,7 +412,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
     }
 
 #if UNITY_EDITOR
-    #region マルチスレッド
+#region マルチスレッド
     private async Task LoadChartImageTaskAsync(string path)
     {
         Texture2D tex = null;
@@ -461,7 +447,7 @@ public class ChartManager : SingletonMonoBehaviour<ChartManager>
         //TODO:暇なら直す
         switchingObject.detailTexture.mainTexture = tex;
     }
-    #endregion
+#endregion
 #endif
     IEnumerator LoadChartImageRoutine(string path)
     {
