@@ -19,12 +19,10 @@ namespace Game
         [Header("Camera")]
         [SerializeField] private Camera camera2D;
         //privtae param
-        private bool wasTransition = false;
+        private bool wasTransition;
         //public param
         //const param
-        const float c_TransitionStartSoundFade = 1.2f;
         const float c_TransitionGameSoundFade = 1.0f;
-        const float c_WaitTime = 0.5f;
         // Start is called before the first frame update
         void Start()
         {
@@ -38,6 +36,7 @@ namespace Game
             AudioManager.Instance.clips = audioClipTable.Table;
 
             //初期化
+            wasTransition = false;
             ChartManager.Instance.Setup();
 
 #if UNITY_EDITOR
@@ -85,37 +84,35 @@ namespace Game
         public void TransitionStart()
         {
             if (wasTransition) { return; }
+            wasTransition = true;
             var audio = AudioManager.Instance;
             //SE
-            audio.PlaySE("Return");
+            audio.PlaySEEx(
+                "Return",
+                false,
+                () =>
+                {
+                    //BGMフェード
+                    //MEMO:場合によってはフェードキューの中でもいいかも
+                    audio.FadeBGM(
+                        Define.c_FadeTime,
+                        audio.GetConvertVolume(audio.BGMVolume),
+                        0
+                        );
+                    //SEフェード
+                    audio.FadeSE(
+                        Define.c_FadeTime,
+                        audio.GetConvertVolume(audio.SEVolume),
+                        0
+                        );
+                    //フェードの開始命令
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                });
             FadeController.Instance.EventQueue.Enqueue(
                 () =>
                 {
                     SceneManager.LoadScene("StartDev");
-                    audio.SourceBGM.Stop();
-                    audio.SourceSE.Stop();
                 });
-            //遅延実行
-            this.DelayMethod(
-                () =>
-                {
-                    FadeController.Instance.FadeIn(Define.c_FadeTime);
-                }, Application.targetFrameRate * c_WaitTime);
-            
-            //BGMフェード
-            //MEMO:場合によってはフェードキューの中でもいいかも
-            audio.FadeBGM(
-                c_TransitionStartSoundFade,
-                audio.GetConvertVolume(audio.BGMVolume),
-                0
-                );
-            //SEフェード
-            audio.FadeSE(
-                c_TransitionStartSoundFade,
-                audio.GetConvertVolume(audio.SEVolume),
-                0
-                );
-            wasTransition = true;
         }
 
         public void OpenRefine()
@@ -164,7 +161,6 @@ namespace Game
                     GameMusic.Instance.StartCoroutine(GameMusic.Instance.LoadToAudioClip(chart.MusicFilePath));
                 });
             //BGMフェード
-            //MEMO:場合によってはフェードキューの中でもいいかも
             audio.FadeBGM(
                 c_TransitionGameSoundFade,
                 audio.GetConvertVolume(audio.BGMVolume),
