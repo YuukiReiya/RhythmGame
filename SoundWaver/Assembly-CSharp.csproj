@@ -346,6 +346,7 @@
     <Compile Include="Assets\Scripts\Input\TouchController.cs" />
     <Compile Include="Assets\Scripts\Judge\Judge.cs" />
     <Compile Include="Assets\Scripts\Lane\Lane.cs" />
+    <Compile Include="Assets\Scripts\NGUI\OnceButton.cs" />
     <Compile Include="Assets\Scripts\NGUI\RenderFrontThanNGUI.cs" />
     <Compile Include="Assets\Scripts\NGUI\SyncTextureColorUtil.cs" />
     <Compile Include="Assets\Scripts\Notes\INote.cs" />
