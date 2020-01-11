@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7484083468325342740}
   - component: {fileID: 7484083468325342747}
   - component: {fileID: 7484083468325342746}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: FadeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3000
+  startingRenderQueue: 3001
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -146,7 +146,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7484083468643793647}
   - component: {fileID: 7484083468643793640}
-  m_Layer: 5
+  - component: {fileID: 354448106}
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,8 +199,8 @@ MonoBehaviour:
   updateAnchors: 1
   mColor: {r: 0, g: 0, b: 0, a: 1}
   mPivot: 4
-  mWidth: 1024
-  mHeight: 1024
+  mWidth: 2160
+  mHeight: 2160
   mDepth: 100
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
@@ -229,6 +230,19 @@ MonoBehaviour:
   mShader: {fileID: 4800000, guid: e75727d9555d9d14ca51d91908c681bc, type: 3}
   mBorder: {x: 0, y: 0, z: 0, w: 0}
   mFixedAspect: 0
+--- !u!65 &354448106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7484083468643793646}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1024, y: 1024, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7484083469356671359
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +254,7 @@ GameObject:
   - component: {fileID: 7484083469356671352}
   - component: {fileID: 7484083469356671355}
   - component: {fileID: 7484083469356671354}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,10 +303,10 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 1
-  m_Depth: 0
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 1024
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
