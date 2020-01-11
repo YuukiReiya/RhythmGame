@@ -43,14 +43,19 @@ namespace Scenes
         [SerializeField] private AudioClipList audioClipTable;
         [Header("Camera")]
         [SerializeField] private Camera camera2D;
+        //private param
+        private bool wasTransition;
         //const param
-        private const float c_TransitionSoundFadeTime = 1.0f;
 
         // Start is called before the first frame update
         void Start()
         {
 #if UNITY_EDITOR
             FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+#if VOL_MAX
+            AudioManager.Instance.SEVolume = Define.c_MaxVolume;
+            AudioManager.Instance.BGMVolume = Define.c_MaxVolume;
+#endif
 #endif
             //アスペクト比変更
             FixedAspectRatio.FitToWidth2D(camera2D);
@@ -58,6 +63,8 @@ namespace Scenes
             //サウンドテーブル更新
             AudioManager.Instance.clips = audioClipTable.Table;
 
+            //初期化
+            wasTransition = false;
             SaveClearData();
             SetupChartData();
             resultScoreCanvas.Setup();
@@ -104,6 +111,8 @@ namespace Scenes
 
         public void TransitionSelect()
         {
+            if (wasTransition) { return; }
+            wasTransition = true;
             var audio = AudioManager.Instance;
             audio.SourceSE.Stop();
             audio.PlaySE("Transition");
@@ -111,21 +120,22 @@ namespace Scenes
                 () =>
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene("SelectDev");
-                    audio.SourceBGM.Stop();
-                    audio.SourceSE.Stop();
                 });
-            FadeController.Instance.FadeIn(Define.c_FadeTime);
             //BGMフェード
             audio.FadeBGM(
-                c_TransitionSoundFadeTime,
+                Define.c_FadeTime,
                 audio.GetConvertVolume(audio.BGMVolume),
                 0
                 );
             //SEフェード
             audio.FadeSE(
-                c_TransitionSoundFadeTime,
+                Define.c_FadeTime,
                 audio.GetConvertVolume(audio.SEVolume),
-                0
+                0,
+                () =>
+                {
+                    FadeController.Instance.FadeIn(Define.c_FadeTime);
+                }
                 );
         }
 
