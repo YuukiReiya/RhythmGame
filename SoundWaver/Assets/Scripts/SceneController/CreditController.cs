@@ -22,8 +22,8 @@ namespace Scenes
         {
 #if UNITY_EDITOR
             FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
-            FixedAspectRatio.FitToWidth2D(camera2D);
 #endif
+            FixedAspectRatio.FitToWidth2D(camera2D);
             //サウンドテーブル更新
             AudioManager.Instance.clips = audioClipTable.Table;
 
