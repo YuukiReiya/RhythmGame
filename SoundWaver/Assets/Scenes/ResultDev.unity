@@ -295,7 +295,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3001
+  startingRenderQueue: 3003
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -339,7 +339,6 @@ Transform:
   m_LocalScale: {x: 0.0013020834, y: 0.0013020834, z: 0.0013020834}
   m_Children:
   - {fileID: 194755400}
-  - {fileID: 267034706}
   - {fileID: 1272983459}
   - {fileID: 1612271641}
   - {fileID: 1059645883}
@@ -1877,7 +1876,7 @@ Transform:
   - {fileID: 102322190}
   - {fileID: 1718071348}
   - {fileID: 1271521097}
-  m_Father: {fileID: 24940925}
+  m_Father: {fileID: 1314898483}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &267034707
@@ -1913,7 +1912,7 @@ MonoBehaviour:
   mPivot: 4
   mWidth: 100
   mHeight: 100
-  mDepth: 4
+  mDepth: 0
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -3265,7 +3264,7 @@ Transform:
   - {fileID: 87544949}
   - {fileID: 30388049}
   m_Father: {fileID: 24940925}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &457689446
 MonoBehaviour:
@@ -6617,7 +6616,7 @@ Transform:
   - {fileID: 1232702818}
   - {fileID: 612118493}
   m_Father: {fileID: 24940925}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1059645884
 MonoBehaviour:
@@ -7695,7 +7694,7 @@ Transform:
   - {fileID: 1466734886}
   - {fileID: 502522468}
   m_Father: {fileID: 24940925}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272983460
 MonoBehaviour:
@@ -8084,6 +8083,7 @@ Transform:
   m_LocalScale: {x: 0.0013020834, y: 0.0013020834, z: 0.0013020834}
   m_Children:
   - {fileID: 1630319728}
+  - {fileID: 267034706}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9542,7 +9542,7 @@ Transform:
   m_Children:
   - {fileID: 1355767938}
   m_Father: {fileID: 24940925}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1612271642
 BoxCollider:
@@ -12006,7 +12006,7 @@ Transform:
   - {fileID: 1028045973}
   - {fileID: 841834347}
   m_Father: {fileID: 24940925}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1961919969
 MonoBehaviour:
