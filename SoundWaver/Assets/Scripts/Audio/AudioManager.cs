@@ -20,6 +20,7 @@ namespace Game.Audio
         [SerializeField, Tooltip("ダイアログのような一部の常にアクセスされる可能性のあるAudioClipのリスト")] private AudioClipTable localAudioClipTable;
         private IEnumerator fadeRoutineBGM;
         private IEnumerator fadeRoutineSE;
+        private IEnumerator runPlaySE;
         //  public param
         [NonSerialized] public uint SEVolume;
         [NonSerialized] public uint BGMVolume;
@@ -61,7 +62,7 @@ namespace Game.Audio
                     sourceBGM.Play();
                     return;
                 }
-                Debug.LogError("AudioManager.cs line50 PlayBGM not found sound key.\n" + key);
+                Debug.LogError("AudioManager.cs line65 PlayBGM not found sound key.\n" + key);
                 ErrorManager.Save();
                 return;
             }
@@ -85,13 +86,61 @@ namespace Game.Audio
                     sourceSE.Play();
                     return;
                 }
-                Debug.LogError("AudioManager.cs line66 PlaySE not found sound key.\n" + key);
+                Debug.LogError("AudioManager.cs line89 PlaySE not found sound key.\n" + key);
                 ErrorManager.Save();
                 return;
             }
             sourceSE.clip = clips.Table[key];
             sourceSE.loop = isLoop;
             sourceSE.Play();
+        }
+
+        public void PlaySEEx(string key, bool isLoop = false, CoroutineExpansion.CoroutineFinishedFunc func = null)
+        {
+            if (!HasTableClipsKey(key))
+            {
+                if (HasLocalClipsKey(key))
+                {
+                    //TODO:リファイン必須
+                    sourceSE.clip = localAudioClipTable.Table[key];
+                    sourceSE.loop = isLoop;
+                    sourceSE.Play();
+                    return;
+                }
+                Debug.LogError("AudioManager.cs line66 PlaySEEx not found sound key.\n" + key);
+                ErrorManager.Save();
+                return;
+            }
+
+            if (runPlaySE != null)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("AudioManager.cs line123 PlaySEEx runPlaySE is not run until.");
+#endif
+                StopCoroutine(runPlaySE);
+            }
+            runPlaySE = PlayRoutine(sourceSE, func);
+            this.StartCoroutine(runPlaySE,()=> { runPlaySE = null; });
+            sourceSE.clip = clips.Table[key];
+            sourceSE.loop = isLoop;
+            sourceSE.Play();
+        }
+
+        /// <summary>
+        /// 音の再生終了時に関数の実行を行いたかったので急遽拡張したCallback
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        private IEnumerator PlayRoutine(AudioSource source,CoroutineExpansion.CoroutineFinishedFunc func)
+        {
+            yield return new WaitUntil(() => { return source.time == 0.0f && !source.isPlaying; });
+            //while(true)
+            //{
+            //    yield return new WaitForFixedUpdate();
+            //    if (!source.isPlaying) { break; }
+            //}
+            func?.Invoke();
         }
 
         private bool HasTableClipsKey(string key)
