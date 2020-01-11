@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Common;
 namespace Game
 {
     public class DialogController : Yuuki.SingletonMonoBehaviour<DialogController>
@@ -65,6 +65,8 @@ namespace Game
         //serialize param
         //[Header("")]
         //[SerializeField] private UITexture fadeImage;
+        [Header("Camera")]
+        [SerializeField] private Camera camera;
         [Header("Check Dialog")]
         [SerializeField] private CheckDialog checkDialog;
         [SerializeField] private YesNoDialog yesNoDialog;
@@ -74,6 +76,12 @@ namespace Game
         protected override void Awake()
         {
             base.Awake();
+            //MEMO:現状Dummy.csの方が早く呼び出されるが、Order等で入れ替えることも考慮し判定しておく
+            if (FixedAspectRatio.Aspect != (Define.c_FixedResolutionHeight / Define.c_FixedResolutionWidth))
+            {
+                FixedAspectRatio.Setup(Define.c_FixedResolutionWidth, Define.c_FixedResolutionHeight);
+            }
+            FixedAspectRatio.FitToWidth2D(camera);
             checkDialog.Parent.gameObject.SetActive(false);
             yesNoDialog.Parent.gameObject.SetActive(false);
         }
