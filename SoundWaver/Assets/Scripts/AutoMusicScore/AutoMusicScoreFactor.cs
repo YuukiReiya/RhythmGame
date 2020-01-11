@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Yuuki.FileManager;
 using Game.UI;
+using Game.Audio;
 public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreFactor>
 {
     //serialize param
@@ -298,6 +299,9 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     private void ProcessEnd()
     {
+        //停止していたBGMの再生
+        AudioManager.Instance.SourceBGM.pitch = 1;
+        //ダイアログ展開
         DialogController.Instance.Open(
             "譜面ファイルの生成を\n完了しました。",
             () =>
@@ -375,6 +379,7 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
             sec.UnitPerBeat = int.Parse(unitPerBeatLabel.text);
             musicEngine.Setup();
             //audio
+            AudioManager.Instance.SourceBGM.pitch = 0;//BGMの一時停止
             GameMusic.Instance.Source = Music.CurrentSource;
             GameMusic.Instance.Source.Play();
             isExecute = true;
@@ -405,6 +410,9 @@ public class AutoMusicScoreFactor : Yuuki.SingletonMonoBehaviour<AutoMusicScoreF
 
     public void CancelButton()
     {
+        //停止していたBGM再生
+        AudioManager.Instance.SourceBGM.pitch = 1;
+        //Reset
         GameMusic.Instance.Source.clip = null;
         GameMusic.Instance.Source = null;
         isExecute = false;

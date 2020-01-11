@@ -10794,6 +10794,8 @@ MonoBehaviour:
       value: {fileID: 8300000, guid: 7cf5ae34063aaf7439d07c89a8e4485b, type: 3}
     - key: Folder_FileManager
       value: {fileID: 8300000, guid: 47d4640511182ad42af3906d346a114b, type: 3}
+    - key: BGM
+      value: {fileID: 8300000, guid: 9aa273b4c1a661e498b5aab4089417e4, type: 3}
 --- !u!1 &990973477
 GameObject:
   m_ObjectHideFlags: 0

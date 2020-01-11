@@ -41,12 +41,14 @@ namespace Scenes
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.SEVolume)
                 );
 
-            //BGM再生
+            //BGM音量
             AudioManager.Instance.FadeBGM(
                 Define.c_FadeTime,
                 0,
                 AudioManager.Instance.GetConvertVolume(AudioManager.Instance.BGMVolume)
                 );
+            //BGM再生
+            AudioManager.Instance.PlayBGM("BGM");
 
             //フェード
             FadeController.Instance.FadeOut(Define.c_FadeTime);
@@ -61,6 +63,9 @@ namespace Scenes
                 () =>
                 {
                     SceneManager.LoadScene("StartDev");
+                    //譜面作成中にタイトルに戻られた場合のケア
+                    //楽曲が再生され続けているので、BGMがフェード仕切ってからピッチを1に戻してあげる
+                    AudioManager.Instance.SourceBGM.pitch = 1;
                     audio.SourceBGM.Stop();
                     audio.SourceSE.Stop();
                 }); 
