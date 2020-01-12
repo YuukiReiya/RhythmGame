@@ -70,7 +70,7 @@ namespace Game
                     ErrorManager.Save();
                     DialogController.Instance.Open(
                         "楽曲の読み込みに失敗しました。\nタイトルに戻ります。",
-                        () => { SceneManager.LoadScene("Start"); }
+                        () => { SceneManager.LoadScene("StartDev"); }
                         );
                     yield break;
                 }
